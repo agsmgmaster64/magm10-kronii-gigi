@@ -1252,6 +1252,7 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
 #define tLotadSpriteId data[9]
 #define tBrendanSpriteId data[10]
 #define tMaySpriteId data[11]
+#define tGigiSpriteId data[12]
 
 void CB2_NewGameBirchSpeech_ReturnFromOptionsMenu(void)
 {
@@ -1698,10 +1699,28 @@ static void Task_NewGameBirchSpeech_StartNamingScreen(u8 taskId)
     }
 }
 
+static const u8 sText_Reset[] = _("Gaster");
+static const u8 sText_RESET[] = _("GASTER");
+static const u8 sText_YourGigiHuh[] = _("You seem pretty weird looking\nright now, Gigi.");
+
+static inline const u8 *GetPlayerNameReaction(void)
+{
+    if (!StringCompare(gSaveBlock2Ptr->playerName, gText_Gigi))
+        return sText_YourGigiHuh;
+    if (!StringCompare(gSaveBlock2Ptr->playerName, sText_Reset) || !StringCompare(gSaveBlock2Ptr->playerName, sText_RESET))
+    {
+        DoSoftReset();
+        return NULL;
+    }
+    return gText_Birch_SoItsPlayer;
+}
+
 static void Task_NewGameBirchSpeech_SoItsPlayerName(u8 taskId)
 {
+    const u8 *string;
     NewGameBirchSpeech_ClearWindow(0);
-    StringExpandPlaceholders(gStringVar4, gText_Birch_SoItsPlayer);
+    string = GetPlayerNameReaction();
+    StringExpandPlaceholders(gStringVar4, string);
     AddTextPrinterForMessage(TRUE);
     gTasks[taskId].func = Task_NewGameBirchSpeech_CreateNameYesNo;
 }
@@ -1754,6 +1773,7 @@ static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
     {
         gSprites[gTasks[taskId].tBrendanSpriteId].invisible = TRUE;
         gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tGigiSpriteId].invisible = TRUE;
         spriteId = gTasks[taskId].tBirchSpriteId;
         gSprites[spriteId].x = 136;
         gSprites[spriteId].y = 60;
@@ -1804,10 +1824,18 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
             gTasks[taskId].tTimer--;
             return;
         }
-        if (gSaveBlock2Ptr->playerGender != MALE)
+        if (!StringCompare(gSaveBlock2Ptr->playerName, gText_Gigi))
+        {
+            spriteId = gTasks[taskId].tGigiSpriteId;
+        }
+        else if (gSaveBlock2Ptr->playerGender != MALE)
+        {
             spriteId = gTasks[taskId].tMaySpriteId;
+        }
         else
+        {
             spriteId = gTasks[taskId].tBrendanSpriteId;
+        }
         gSprites[spriteId].x = 120;
         gSprites[spriteId].y = 60;
         gSprites[spriteId].invisible = FALSE;
@@ -1915,7 +1943,13 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     FreeAllSpritePalettes();
     ResetAllPicSprites();
     AddBirchSpeechObjects(taskId);
-    if (gSaveBlock2Ptr->playerGender != MALE)
+    if (!StringCompare(gSaveBlock2Ptr->playerName, gText_Gigi))
+    {
+        gSaveBlock2Ptr->playerGender = FEMALE;
+        gTasks[taskId].tPlayerGender = FEMALE;
+        spriteId = gTasks[taskId].tGigiSpriteId;
+    }
+    else if (gSaveBlock2Ptr->playerGender != MALE)
     {
         gTasks[taskId].tPlayerGender = FEMALE;
         spriteId = gTasks[taskId].tMaySpriteId;
@@ -1977,6 +2011,7 @@ static void AddBirchSpeechObjects(u8 taskId)
     u8 lotadSpriteId;
     u8 brendanSpriteId;
     u8 maySpriteId;
+    u8 gigiSpriteId;
 
     birchSpriteId = AddNewGameBirchObject(0x88, 0x3C, 1);
     gSprites[birchSpriteId].callback = SpriteCB_Null;
@@ -1998,6 +2033,11 @@ static void AddBirchSpeechObjects(u8 taskId)
     gSprites[maySpriteId].invisible = TRUE;
     gSprites[maySpriteId].oam.priority = 0;
     gTasks[taskId].tMaySpriteId = maySpriteId;
+    gigiSpriteId = CreateTrainerSprite(GetPlayerTrainerPicIdByOutfitGenderType(OUTFIT_GIGI_MURIN, MALE, 0), 120, 60, 0, NULL);
+    gSprites[gigiSpriteId].callback = SpriteCB_Null;
+    gSprites[gigiSpriteId].invisible = TRUE;
+    gSprites[gigiSpriteId].oam.priority = 0;
+    gTasks[taskId].tGigiSpriteId = gigiSpriteId;
 }
 
 #undef tPlayerSpriteId
@@ -2007,6 +2047,7 @@ static void AddBirchSpeechObjects(u8 taskId)
 #undef tLotadSpriteId
 #undef tBrendanSpriteId
 #undef tMaySpriteId
+#undef tGigiSpriteId
 
 #define tMainTask data[0]
 #define tAlphaCoeff1 data[1]

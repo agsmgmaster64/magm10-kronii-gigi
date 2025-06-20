@@ -79,7 +79,7 @@ enum
 enum
 {
     SEARCH_NAME,
-    SEARCH_COLOR,
+    SEARCH_SOURCE,
     SEARCH_TYPE_LEFT,
     SEARCH_TYPE_RIGHT,
     SEARCH_ORDER,
@@ -354,7 +354,7 @@ struct PokemonStats
     u8  evYield_Defense;
     u8  evYield_SpDefense;
     u8  catchRate;
-    u8  growthRate;
+    enum GrowthRate growthRate:8;
     u8  eggGroup1;
     u8  eggGroup2;
     u8  eggCycles;
@@ -589,7 +589,7 @@ static void Task_SwitchScreensFromFormsScreen(u8 taskId);
 static void Task_ExitFormsScreen(u8 taskId);
 
 //Physical/Special/Status category icon
-static u8 ShowCategoryIcon(u32 category);
+static u8 ShowCategoryIcon(enum DamageCategory category);
 static void DestroyCategoryIcon(void);
 
 static u16 NationalPokedexNumToSpeciesHGSS(u16 nationalNum);
@@ -1551,7 +1551,7 @@ static const struct SearchMenuItem sSearchMenuItems[SEARCH_COUNT] =
         .selectionBgY = 2,
         .selectionBgWidth = 12,
     },
-    [SEARCH_COLOR] =
+    [SEARCH_SOURCE] =
     {
         .description = gText_ListByBodyColor,
         .titleBgX = 0,
@@ -1621,9 +1621,9 @@ static const u8 sSearchMovementMap_SearchNatDex[SEARCH_COUNT][4] =
         0xFF,
         0xFF,
         0xFF,
-        SEARCH_COLOR
+        SEARCH_SOURCE
     },
-    [SEARCH_COLOR] =
+    [SEARCH_SOURCE] =
     {
         0xFF,
         0xFF,
@@ -1634,13 +1634,13 @@ static const u8 sSearchMovementMap_SearchNatDex[SEARCH_COUNT][4] =
     {
         0xFF,
         SEARCH_TYPE_RIGHT,
-        SEARCH_COLOR,
+        SEARCH_SOURCE,
         SEARCH_ORDER
     },
     [SEARCH_TYPE_RIGHT] =
     {   SEARCH_TYPE_LEFT,
         0xFF,
-        SEARCH_COLOR,
+        SEARCH_SOURCE,
         SEARCH_ORDER
     },
     [SEARCH_ORDER] =
@@ -1676,7 +1676,7 @@ static const u8 sSearchMovementMap_ShiftNatDex[SEARCH_COUNT][4] =
         0xFF,
         0xFF
     },
-    [SEARCH_COLOR] =
+    [SEARCH_SOURCE] =
     {
         0xFF,
         0xFF,
@@ -1728,9 +1728,9 @@ static const u8 sSearchMovementMap_SearchHoennDex[SEARCH_COUNT][4] =
         0xFF,
         0xFF,
         0xFF,
-        SEARCH_COLOR
+        SEARCH_SOURCE
     },
-    [SEARCH_COLOR] =
+    [SEARCH_SOURCE] =
     {
         0xFF,
         0xFF,
@@ -1741,13 +1741,13 @@ static const u8 sSearchMovementMap_SearchHoennDex[SEARCH_COUNT][4] =
     {
         0xFF,
         SEARCH_TYPE_RIGHT,
-        SEARCH_COLOR,
+        SEARCH_SOURCE,
         SEARCH_ORDER
     },
     [SEARCH_TYPE_RIGHT] =
     {   SEARCH_TYPE_LEFT,
         0xFF,
-        SEARCH_COLOR,
+        SEARCH_SOURCE,
         SEARCH_ORDER
     },
     [SEARCH_ORDER] =
@@ -1783,7 +1783,7 @@ static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] =
         0xFF,
         0xFF
     },
-    [SEARCH_COLOR] =
+    [SEARCH_SOURCE] =
     {
         0xFF,
         0xFF,
@@ -1956,7 +1956,7 @@ static const u8 sDexSearchTypeIds[NUMBER_OF_MON_TYPES] =
 static const struct SearchOption sSearchOptions[] =
 {
     [SEARCH_NAME]       = {sDexSearchNameOptions,  6,  7, ARRAY_COUNT(sDexSearchNameOptions) - 1},
-    [SEARCH_COLOR]      = {sDexSearchColorOptions, 8,  9, ARRAY_COUNT(sDexSearchColorOptions) - 1},
+    [SEARCH_SOURCE]      = {sDexSearchColorOptions, 8,  9, ARRAY_COUNT(sDexSearchColorOptions) - 1},
     [SEARCH_TYPE_LEFT]  = {sDexSearchTypeOptions, 10, 11, ARRAY_COUNT(sDexSearchTypeOptions) - 1},
     [SEARCH_TYPE_RIGHT] = {sDexSearchTypeOptions, 12, 13, ARRAY_COUNT(sDexSearchTypeOptions) - 1},
     [SEARCH_ORDER]      = {sDexOrderOptions,       4,  5, ARRAY_COUNT(sDexOrderOptions) - 1},
@@ -2336,7 +2336,7 @@ static void Task_ClosePokedex(u8 taskId)
         ClearMonSprites();
         FreeWindowAndBgBuffers();
         DestroyTask(taskId);
-        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
+        SetMainCallback2(CB2_ReturnToFullScreenStartMenu);
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 0x100);
         Free(sPokedexView);
     }
@@ -4105,7 +4105,7 @@ void Task_DisplayCaughtMonDexPageHGSS(u8 taskId)
 {
     u8 spriteId;
     u16 species;
-    u16 dexNum;
+    enum NationalDexOrder dexNum;
 
     if (!POKEDEX_PLUS_HGSS) return; // prevents the compiler from emitting static .rodata
                                     // if the feature is disabled
@@ -4716,7 +4716,7 @@ static void LoadTilesetTilemapHGSS(u8 page)
 }
 
 //Physical/Special/Status category
-static u8 ShowCategoryIcon(u32 category)
+static u8 ShowCategoryIcon(enum DamageCategory category)
 {
     if (sPokedexView->categoryIconSpriteId == 0xFF)
         sPokedexView->categoryIconSpriteId = CreateSprite(&gSpriteTemplate_CategoryIcons, 174, 43, 0);
@@ -5586,7 +5586,7 @@ static void PrintStatsScreen_Left(u8 taskId)
     if (gTasks[taskId].data[5] == 0)
     {
         u32 catchRate = sPokedexView->sPokemonStats.catchRate;
-        u32 growthRate = sPokedexView->sPokemonStats.growthRate;
+        enum GrowthRate growthRate = sPokedexView->sPokemonStats.growthRate;
 
         //Catch rate
         PrintStatsScreenTextSmall(WIN_STATS_LEFT, sText_Stats_CatchRate, base_x, base_y + base_y_offset*base_i);
@@ -6126,8 +6126,8 @@ static void Task_HandleEvolutionScreenInput(u8 taskId)
 
         if (JOY_NEW(A_BUTTON))
         {
-            u16 targetSpecies   = sPokedexView->sEvoScreenData.targetSpecies[sPokedexView->sEvoScreenData.menuPos];
-            u16 dexNum          = SpeciesToNationalPokedexNum(targetSpecies);
+            u16 targetSpecies            = sPokedexView->sEvoScreenData.targetSpecies[sPokedexView->sEvoScreenData.menuPos];
+            enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(targetSpecies);
             if (sPokedexView->isSearchResults && sPokedexView->originalSearchSelectionNum == 0)
                 sPokedexView->originalSearchSelectionNum = sPokedexListItem->dexNum;
 
@@ -6379,7 +6379,7 @@ u32 GetSpeciesNameWidthInChars(const u8 *speciesName)
 
 bool32 IsSpeciesAlcremie(u32 targetSpecies)
 {
-    return targetSpecies >= SPECIES_ALCREMIE_STRAWBERRY_VANILLA_CREAM && targetSpecies <= SPECIES_ALCREMIE_RIBBON_RAINBOW_SWIRL;
+    return GET_BASE_SPECIES_ID(targetSpecies) == SPECIES_ALCREMIE;
 }
 
 static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 depth, u32 *depth_i, u32 alreadyPrintedIcons[], u32 *icon_depth_i, u32 numLines)
@@ -6564,10 +6564,10 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 dept
             case IF_PID_UPPER_MODULO_10_EQ:
             case IF_PID_UPPER_MODULO_10_LT:
                 arg = evolutions[i].params[j].arg1;
-                    if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_UPPER_MODULO_10_GT 
+                    if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_UPPER_MODULO_10_GT
                         && arg < 10 && arg >= 0)
                         arg = 9 - arg;
-                    else if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_UPPER_MODULO_10_EQ 
+                    else if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_UPPER_MODULO_10_EQ
                              && arg < 10 && arg >= 0)
                         arg = 1;
                 ConvertIntToDecimalStringN(gStringVar2, arg * 10, STR_CONV_MODE_LEFT_ALIGN, 3);
@@ -6677,10 +6677,10 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 dept
             case IF_PID_MODULO_100_EQ:
             case IF_PID_MODULO_100_LT:
                     arg = evolutions[i].params[j].arg1;
-                        if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_MODULO_100_GT 
+                        if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_MODULO_100_GT
                             && arg < 100 && arg >= 0)
                             arg = 99 - arg;
-                        else if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_MODULO_100_EQ 
+                        else if ((enum EvolutionConditions)evolutions[i].params[j].condition == IF_PID_MODULO_100_EQ
                                  && arg < 100 && arg >= 0)
                             arg = 1;
                     ConvertIntToDecimalStringN(gStringVar2, arg, STR_CONV_MODE_LEFT_ALIGN, 3);
@@ -6721,7 +6721,7 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, u16 species, u8 dept
         }
 
         if (isAlcremie)
-            fontId = FONT_NARROWER;
+            fontId = FONT_SMALL_NARROWER;
         else
             fontId = GetFontIdToFit(gStringVar4, FONT_SMALL, 0, maxScreenWidth);
 
@@ -7690,7 +7690,7 @@ static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId)
 //*        Search code               *
 //*                                  *
 //************************************
-static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 sourceGame, u8 type1, u8 type2)
+static int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, enum SourceGame sourceGame, u8 type1, u8 type2)
 {
     u16 species;
     u16 i;
@@ -8106,7 +8106,7 @@ static void Task_StartPokedexSearch(u8 taskId)
     u8 dexMode = GetSearchModeSelection(taskId, SEARCH_MODE);
     u8 order = GetSearchModeSelection(taskId, SEARCH_ORDER);
     u8 abcGroup = GetSearchModeSelection(taskId, SEARCH_NAME);
-    u8 sourceGame = GetSearchModeSelection(taskId, SEARCH_COLOR);
+    enum SourceGame sourceGame = GetSearchModeSelection(taskId, SEARCH_SOURCE);
     u8 type1 = GetSearchModeSelection(taskId, SEARCH_TYPE_LEFT);
     u8 type2 = GetSearchModeSelection(taskId, SEARCH_TYPE_RIGHT);
 
@@ -8305,7 +8305,7 @@ static void SetSearchRectHighlight(u8 flags, u8 x, u8 y, u8 width)
 #define SEARCH_BG_SHIFT                 SEARCH_TOPBAR_SHIFT
 #define SEARCH_BG_CANCEL                SEARCH_TOPBAR_CANCEL
 #define SEARCH_BG_NAME                  (SEARCH_NAME + SEARCH_TOPBAR_COUNT)
-#define SEARCH_BG_COLOR                 (SEARCH_COLOR + SEARCH_TOPBAR_COUNT)
+#define SEARCH_BG_COLOR                 (SEARCH_SOURCE + SEARCH_TOPBAR_COUNT)
 #define SEARCH_BG_TYPE_SELECTION_LEFT   (SEARCH_TYPE_LEFT + SEARCH_TOPBAR_COUNT)
 #define SEARCH_BG_TYPE_SELECTION_RIGHT  (SEARCH_TYPE_RIGHT + SEARCH_TOPBAR_COUNT)
 #define SEARCH_BG_ORDER                 (SEARCH_ORDER + SEARCH_TOPBAR_COUNT)
@@ -8406,7 +8406,7 @@ static void HighlightSelectedSearchMenuItem(u8 topBarItem, u8 menuItem)
     case SEARCH_NAME:
         DrawSearchMenuItemBgHighlight(SEARCH_BG_NAME, FALSE, FALSE);
         break;
-    case SEARCH_COLOR:
+    case SEARCH_SOURCE:
         DrawSearchMenuItemBgHighlight(SEARCH_BG_COLOR, FALSE, FALSE);
         break;
     case SEARCH_TYPE_LEFT:
@@ -8529,7 +8529,7 @@ static u8 GetSearchModeSelection(u8 taskId, u8 option)
             return 0xFF;
         else
             return id;
-    case SEARCH_COLOR:
+    case SEARCH_SOURCE:
         if (id == 0)
             return 0xFF;
         else

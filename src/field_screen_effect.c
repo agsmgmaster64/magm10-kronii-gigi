@@ -5,6 +5,7 @@
 #include "field_camera.h"
 #include "field_door.h"
 #include "field_effect.h"
+#include "field_effect_helpers.h"
 #include "event_object_lock.h"
 #include "event_object_movement.h"
 #include "event_scripts.h"
@@ -45,6 +46,12 @@
 #include "constants/metatile_behaviors.h"
 #include "m4a.h"
 #include "battle.h"
+#include "ui_startmenu_full.h"
+#include "battle_pike.h"
+#include "battle_pyramid.h"
+#include "battle_pyramid_bag.h"
+#include "safari_zone.h"
+#include "field_specials.h"
 
 static void Task_ExitNonAnimDoor(u8);
 static void Task_ExitNonDoor(u8);
@@ -462,7 +469,10 @@ static void Task_WaitForFadeShowStartMenu(u8 taskId)
     if (WaitForWeatherFadeIn() == TRUE)
     {
         DestroyTask(taskId);
-        CreateTask(Task_ShowStartMenu, 80);
+        if (ShouldHideFullScreenStartMenu())
+            CreateTask(Task_ShowStartMenu, 80);
+        else        
+            CreateTask(Task_OpenStartMenuFullScreen, 80);
     }
 }
 
@@ -551,6 +561,7 @@ void DoDiveWarp(void)
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
     PlayRainStoppingSoundEffect();
+    SetFollowerNPCData(FNPC_DATA_COME_OUT_DOOR, FNPC_DOOR_NONE);
     gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(Task_WarpAndLoadMap, 10);
 }
@@ -706,6 +717,7 @@ void Task_WarpAndLoadMap(u8 taskId)
     case 0:
         FreezeObjectEvents();
         LockPlayerFieldControls();
+        EndORASDowsing();
         task->tState++;
         break;
     case 1:
@@ -767,6 +779,7 @@ void Task_DoDoorWarp(u8 taskId)
             ObjectEventSetHeldMovement(followerObject, MOVEMENT_ACTION_ENTER_POKEBALL);
         }
         task->tDoorTask = FieldAnimateDoorOpen(*x, *y - 1);
+        EndORASDowsing();
         task->tState = DOORWARP_START_WALK_UP;
         break;
     case DOORWARP_START_WALK_UP:

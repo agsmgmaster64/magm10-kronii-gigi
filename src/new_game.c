@@ -55,6 +55,8 @@
 #include "tx_randomizer_and_challenges.h"
 #include "randomizer.h"
 #include "follower_npc.h"
+#include "string_util.h"
+#include "strings.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 
@@ -186,7 +188,15 @@ static void ResetOutfitData(void)
 {
     memset(gSaveBlock3Ptr->outfits, 0, sizeof(gSaveBlock3Ptr->outfits));
     UnlockOutfit(DEFAULT_OUTFIT);
-    gSaveBlock3Ptr->currOutfitId = DEFAULT_OUTFIT;
+    if (!StringCompare(gSaveBlock2Ptr->playerName, gText_Gigi))
+    {
+        UnlockOutfit(OUTFIT_GIGI_MURIN);
+        gSaveBlock3Ptr->currOutfitId = OUTFIT_GIGI_MURIN;
+    }
+    else
+    {
+        gSaveBlock3Ptr->currOutfitId = DEFAULT_OUTFIT;
+    }
 }
 
 void NewGameInitData(void)

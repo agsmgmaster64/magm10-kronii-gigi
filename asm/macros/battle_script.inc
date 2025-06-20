@@ -116,10 +116,10 @@
 	.byte 0x17
 	.endm
 
-	.macro clearstatus2 battler:req, status2:req
+	.macro clearvolatile battler:req, volatile:req
 	.byte 0x18
 	.byte \battler
-	.4byte \status2
+	.byte \volatile
 	.endm
 
 	.macro tryfaintmon battler:req
@@ -153,10 +153,10 @@
 	.4byte \jumpInstr
 	.endm
 
-	.macro jumpifstatus2 battler:req, flags:req, jumpInstr:req
+	.macro jumpifvolatile battler:req, volatile:req, jumpInstr:req
 	.byte 0x1d
 	.byte \battler
-	.4byte \flags
+	.byte \volatile
 	.4byte \jumpInstr
 	.endm
 
@@ -408,15 +408,12 @@
 	.4byte \argPtr
 	.endm
 
-	.macro setgraphicalstatchangevalues
+	.macro unused_0x47
 	.byte 0x47
 	.endm
 
-	.macro playstatchangeanimation battler:req, stats:req, flags:req
+	.macro unused_0x48
 	.byte 0x48
-	.byte \battler
-	.byte \stats
-	.byte \flags
 	.endm
 
 	.macro moveend endMode:req, endState:req
@@ -771,10 +768,11 @@
 	.byte 0x88
 	.endm
 
-	.macro statbuffchange flags:req, failInstr:req
+	.macro statbuffchange flags:req, failInstr:req, stats=0
 	.byte 0x89
 	.2byte \flags
 	.4byte \failInstr
+	.byte \stats
 	.endm
 
 	.macro normalisebuffs
@@ -833,7 +831,7 @@
 	.4byte \failInstr
 	.endm
 
-	.macro unused_0x94
+	.macro setstatuswithability
 	.byte 0x94
 	.endm
 
@@ -1337,8 +1335,9 @@
 	.4byte \jumpInstr
 	.endm
 
-	.macro setnonvolatilestatus
+	.macro setnonvolatilestatus trigger:req
 	.byte 0xfd
+	.byte \trigger
 	.endm
 
 	.macro tryworryseed failInstr:req
@@ -1447,10 +1446,6 @@
 
 	.macro setglaiverush
 	callnative BS_SetGlaiveRush
-	.endm
-
-	.macro tryrelicsong
-	callnative BS_TryRelicSong
 	.endm
 
 	.macro setpledge jumpInstr:req
@@ -2541,11 +2536,10 @@
 	ANIM_ON = TRUE
 
 	setstatchanger \stat, \amount, \mode
-	statbuffchange STAT_CHANGE_ALLOW_PTR, \script
-	setgraphicalstatchangevalues
-	.if \animation == TRUE
-		playanimation \battler, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	.if \animation == FALSE
+		setbyte sSTAT_ANIM_PLAYED, TRUE
 	.endif
+	statbuffchange STAT_CHANGE_ALLOW_PTR, \script
 	.ifnb \customString
 		printstring \customString
 	.else

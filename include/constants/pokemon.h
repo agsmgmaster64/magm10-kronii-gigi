@@ -214,46 +214,55 @@
 #define EV_ITEM_RAISE_LIMIT ((I_VITAMIN_EV_CAP >= GEN_8) ? MAX_PER_STAT_EVS : 100)
 
 // Move category defines.
-#define DAMAGE_CATEGORY_PHYSICAL    0
-#define DAMAGE_CATEGORY_SPECIAL     1
-#define DAMAGE_CATEGORY_STATUS      2
+enum DamageCategory
+{
+    DAMAGE_CATEGORY_PHYSICAL,
+    DAMAGE_CATEGORY_SPECIAL,
+    DAMAGE_CATEGORY_STATUS
+};
 
 // Growth rates
-#define GROWTH_MEDIUM_FAST  0
-#define GROWTH_ERRATIC      1
-#define GROWTH_FLUCTUATING  2
-#define GROWTH_MEDIUM_SLOW  3
-#define GROWTH_FAST         4
-#define GROWTH_SLOW         5
+enum GrowthRate
+{
+    GROWTH_MEDIUM_FAST,
+    GROWTH_ERRATIC,
+    GROWTH_FLUCTUATING,
+    GROWTH_MEDIUM_SLOW,
+    GROWTH_FAST,
+    GROWTH_SLOW,
+};
 
-// Origin gamess for Pokédex search
-#define SOURCE_HRTP         0
-#define SOURCE_SOEW         1
-#define SOURCE_PODD         2
-#define SOURCE_LLS          3
-#define SOURCE_MS           4
-#define SOURCE_EOSD         5
-#define SOURCE_PCB          6
-#define SOURCE_IN           7
-#define SOURCE_POFV         8
-#define SOURCE_MOF          9
-#define SOURCE_SA           10
-#define SOURCE_UFO          11
-#define SOURCE_TD           12
-#define SOURCE_DDC          13
-#define SOURCE_LOLK         14
-#define SOURCE_HSIFS        15
-#define SOURCE_WBAWC        16
-#define SOURCE_UM           17
-#define SOURCE_UDOALG       18
-#define SOURCE_SPINOFF      19
-#define SOURCE_PRINT        20
-#define SOURCE_VTUBERS     21
-#define SOURCE_UNDERTALE    22
-#define SOURCE_DELTARUNE    23
-#define SOURCE_PIZZA_TOWER  24
-#define SOURCE_MARIO        25
-#define SOURCE_OTHER        26
+// Origin games for Pokédex search
+enum SourceGame
+{
+    SOURCE_HRTP,
+    SOURCE_SOEW,
+    SOURCE_PODD,
+    SOURCE_LLS,
+    SOURCE_MS,
+    SOURCE_EOSD,
+    SOURCE_PCB,
+    SOURCE_IN,
+    SOURCE_POFV,
+    SOURCE_MOF,
+    SOURCE_SA,
+    SOURCE_UFO,
+    SOURCE_TD,
+    SOURCE_DDC,
+    SOURCE_LOLK,
+    SOURCE_HSIFS,
+    SOURCE_WBAWC,
+    SOURCE_UM,
+    SOURCE_UDOALG,
+    SOURCE_SPINOFF,
+    SOURCE_PRINT,
+    SOURCE_VTUBERS,
+    SOURCE_UNDERTALE,
+    SOURCE_DELTARUNE,
+    SOURCE_PIZZA_TOWER,
+    SOURCE_MARIO,
+    SOURCE_OTHER,
+};
 
 #define F_SUMMARY_SCREEN_FLIP_SPRITE 0x80
 

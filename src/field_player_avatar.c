@@ -16,6 +16,7 @@
 #include "fishing_game.h"
 #include "m4a.h"
 #include "follower_npc.h"
+#include "item_use.h"
 #include "menu.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
@@ -374,6 +375,8 @@ void PlayerStep(u8 direction, u16 newKeys, u16 heldKeys)
     }
 }
 
+#define sCounter        data[3]
+
 static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEvent, u8 direction)
 {
     if (ObjectEventIsMovementOverridden(playerObjEvent)
@@ -382,6 +385,8 @@ static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEve
         u8 heldMovementActionId = ObjectEventGetHeldMovementActionId(playerObjEvent);
         if (heldMovementActionId > MOVEMENT_ACTION_WALK_FAST_RIGHT && heldMovementActionId < MOVEMENT_ACTION_WALK_IN_PLACE_NORMAL_DOWN)
         {
+            struct ObjectEvent *playerObj = &gObjectEvents[gPlayerAvatar.objectEventId];
+
             if (direction == DIR_NONE)
             {
                 return TRUE;
@@ -389,12 +394,21 @@ static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEve
 
             if (playerObjEvent->movementDirection != direction)
             {
+                if (I_ORAS_DOWSING_FLAG != 0 && FlagGet(I_ORAS_DOWSING_FLAG))
+                    gSprites[playerObj->fieldEffectSpriteId].sCounter = 0;
+
                 ObjectEventClearHeldMovement(playerObjEvent);
                 return FALSE;
             }
 
             if (CheckForPlayerAvatarStaticCollision(direction) == COLLISION_NONE)
             {
+                if (I_ORAS_DOWSING_FLAG != 0 && FlagGet(I_ORAS_DOWSING_FLAG))
+                {
+                    gSprites[playerObj->fieldEffectSpriteId].sCounter = 0;
+                    gSprites[playerObj->fieldEffectSpriteId].y2 = 0;
+                }
+
                 ObjectEventClearHeldMovement(playerObjEvent);
                 return FALSE;
             }
@@ -405,6 +419,8 @@ static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEve
 
     return FALSE;
 }
+
+#undef sCounter
 
 static void npc_clear_strange_bits(struct ObjectEvent *objEvent)
 {
@@ -855,8 +871,12 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         return;
     }
 
-    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON || gSaveBlock3Ptr->autoRun) && FlagGet(FLAG_SYS_B_DASH)
-     && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0 && !FollowerNPCComingThroughDoor())
+    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER)
+     && (heldKeys & B_BUTTON || gSaveBlock3Ptr->autoRun)
+     && FlagGet(FLAG_SYS_B_DASH)
+     && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0 
+     && !FollowerNPCComingThroughDoor() 
+     && (I_ORAS_DOWSING_FLAG == 0 || (I_ORAS_DOWSING_FLAG != 0 && !FlagGet(I_ORAS_DOWSING_FLAG))))
     {
         if (heldKeys & B_BUTTON && gSaveBlock3Ptr->autoRun == TRUE)
         {
@@ -884,6 +904,8 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
             PlayerWalkNormal(direction);
     }
 }
+
+#undef tPlayerStep
 
 static u8 CheckForPlayerAvatarCollision(u8 direction)
 {
@@ -1683,6 +1705,7 @@ void SetPlayerInvisibility(bool8 invisible)
 
 static void SetPlayerAvatarAnimation(u32 playerAnimId, u32 animNum)
 {
+    EndORASDowsing();
     u16 gfxId = GetPlayerAnimGraphicsIdByOutfitStateIdAndGender(gSaveBlock3Ptr->currOutfitId, playerAnimId, gSaveBlock2Ptr->playerGender);
     ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], gfxId);
     StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], animNum);

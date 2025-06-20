@@ -249,13 +249,13 @@ const u8 gText_ReturnToVar1[] = _("Return to\n{STR_VAR_1}.");
 
 const u8 *const gPocketNamesStringsTable[] =
 {
-    [ITEMS_POCKET] =    COMPOUND_STRING("Items"),
-    [MEDICINE_POCKET] = COMPOUND_STRING("Medicine"),
-    [BALLS_POCKET] =    COMPOUND_STRING("Toho Orbs"),
-    [BATTLEITEMS_POCKET] = COMPOUND_STRING("Battle Item"),
-    [TMHM_POCKET]  =    COMPOUND_STRING("TMs & HMs"),
-    [BERRIES_POCKET] =  COMPOUND_STRING("Berries"),
-    [KEYITEMS_POCKET] = COMPOUND_STRING("Key Items")
+    [POCKET_ITEMS] =        COMPOUND_STRING("Items"),
+    [POCKET_MEDICINE] =     COMPOUND_STRING("Medicine"),
+    [POCKET_POKE_BALLS] =   COMPOUND_STRING("Toho Orbs"),
+    [POCKET_BATTLE_ITEMS] = COMPOUND_STRING("Battle Item"),
+    [POCKET_TM_HM]  =       COMPOUND_STRING("TMs & HMs"),
+    [POCKET_BERRIES] =      COMPOUND_STRING("Berries"),
+    [POCKET_KEY_ITEMS] =    COMPOUND_STRING("Key Items")
 };
 
 const u8 gText_NumberItem_TM100[] = _("{NO}00{CLEAR 0x07}{STR_VAR_2}");

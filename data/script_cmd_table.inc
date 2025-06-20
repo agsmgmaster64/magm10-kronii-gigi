@@ -262,7 +262,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_RETURNQUESTSTATE              ScrCmd_returnqueststate,            requests_effects=1  @ 0xed
 	script_cmd_table_entry SCR_OP_TOGGLEOUTFIT                  ScrCmd_toggleoutfit,                requests_effects=1  @ 0xee
 	script_cmd_table_entry SCR_OP_GETOUTFITSTATUS               ScrCmd_getoutfitstatus,             requests_effects=1  @ 0xef
-	script_cmd_table_entry SCR_OP_BUFFEROUTFITSTRING            ScrCmd_bufferoutfitstr,             requests_effects=1  @ 0xf0
+	script_cmd_table_entry SCR_OP_BUFFEROUTFITSTR               ScrCmd_bufferoutfitstr,             requests_effects=1  @ 0xf0
 
 	.if ALLOCATE_SCRIPT_CMD_TABLE
 gScriptCmdTableEnd::

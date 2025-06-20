@@ -3089,11 +3089,10 @@ void TryAddLastUsedBallItemSprites(void)
         }
         else
         {
-            CompactItemsInBagPocket(&gBagPockets[BALLS_POCKET]);
-            firstBall = gBagPockets[BALLS_POCKET].itemSlots[0].itemId;
+            CompactItemsInBagPocket(POCKET_POKE_BALLS);
+            firstBall = GetBagItemId(POCKET_POKE_BALLS, 0);
         }
 
-        firstBall = gBagPockets[BALLS_POCKET].itemSlots[0].itemId;
         if (firstBall > ITEM_NONE)
             gBallToDisplay = firstBall;
     }

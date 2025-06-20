@@ -2238,7 +2238,7 @@
 	@! Buffers either the name or the description strings of an outfit
 	@! to a str var
 	.macro bufferoutfitstr stringVarId:req, outfitId:req, type:req
-	.byte SCR_OP_BUFFEROUTFITSTRING
+	.byte SCR_OP_BUFFEROUTFITSTR
 	stringvar \stringVarId
 	.2byte \outfitId
 	.byte \type
@@ -2734,6 +2734,11 @@
 	@ can be used in conjunection with createmon to set up a wild battle with 2 player mons vs. 1 enemy mon
 	.macro setwilddoubleflag
 	callnative ScriptSetDoubleBattleFlag, requests_effects=1
+	.endm
+
+	@ Stop using the ORAS dowsing machine.
+	.macro stoporasdowsing
+	callnative EndORASDowsing
 	.endm
 
 	@ ============================ @

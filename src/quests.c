@@ -3004,7 +3004,7 @@ void Task_QuestMenu_OpenFromStartMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        QuestMenu_Init(tItemPcParam, CB2_ReturnToFieldWithOpenMenu);
+        QuestMenu_Init(tItemPcParam, CB2_ReturnToFullScreenStartMenu);
         DestroyTask(taskId);
     }
 }

@@ -1,6 +1,7 @@
 #ifndef GUARD_DEXNAV_H
 #define GUARD_DEXNAV_H
 
+#include "main.h"
 #include "config/dexnav.h"
 
 // GUI Info
@@ -71,6 +72,7 @@ enum EncounterType
 
 //funcs
 u8 GetSearchLevel(u16 species);
+void DexNavGuiInit(MainCallback callback);
 void EndDexNavSearch(u8 taskId);
 void Task_OpenDexNavFromStartMenu(u8 taskId);
 bool8 TryStartDexNavSearch(void);

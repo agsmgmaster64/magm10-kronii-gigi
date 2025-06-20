@@ -12,6 +12,18 @@ enum {
     BOB_JUST_MON,
 };
 
+// States for ORAS Dowsing
+enum
+{
+    ORASD_WIGGLE_NONE,
+    ORASD_WIGGLE_SLOW,
+    ORASD_WIGGLE_NORMAL,
+    ORASD_WIGGLE_FAST,
+    ORASD_WIGGLE_FASTER
+};
+
+extern const u16 gFieldEffectPal_ORASDowsing[];
+
 u8 CreateWarpArrowSprite(void);
 u8 StartUnderwaterSurfBlobBobbing(u8 blobSpriteId);
 void SetSurfBlob_BobState(u8 spriteId, u8 state);
@@ -44,5 +56,8 @@ void UpdateSparkleFieldEffect(struct Sprite *sprite);
 void SetSpriteInvisible(u8 spriteId);
 void ShowWarpArrowSprite(u8 spriteId, u8 direction, s16 x, s16 y);
 void UpdateSnowGrassFieldEffect(struct Sprite *);
+void UpdateORASDowsingFieldEffect(struct Sprite *sprite);
+void UpdateDowsingAnimDirection(struct Sprite *sprite, struct ObjectEvent *playerObj);
+void EndORASDowsing(void);
 
 #endif //GUARD_FIELD_EFFECT_HELPERS_H

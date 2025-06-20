@@ -84,6 +84,7 @@ enum
     MENUITEM_MISC_R_BUTTONMODE,
     MENUITEM_MISC_OVERWORLD_SPEED,
     MENUITEM_MISC_MATCHCALL,
+    MENUITEM_MISC_START_MENU,
     MENUITEM_MISC_DEBUG_MODE,
     MENUITEM_MISC_CANCEL,
     MENUITEM_MISC_COUNT,
@@ -305,6 +306,7 @@ static void DrawChoices_UnitSystem(int selection, int y);
 static void DrawChoices_Font(int selection, int y);
 static void DrawChoices_FrameType(int selection, int y);
 static void DrawChoices_MatchCall(int selection, int y);
+static void DrawChoices_StartMenu(int selection, int y);
 static void DrawChoices_DebugMode(int selection, int y);
 static void DrawChoices_AnimSpeed(int selection, int y);
 static void DrawChoices_UniqueColors(int selection, int y);
@@ -488,6 +490,7 @@ static const struct OptionFuncs sItemFunctionsMisc[MENUITEM_MISC_COUNT] =
     [MENUITEM_MISC_R_BUTTONMODE] = {DrawChoices_RButtonMode, ProcessInput_Options_Four},
     [MENUITEM_MISC_OVERWORLD_SPEED] = {DrawChoices_OverworldSpeed, ProcessInput_Options_Four},
     [MENUITEM_MISC_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
+    [MENUITEM_MISC_START_MENU]   = {DrawChoices_StartMenu,   ProcessInput_Options_Two},
     [MENUITEM_MISC_DEBUG_MODE]   = {DrawChoices_DebugMode,   ProcessInput_Options_Two},
     [MENUITEM_MISC_CANCEL]       = {NULL, NULL},
 };
@@ -559,6 +562,7 @@ static const u8 sText_MatchCalls[]   = _("OVERWORLD CALLS");
 static const u8 sText_LButtonMode[]  = _("L BUTTON");
 static const u8 sText_RButtonMode[]  = _("R BUTTON");
 static const u8 sText_DebugMode[]    = _("DEBUG MODE");
+static const u8 sText_StartMenu[]    = _("START MENU");
 static const u8 sText_OverworldSpeed[] = _("OW. SPEED");
 
 static const u8 sText_Randomizer[] =                _("RANDOMIZER");
@@ -735,6 +739,7 @@ static const u8 *const sOptionMenuItemsNamesMisc[MENUITEM_MISC_COUNT] =
     [MENUITEM_MISC_R_BUTTONMODE] = sText_RButtonMode,
     [MENUITEM_MISC_OVERWORLD_SPEED] = sText_OverworldSpeed,
     [MENUITEM_MISC_MATCHCALL]    = sText_MatchCalls,
+    [MENUITEM_MISC_START_MENU]   = sText_StartMenu,
     [MENUITEM_MISC_DEBUG_MODE]   = sText_DebugMode,
     [MENUITEM_MISC_CANCEL]       = sText_OptionMenuSave,
 };
@@ -814,6 +819,7 @@ static const u8 *const sOptionMenuItemDescriptionsMisc[MENUITEM_MISC_COUNT][4] =
     [MENUITEM_MISC_R_BUTTONMODE] = {sText_Desc_RButtonMode_None,     sText_Desc_RButtonMode_DexNav, sText_Desc_RButtonMode_Bike,    sText_Desc_RButtonMode_Register},
     [MENUITEM_MISC_OVERWORLD_SPEED] = {sText_Desc_OverworldSpeed,     sText_Empty, sText_Empty,    sText_Empty},
     [MENUITEM_MISC_MATCHCALL]    = {sText_Desc_OverworldCallsOn,     sText_Desc_OverworldCallsOff,  sText_Empty,                    sText_Empty},
+    [MENUITEM_MISC_START_MENU]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
     [MENUITEM_MISC_DEBUG_MODE]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
     [MENUITEM_MISC_CANCEL]       = {sText_Desc_Options_Save,         sText_Empty,                   sText_Empty,                    sText_Empty},
 };
@@ -908,6 +914,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledMisc[MENUITEM_MISC_COU
     [MENUITEM_MISC_R_BUTTONMODE] = sText_Empty,
     [MENUITEM_MISC_OVERWORLD_SPEED]    = sText_Empty,
     [MENUITEM_MISC_MATCHCALL]    = sText_Empty,
+    [MENUITEM_MISC_START_MENU]   = sText_Empty,
     [MENUITEM_MISC_DEBUG_MODE]   = sText_Desc_Disabled_DebugMode,
     [MENUITEM_MISC_CANCEL]       = sText_Empty,
 };
@@ -1470,6 +1477,7 @@ static void OptionsMenu_LoadOptions(u32 optionMode)
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_OVERWORLD_SPEED] = gSaveBlock2Ptr->optionsOwSpeed;
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_MATCHCALL]    = gSaveBlock2Ptr->optionsDisableMatchCall;
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_DEBUG_MODE]   = gSaveBlock2Ptr->optionsDebugMode;
+        sOptions->selection.optionsPlus.misc[MENUITEM_MISC_START_MENU]   = gSaveBlock2Ptr->optionsFullStartMenu;
 
         sOptions->submenu = 0;
         break;
@@ -1946,6 +1954,7 @@ static void OptionsMenu_SaveOptions(void)
         gSaveBlock2Ptr->optionsOwSpeed          = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_OVERWORLD_SPEED];
         gSaveBlock2Ptr->optionsDisableMatchCall = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_MATCHCALL];
         gSaveBlock2Ptr->optionsDebugMode        = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_DEBUG_MODE];
+        gSaveBlock2Ptr->optionsFullStartMenu    = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_START_MENU];
         break;
     case MENUMODE_CHALLENGES:
         switch (sOptions->selection.challenges.randomizer[MENUITEM_RANDOM_STARTER])
@@ -2329,6 +2338,8 @@ static const u8 sText_Register[] = _("REGISTER");
 static const u8 sText_DexNav[] = _("DEXNAV");
 static const u8 sText_BikeSwitch[] = _("BIKE SWITCH");
 static const u8 sText_Placeholder[] = _("WIP");
+static const u8 sText_Fullscreen[] = _("FULLSCREEN");
+static const u8 sText_Original[] = _("ORIGINAL");
 
 static const u8 sText_Random[]  = _("RANDOM");
 static const u8 sText_3Stage[]  = _("EVO");
@@ -2341,7 +2352,7 @@ static const u8 sText_Yes[] = _("YES");
 static const u8 sText_No[]  = _("NO");
 static const u8 sText_ScalingIVsEVs_Scaling[]   = _("SCALE");
 static const u8 sText_ScalingIVsEVs_Hard[]      = _("HARD");
-static const u8 sText_ScalingIVsEVs_Extrem[]    = _("EXTREM");
+static const u8 sText_ScalingIVsEVs_Extreme[]    = _("EXTREME");
 static const u8 sText_Challenges_LevelCap_Normal[]  = _("SOFT");
 static const u8 sText_Challenges_LevelCap_Hard[]    = _("HARD");
 static const u8 sText_Challenges_TrainerDifficulty_Easy[]    = _("EASY");
@@ -2352,7 +2363,7 @@ static const u8 sText_Challenges_TrainerDifficulty_Lunatic[] = _("LUNATIC");
 static const u8 *const sTextSpeedStrings[] = {gText_TextSpeedSlow, gText_TextSpeedMid, gText_TextSpeedFast, sText_Faster};
 static const u8 *const sAnimSpeedStrings[] = {sText_AnimSpeed1, sText_AnimSpeed2, sText_AnimSpeed3, sText_AnimSpeed4};
 
-static const u8 *const sText_ScalingEVs_Strings[] = {sText_Off, sText_ScalingIVsEVs_Scaling, sText_ScalingIVsEVs_Hard, sText_ScalingIVsEVs_Extrem};
+static const u8 *const sText_ScalingEVs_Strings[] = {sText_Off, sText_ScalingIVsEVs_Scaling, sText_ScalingIVsEVs_Hard, sText_ScalingIVsEVs_Extreme};
 static const u8 *const sText_Challenges_TrainerDifficulty_Strings[] = {sText_Challenges_TrainerDifficulty_Easy, sText_Challenges_TrainerDifficulty_Normal, sText_Challenges_TrainerDifficulty_Hard, sText_Challenges_TrainerDifficulty_Lunatic};
 
 static void DrawChoices_TextSpeed(int selection, int y)
@@ -2523,6 +2534,16 @@ static void DrawChoices_MatchCall(int selection, int y)
 
     DrawOptionMenuChoice(sText_On, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_Off, GetStringRightAlignXOffset(1, sText_Off, 198), y, styles[1], active);
+}
+
+static void DrawChoices_StartMenu(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_MISC_START_MENU);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_Fullscreen, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_Original, GetStringRightAlignXOffset(1, sText_Original, 198), y, styles[1], active);
 }
 
 static void DrawChoices_DebugMode(int selection, int y)

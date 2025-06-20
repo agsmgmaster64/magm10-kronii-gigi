@@ -87,6 +87,7 @@ gFieldEffectScriptPointers::
 	.4byte gFieldEffectScript_UseRockClimbTool          @ FLDEFF_USE_ROCK_CLIMB_TOOL
 	.4byte gFieldEffectScript_SnowGrass                 @ FLDEFF_SNOW_GRASS
 	.4byte gFieldEffectScript_Defog                     @ FLDEFF_DEFOG
+	.4byte gFieldEffectScript_ORASDowse                 @ FLDEFF_ORAS_DOWSE
 
 gFieldEffectScript_ExclamationMarkIcon1::
 	field_eff_callnative FldEff_ExclamationMarkIcon
@@ -416,5 +417,9 @@ gFieldEffectScript_SnowGrass::
 	field_eff_end
 
 gFieldEffectScript_Defog::
-	field_eff_callnative FldEff_Defog
+    field_eff_callnative FldEff_Defog
+    field_eff_end
+
+gFieldEffectScript_ORASDowse::
+	field_eff_callnative FldEff_ORASDowsing
 	field_eff_end

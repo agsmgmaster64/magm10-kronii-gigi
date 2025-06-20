@@ -90,7 +90,7 @@ bool32 IsFlyToolUsed(void)
 void ReturnToFieldOrBagFromFlyTool(void)
 {
     if (VarGet(VAR_FLY_TOOL_SOURCE) == FLY_SOURCE_BAG)
-        GoToBagMenu(ITEMMENULOCATION_LAST, KEYITEMS_POCKET, CB2_ReturnToFieldWithOpenMenu);
+        GoToBagMenu(ITEMMENULOCATION_LAST, POCKET_KEY_ITEMS, CB2_ReturnToFullScreenStartMenu);
     else if (VarGet(VAR_FLY_TOOL_SOURCE) == FLY_SOURCE_FIELD)
         SetMainCallback2(CB2_ReturnToField);
 }

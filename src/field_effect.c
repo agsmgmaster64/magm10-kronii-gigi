@@ -1691,6 +1691,7 @@ void StartEscalatorWarp(u8 metatileBehavior, u8 priority)
     {
         gTasks[taskId].tGoingUp = TRUE;
     }
+    EndORASDowsing();
 }
 
 static void Task_EscalatorWarpOut(u8 taskId)
@@ -2075,6 +2076,7 @@ bool8 DiveFieldEffect_TryWarp(struct Task *task)
 
 void StartLavaridgeGymB1FWarp(u8 priority)
 {
+    EndORASDowsing();
     CreateTask(Task_LavaridgeGymB1FWarp, priority);
 }
 
@@ -2283,6 +2285,7 @@ void SpriteCB_AshLaunch(struct Sprite *sprite)
 
 void StartLavaridgeGym1FWarp(u8 priority)
 {
+    EndORASDowsing();
     CreateTask(Task_LavaridgeGym1FWarp, priority);
 }
 
@@ -2405,6 +2408,7 @@ void StartEscapeRopeFieldEffect(void)
     LockPlayerFieldControls();
     FreezeObjectEvents();
     HideFollowerForFieldEffect(); // hide follower before warping
+    EndORASDowsing();
     CreateTask(Task_EscapeRopeWarpOut, 80);
 }
 
@@ -2599,6 +2603,7 @@ static void TeleportWarpOutFieldEffect_Init(struct Task *task)
     LockPlayerFieldControls();
     FreezeObjectEvents();
     CameraObjectFreeze();
+    EndORASDowsing();
     task->data[15] = GetPlayerFacingDirection();
     task->tState++;
 }
