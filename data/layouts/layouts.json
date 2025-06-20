@@ -5472,6 +5472,18 @@
       "secondary_tileset": "gTileset_RG_GameCorner",
       "border_filepath": "data/layouts/CarpetTraining/border.bin",
       "blockdata_filepath": "data/layouts/CarpetTraining/map.bin"
+    },
+    {
+      "id": "LAYOUT_KRONII_CEREMONY_MAIN",
+      "name": "KroniiCeremonyMain_Layout",
+      "width": 40,
+      "height": 40,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_RG_General",
+      "secondary_tileset": "gTileset_RG_SeviiIslands123",
+      "border_filepath": "data/layouts/KroniiCeremonyMain/border.bin",
+      "blockdata_filepath": "data/layouts/KroniiCeremonyMain/map.bin"
     }
   ]
 }

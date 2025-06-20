@@ -101,7 +101,8 @@
     "HomeLikeCarpet",
     "ApartmentLikeCarpet",
     "ResidentialLikeCarpet",
-    "VillaLikeCarpet"
+    "VillaLikeCarpet",
+    "KroniiCeremonyMain"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

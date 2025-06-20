@@ -1210,3 +1210,6 @@ EventScript_VsSeekerChargingDone::
 
 	.include "data/maps/CarpetTraining/scripts.inc"
 	.include "data/maps/CarpetTraining/text.inc"
+
+	.include "data/maps/KroniiCeremonyMain/scripts.inc"
+	.include "data/maps/KroniiCeremonyMain/text.inc"

@@ -1,0 +1,28 @@
+script KroniiCeremonyMain_EventScript_KroniiIntroduction {
+	lock
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiIntro)
+	closemessage
+	release
+	end
+}
+
+text KroniiCeremonyMain_Text_KroniiIntro {
+	format("Kroniichiwa!\p"
+	"My name is Ouro Kronii. Nice to see you've taken my offer to help out with my ceremony here.\p"
+	"I'm very gald you chose to help out, so here's a little pass to allow you to go through wherever you need.\p"
+	"I do need some help however with setting up the stage for me to talk about myself, so if you can, please get some people to help me out with it.\p"
+	"I've also invited my friend Gigi here as well, although I'm not sure if she'll be much help, considering who she is.\p"
+	"Do feel free to talk to me if you need any help here.")
+}
+
+text KroniiCeremonyMain_Text_NoWaterGuy {
+	format("YOu're wondering where the water is at?\p"
+	"Sorry bud, our organizer here banned straight up water here after the last incident with ")
+}
+
+raw `
+KroniiCeremonyMain_MapScripts::
+	.byte 0
+
+`

@@ -31,7 +31,7 @@ u32 GetCurrentLevelCap(void)
     u32 i;
 
     if (HOUSE_LIKE_CARPET)
-        return 50;
+        return 10;
 
     enum LevelCapDifficulties levelCapType = GetLevelCapDifficulty();
 
