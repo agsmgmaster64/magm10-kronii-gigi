@@ -6,6 +6,20 @@ script KroniiCeremonyMain_EventScript_KroniiIntroduction {
 	release
 	end
 }
+script KroniiCeremonyMain_EventScript_SuspiciousGuy {
+	lock
+	faceplayer
+	setspeakername(KroniiCeremonyMain_Text_SkualperGuyName)
+	msgbox(KroniiCeremonyMain_Text_SkualperGuyIntro)
+	msgbox(KroniiCeremonyMain_Text_SkualperGuySwindle, MSGBOX_YESNO)
+	if(var(VAR_RESULT) == FALSE) {
+		msgbox(KroniiCeremonyMain_Text_SkualperGuyDenied)
+		release
+		end
+	}
+	release
+	end
+}
 
 text KroniiCeremonyMain_Text_KroniiIntro {
 	format("Kroniichiwa!\p"
@@ -17,8 +31,32 @@ text KroniiCeremonyMain_Text_KroniiIntro {
 }
 
 text KroniiCeremonyMain_Text_NoWaterGuy {
-	format("YOu're wondering where the water is at?\p"
-	"Sorry bud, our organizer here banned straight up water here after the last incident with ")
+	format("You're wondering where the water is at?\p"
+	"Sorry bud, our organizer here banned straight up water here after the last incident with a water cooler.\p"
+	"Safe to say we don't want to risk anything like that again with our organizer Kronii here.")
+}
+
+text KroniiCeremonyMain_Text_SkualperGuyName {
+	"Skualper"
+}
+
+text KroniiCeremonyMain_Text_SkualperGuyIntro {
+	format("Hey you there! You with the blue there!\p"
+	"Do you want a ticket for this exclusive event here?\p"
+	"I happen to have one here, but I'm not really interested in this lame person that this event is about.\p"
+	"No point in joining this sad community, I got nothing to gain by doing so after all.")
+}
+
+text KroniiCeremonyMain_Text_SkualperGuySwindle {
+	format("But that's just me here, what do you say kid?\p"
+	"Do you want this exclusive ticket here?")
+}
+
+text KroniiCeremonyMain_Text_SkualperGuyDenied {
+	format("So it's like that, huh?\p"
+	"Just gonna get a ticket the old fashionhed way, you think?\p"
+	"Well, let's see how that will work out for you, if it even does at all.\p"
+	"I'll still be here though if you change your mind.")
 }
 
 raw `

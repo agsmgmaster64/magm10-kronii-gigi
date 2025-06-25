@@ -113,7 +113,8 @@
     "CarpetCenter",
     "CarpetMart",
     "CarpetPort",
-    "CarpetTraining"
+    "CarpetTraining",
+    "KroniiCeremonyIndoor"
   ],
   "gMapGroup_IndoorOldale": [
     "OldaleTown_House1",

@@ -5484,6 +5484,18 @@
       "secondary_tileset": "gTileset_RG_SeviiIslands123",
       "border_filepath": "data/layouts/KroniiCeremonyMain/border.bin",
       "blockdata_filepath": "data/layouts/KroniiCeremonyMain/map.bin"
+    },
+    {
+      "id": "LAYOUT_KRONII_CEREMONY_INDOOR",
+      "name": "KroniiCeremonyIndoor_Layout",
+      "width": 10,
+      "height": 10,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_RG_Building",
+      "secondary_tileset": "gTileset_RG_PewterGym",
+      "border_filepath": "data/layouts/KroniiCeremonyIndoor/border.bin",
+      "blockdata_filepath": "data/layouts/KroniiCeremonyIndoor/map.bin"
     }
   ]
 }

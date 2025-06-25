@@ -1213,3 +1213,6 @@ EventScript_VsSeekerChargingDone::
 
 	.include "data/maps/KroniiCeremonyMain/scripts.inc"
 	.include "data/maps/KroniiCeremonyMain/text.inc"
+
+	.include "data/maps/KroniiCeremonyIndoor/scripts.inc"
+	.include "data/maps/KroniiCeremonyIndoor/text.inc"
