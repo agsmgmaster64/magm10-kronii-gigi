@@ -1428,3 +1428,19 @@ static const struct SpriteFrameImage sPicTable_Lost[] = {
 static const struct SpriteFrameImage sPicTable_Nitori[] = {
     overworld_ascending_frames(gObjectEventPic_Nitori, 2, 4),
 };
+
+static const struct SpriteFrameImage sPicTable_Hiker2[] = {
+    overworld_ascending_frames(gObjectEventPic_Hiker2, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_Engineer[] = {
+    overworld_ascending_frames(gObjectEventPic_Engineer, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_Kindler[] = {
+    overworld_ascending_frames(gObjectEventPic_Kindler, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_SuperNerd[] = {
+    overworld_ascending_frames(gObjectEventPic_SuperNerd, 2, 4),
+};

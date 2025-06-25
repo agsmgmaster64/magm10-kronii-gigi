@@ -87,6 +87,7 @@ u32 GetItemStatus1Mask(u16 itemId);
 u32 GetItemStatus2Mask(u16 itemId);
 u32 GetItemCoinPrice(u16 itemId);
 u32 GetItemBpPrice(u16 itemId);
+u32 GetItemSellPrice(u32 itemId);
 
 /* Expands to:
  * enum

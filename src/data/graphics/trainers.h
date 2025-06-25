@@ -298,6 +298,9 @@ const u16 gTrainerPalette_MischievousFairy[] = INCBIN_U16("graphics/trainers/fro
 const u32 gTrainerFrontPic_SunflowerFairy[] = INCBIN_U32("graphics/trainers/front_pics/sunflower_fairy.4bpp.smol");
 const u16 gTrainerPalette_SunflowerFairy[] = INCBIN_U16("graphics/trainers/front_pics/sunflower_fairy.gbapal");
 
+const u32 gTrainerFrontPic_Engineer[] = INCBIN_U32("graphics/trainers/front_pics/engineer.4bpp.smol");
+const u16 gTrainerPalette_Engineer[] = INCBIN_U16("graphics/trainers/front_pics/engineer.gbapal");
+
 const u8 gTrainerBackPic_Renko[] = INCBIN_U8("graphics/trainers/back_pics/renko.4bpp");
 const u8 gTrainerBackPic_Maribel[] = INCBIN_U8("graphics/trainers/back_pics/maribel.4bpp");
 const u8 gTrainerBackPic_RenkoYoung[] = INCBIN_U8("graphics/trainers/back_pics/renko_young.4bpp");
@@ -436,6 +439,7 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_SUNFLOWER_FAIRY, gTrainerFrontPic_SunflowerFairy, gTrainerPalette_SunflowerFairy),
     TRAINER_SPRITE(TRAINER_PIC_RENKO_YOUNG, gTrainerFrontPic_RenkoYoung, gTrainerPalette_RenkoYoung),
     TRAINER_SPRITE(TRAINER_PIC_MARIBEL_YOUNG, gTrainerFrontPic_MaribelYoung, gTrainerPalette_MaribelYoung),
+    TRAINER_SPRITE(TRAINER_PIC_ENGINEER, gTrainerFrontPic_Engineer, gTrainerPalette_Engineer),
 };
 
 static const union AnimCmd sAnimCmd_Hoenn[] =

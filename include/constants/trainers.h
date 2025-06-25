@@ -114,7 +114,8 @@
 #define TRAINER_PIC_SUNFLOWER_FAIRY       96
 #define TRAINER_PIC_RENKO_YOUNG           97
 #define TRAINER_PIC_MARIBEL_YOUNG         98
-#define TRAINER_PIC_COUNT                 99
+#define TRAINER_PIC_ENGINEER              99
+#define TRAINER_PIC_COUNT                 100
 
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
 #define TRAINER_BACK_PIC_RENKO                  0
@@ -367,6 +368,7 @@ enum TrainerClassID
     TRAINER_CLASS_THE_GUY,
     TRAINER_CLASS_MISCHIEVOUS_FAIRY,
     TRAINER_CLASS_SUNFLOWER_FAIRY,
+    TRAINER_CLASS_ENGINEER,
     TRAINER_CLASS_COUNT,
 };
 

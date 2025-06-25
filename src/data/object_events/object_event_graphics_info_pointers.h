@@ -262,6 +262,10 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kronii;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Murasa;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lost;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Nitori;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Hiker2;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Engineer;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kindler;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SuperNerd;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_RENKO_NORMAL] =             &gObjectEventGraphicsInfo_BrendanNormal,
@@ -519,6 +523,10 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_MURASA] =                   &gObjectEventGraphicsInfo_Murasa,
     [OBJ_EVENT_GFX_LOST] =                     &gObjectEventGraphicsInfo_Lost,
     [OBJ_EVENT_GFX_NITORI] =                   &gObjectEventGraphicsInfo_Nitori,
+    [OBJ_EVENT_GFX_HIKER_2] =                  &gObjectEventGraphicsInfo_Hiker2,
+    [OBJ_EVENT_GFX_ENGINEER] =                 &gObjectEventGraphicsInfo_Engineer,
+    [OBJ_EVENT_GFX_KINDLER] =                  &gObjectEventGraphicsInfo_Kindler,
+    [OBJ_EVENT_GFX_SUPER_NERD] =               &gObjectEventGraphicsInfo_SuperNerd,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {
