@@ -108,6 +108,7 @@ static void CreateInitialRoamerMon(u8 index, u16 species, u8 level)
     ROAMER(index)->statusA = 0;
     ROAMER(index)->statusB = 0;
     ROAMER(index)->hp = GetMonData(&gEnemyParty[0], MON_DATA_MAX_HP);
+    ROAMER(index)->shiny = GetMonData(&gEnemyParty[0], MON_DATA_IS_SHINY);
     ROAMER(index)->active = TRUE;
     sRoamerLocation[index][MAP_GRP] = ROAMER_MAP_GROUP;
     sRoamerLocation[index][MAP_NUM] = sRoamerLocations[Random() % NUM_LOCATION_SETS][0];
@@ -238,10 +239,9 @@ void CreateRoamerMonInstance(u32 roamerIndex)
     struct Pokemon *mon = &gEnemyParty[0];
     ZeroEnemyPartyMons();
     CreateMonWithIVsPersonality(mon, ROAMER(roamerIndex)->species, ROAMER(roamerIndex)->level, ROAMER(roamerIndex)->ivs, ROAMER(roamerIndex)->personality);
-    // The roamer's status field is u16, but SetMonData expects status to be u32, so will set the roamer's status
-    // using the status field and the following 3 bytes (cool, beauty, and cute).
     SetMonData(mon, MON_DATA_STATUS, &status);
     SetMonData(mon, MON_DATA_HP, &ROAMER(roamerIndex)->hp);
+    SetMonData(mon, MON_DATA_IS_SHINY, &ROAMER(roamerIndex)->shiny);
 }
 
 bool8 TryStartRoamerEncounter(void)

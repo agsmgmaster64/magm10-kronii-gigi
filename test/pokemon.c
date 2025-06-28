@@ -80,6 +80,48 @@ TEST("Shininess independent from PID and OTID")
     EXPECT_EQ(!isShiny, GetMonData(&mon, MON_DATA_IS_SHINY));
 }
 
+TEST("Hyper Training increases stats without affecting IVs")
+{
+    u32 data, hp, atk, def, speed, spatk, spdef, friendship = 0;
+    struct Pokemon mon;
+    CreateMon(&mon, SPECIES_WOBBUFFET, 100, 3, TRUE, 0, OT_ID_PRESET, 0);
+
+    // Consider B_FRIENDSHIP_BOOST.
+    SetMonData(&mon, MON_DATA_FRIENDSHIP, &friendship);
+    CalculateMonStats(&mon);
+
+    hp = GetMonData(&mon, MON_DATA_HP);
+    atk = GetMonData(&mon, MON_DATA_ATK);
+    def = GetMonData(&mon, MON_DATA_DEF);
+    speed = GetMonData(&mon, MON_DATA_SPEED);
+    spatk = GetMonData(&mon, MON_DATA_SPATK);
+    spdef = GetMonData(&mon, MON_DATA_SPDEF);
+
+    data = TRUE;
+    SetMonData(&mon, MON_DATA_HYPER_TRAINED_HP, &data);
+    SetMonData(&mon, MON_DATA_HYPER_TRAINED_ATK, &data);
+    SetMonData(&mon, MON_DATA_HYPER_TRAINED_DEF, &data);
+    SetMonData(&mon, MON_DATA_HYPER_TRAINED_SPEED, &data);
+    SetMonData(&mon, MON_DATA_HYPER_TRAINED_SPATK, &data);
+    SetMonData(&mon, MON_DATA_HYPER_TRAINED_SPDEF, &data);
+    CalculateMonStats(&mon);
+
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_IV), 3);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_ATK_IV), 3);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_DEF_IV), 3);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_SPEED_IV), 3);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_SPATK_IV), 3);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_SPDEF_IV), 3);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_SPEED_IV), 3);
+
+    EXPECT_EQ(hp - 3 + MAX_PER_STAT_IVS, GetMonData(&mon, MON_DATA_HP));
+    EXPECT_EQ(atk - 3 + MAX_PER_STAT_IVS, GetMonData(&mon, MON_DATA_ATK));
+    EXPECT_EQ(def - 3 + MAX_PER_STAT_IVS, GetMonData(&mon, MON_DATA_DEF));
+    EXPECT_EQ(speed - 3 + MAX_PER_STAT_IVS, GetMonData(&mon, MON_DATA_SPEED));
+    EXPECT_EQ(spatk - 3 + MAX_PER_STAT_IVS, GetMonData(&mon, MON_DATA_SPATK));
+    EXPECT_EQ(spdef - 3 + MAX_PER_STAT_IVS, GetMonData(&mon, MON_DATA_SPDEF));
+}
+
 TEST("Status1 round-trips through BoxPokemon")
 {
     u32 status1;
@@ -104,8 +146,13 @@ TEST("Status1 round-trips through BoxPokemon")
 
 TEST("canhypertrain/hypertrain affect MON_DATA_*_IV and recalculate stats")
 {
-    u32 atk;
-    CreateMon(&gPlayerParty[0], SPECIES_CHIBI_YUUGI, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
+    u32 atk, friendship = 0;
+    CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
+
+    // Consider B_FRIENDSHIP_BOOST.
+    SetMonData(&gPlayerParty[0], MON_DATA_FRIENDSHIP, &friendship);
+    CalculateMonStats(&gPlayerParty[0]);
+
     atk = GetMonData(&gPlayerParty[0], MON_DATA_ATK);
 
     RUN_OVERWORLD_SCRIPT(

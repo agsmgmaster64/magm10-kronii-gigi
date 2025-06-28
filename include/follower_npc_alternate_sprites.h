@@ -18,21 +18,17 @@ static const struct FollowerNPCSpriteGraphics gFollowerNPCAlternateSprites[] =
         .bikeId = OBJ_EVENT_GFX_MARIBEL_ACRO_BIKE,
         .surfId = OBJ_EVENT_GFX_MARIBEL_SURFING,
         .underwaterId = OBJ_EVENT_GFX_MARIBEL_UNDERWATER,
+        .hasRunningFrames = TRUE,
     },
     {
         .normalId = OBJ_EVENT_GFX_RENKO_NORMAL,
         .bikeId = OBJ_EVENT_GFX_RENKO_ACRO_BIKE,
         .surfId = OBJ_EVENT_GFX_RENKO_SURFING,
         .underwaterId = OBJ_EVENT_GFX_RENKO_UNDERWATER,
+        .hasRunningFrames = TRUE,
     },
     {
         .normalId = OBJ_EVENT_GFX_GIGI_MURIN,
-        .bikeId = OBJ_EVENT_GFX_RENKO_ACRO_BIKE,
-        .surfId = OBJ_EVENT_GFX_RENKO_SURFING,
-        .underwaterId = OBJ_EVENT_GFX_RENKO_UNDERWATER,
-    },
-    {
-        .normalId = OBJ_EVENT_GFX_KRONII,
         .bikeId = OBJ_EVENT_GFX_RENKO_ACRO_BIKE,
         .surfId = OBJ_EVENT_GFX_RENKO_SURFING,
         .underwaterId = OBJ_EVENT_GFX_RENKO_UNDERWATER,

@@ -6064,11 +6064,11 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Rapid Spin"),
         .description = COMPOUND_STRING(
-            "Spins attack that removes\n"
+            "User spins and removes some\n"
         #if B_SPEED_BUFFING_RAPID_SPIN >= GEN_8
-            "some effects and ups speed."),
-        #else
-            "certain effects."),
+            "effects, while upping speed."),
+        #else 
+            "effects."),
         #endif
         .effect = EFFECT_RAPID_SPIN,
         .power = 40,

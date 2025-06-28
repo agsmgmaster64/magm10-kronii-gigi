@@ -80,4 +80,4 @@ const u32 gBallGfx_Beast[] = INCBIN_U32("graphics/balls/beast.4bpp.smol");
 const u16 gBallPal_Beast[] = INCBIN_U16("graphics/balls/beast.gbapal");
 
 const u32 gBallGfx_Cherish[] = INCBIN_U32("graphics/balls/cherish.4bpp.smol");
-const u32 gBallPal_Cherish[] = INCBIN_U32("graphics/balls/cherish.gbapal");
+const u16 gBallPal_Cherish[] = INCBIN_U16("graphics/balls/cherish.gbapal");

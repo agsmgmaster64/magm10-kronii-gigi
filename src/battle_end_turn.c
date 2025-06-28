@@ -510,7 +510,7 @@ static bool32 HandleEndTurnFirstEventBlock(u32 battler)
         {
         case HOLD_EFFECT_LEFTOVERS:
         case HOLD_EFFECT_BLACK_SLUDGE:
-            if (ItemBattleEffects(ITEMEFFECT_NORMAL, battler, FALSE))
+            if (ItemBattleEffects(ITEMEFFECT_NORMAL, battler))
                 effect = TRUE;
             break;
         default:
@@ -1426,11 +1426,11 @@ static bool32 HandleEndTurnThirdEventBlock(u32 battler)
         case HOLD_EFFECT_STICKY_BARB:
         case HOLD_EFFECT_TOXIC_ORB:
         case HOLD_EFFECT_FROST_ORB:
-            if (ItemBattleEffects(ITEMEFFECT_ORBS, battler, FALSE))
+            if (ItemBattleEffects(ITEMEFFECT_ORBS, battler))
                 effect = TRUE;
             break;
         case HOLD_EFFECT_WHITE_HERB:
-            if (ItemBattleEffects(ITEMEFFECT_NORMAL, battler, FALSE))
+            if (ItemBattleEffects(ITEMEFFECT_NORMAL, battler))
                 effect = TRUE;
             break;
         default:
@@ -1488,7 +1488,7 @@ static bool32 HandleEndTurnFourthEventBlock(u32 battler)
         enum ItemHoldEffect holdEffect = GetBattlerHoldEffect(battler, TRUE);
         if (holdEffect == HOLD_EFFECT_EJECT_PACK)
         {
-            if (ItemBattleEffects(ITEMEFFECT_NORMAL, battler, FALSE))
+            if (ItemBattleEffects(ITEMEFFECT_NORMAL, battler))
                 effect = TRUE;
         }
         gBattleStruct->eventBlockCounter = 0;
