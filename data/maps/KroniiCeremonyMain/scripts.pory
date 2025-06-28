@@ -1,11 +1,65 @@
-script KroniiCeremonyMain_EventScript_KroniiIntroduction {
-	lock
+mapscripts KroniiCeremonyMain_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_HOUSE_LIKE_CARPET_STATE, 0: KroniiCeremonyMain_EventScript_KroniiGigiIntroduction
+    ]
+}
+
+script KroniiCeremonyMain_EventScript_KroniiGigiIntroduction {
+	lockall
+	applymovement(LOCALID_CEREMONY_KRONII, KroniiCeremonyMain_Movement_KroniiIntroMove)
+	applymovement(LOCALID_CEREMONY_GIGI, KroniiCeremonyMain_Movement_GigiIntroMove)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	playse(SE_PIN)
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_ExclamationMark)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	waitse
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterRight)
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterLeft)
+	waitmovement(LOCALID_CEREMONY_GIGI)
 	setspeakername(gText_Kronii)
 	msgbox(KroniiCeremonyMain_Text_KroniiIntro)
 	closemessage
-	release
+	applymovement(LOCALID_CEREMONY_KRONII, KroniiCeremonyMain_Movement_KroniiIntroGo)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	removeobject(LOCALID_CEREMONY_KRONII)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiGoInside)
+	closemessage
+	call(KroniiCeremonyMain_EventScript_GetStartingStuff)
+	applymovement(LOCALID_PLAYER, KroniiCeremonyMain_Movement_PlayerDoorWay)
+	applymovement(LOCALID_CEREMONY_GIGI, KroniiCeremonyMain_Movement_GigiMoveToDoor)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+    opendoor(30, 31)
+	waitdooranim
+	applymovement(LOCALID_CEREMONY_GIGI, KroniiCeremonyMain_Movement_GigiGoInDoor)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	removeobject(LOCALID_CEREMONY_GIGI)
+    closedoor(30, 31)
+	waitdooranim
+	clearflag(FLAG_CEREMONY_INSIDE_GIGI)
+	setvar(VAR_HOUSE_LIKE_CARPET_STATE, 1)
+	releaseall
 	end
 }
+
+script KroniiCeremonyMain_EventScript_GetStartingStuff {
+	setflag(FLAG_SYS_POKEMON_GET)
+	givemon(SPECIES_CHIBI_BIJOU, 10, ITEM_NONE, BALL_POKE, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1)
+	givemon(SPECIES_CHIBI_MINORIKO_SANNI, 10, ITEM_NONE, BALL_POKE, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1)
+	givemon(SPECIES_CHIBI_MARISA, 10, ITEM_NONE, BALL_POKE, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1)
+	return
+}
+
+script KroniiCeremonyMain_EventScript_CantGoToStage {
+	lockall
+	msgbox(KroniiCeremonyMain_Text_CantGoToStage)
+	closemessage
+	applymovement(LOCALID_PLAYER, KroniiCeremonyMain_Movement_PlayerGoDown)
+	waitmovement(LOCALID_PLAYER)
+	releaseall
+	end
+}
+
 script KroniiCeremonyMain_EventScript_SuspiciousGuy {
 	lock
 	faceplayer
@@ -21,13 +75,186 @@ script KroniiCeremonyMain_EventScript_SuspiciousGuy {
 	end
 }
 
+script KroniiCeremonyMain_EventScript_Kindler {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_KindlerName)
+    msgbox(KroniiCeremonyMain_Text_KindlerNormal, MSGBOX_YESNO)
+	if (var(VAR_RESULT) == FALSE) {
+    	closemessage
+		release
+		end
+	}
+    closemessage
+	trainerbattle_no_intro(TRAINER_HAYDEN, KroniiCeremonyMain_Text_KindlerDefeat)
+    setspeakername(KroniiCeremonyMain_Text_KindlerName)
+    msgbox(KroniiCeremonyMain_Text_KindlerRecruit)
+    closemessage
+	clearflag(FLAG_CEREMONY_INSIDE_KINDLER)
+	removeobject(LOCALID_CEREMONY_KINDLER)
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_Engineer {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_EngineerName)
+    msgbox(KroniiCeremonyMain_Text_EngineerNormal, MSGBOX_YESNO)
+	if (var(VAR_RESULT) == FALSE) {
+    	closemessage
+		release
+		end
+	}
+    closemessage
+	trainerbattle_no_intro(TRAINER_BIANCA, KroniiCeremonyMain_Text_EngineerDefeat)
+    setspeakername(KroniiCeremonyMain_Text_EngineerName)
+    msgbox(KroniiCeremonyMain_Text_EngineerRecruit)
+    closemessage
+	clearflag(FLAG_CEREMONY_INSIDE_ENGINEER)
+	removeobject(LOCALID_CEREMONY_ENGINEER)
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_Hiker {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_HikerName)
+    msgbox(KroniiCeremonyMain_Text_HikerNormal, MSGBOX_YESNO)
+	if (var(VAR_RESULT) == FALSE) {
+    	closemessage
+		release
+		end
+	}
+    closemessage
+	trainerbattle_no_intro(TRAINER_BRICE, KroniiCeremonyMain_Text_HikerDefeat)
+    setspeakername(KroniiCeremonyMain_Text_HikerName)
+    msgbox(KroniiCeremonyMain_Text_HikerRecruit)
+    closemessage
+	clearflag(FLAG_CEREMONY_INSIDE_HIKER)
+	removeobject(LOCALID_CEREMONY_HIKER)
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_CyanFan {
+    lock
+	faceplayer
+    setspeakername(gText_Cyan)
+    msgbox(KroniiCeremonyMain_Text_CyanNormal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_Kronie1 {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_Kronie1Name)
+    msgbox(KroniiCeremonyMain_Text_Kronie1Normal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_Kronie2 {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_Kronie2Name)
+    msgbox(KroniiCeremonyMain_Text_Kronie2Normal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_Kronie3 {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_Kronie3Name)
+    msgbox(KroniiCeremonyMain_Text_Kronie3Normal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_CaveGuard {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_CaveGuardName)
+    msgbox(KroniiCeremonyMain_Text_CaveGuardNormal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_JuiceSeller {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyMain_Text_JuiceSellerName)
+    message(KroniiCeremonyMain_Text_JuiceSellerNormal)
+	waitmessage
+	pokemart(KroniiCeremonyMain_Mart_JuiceSellerMart)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyMain_EventScript_CaveSign {
+	msgbox(KroniiCeremonyMain_Text_CaveSign, MSGBOX_SIGN)
+	end
+}
+
+script KroniiCeremonyMain_EventScript_KroniiCeremonySign {
+	msgbox(KroniiCeremonyMain_Text_KroniiCeremonySign, MSGBOX_SIGN)
+	end
+}
+
+mart KroniiCeremonyMain_Mart_JuiceSellerMart {
+	ITEM_BERRY_JUICE
+}
+
+movement KroniiCeremonyMain_Movement_KroniiIntroMove {
+	walk_right * 8
+	walk_up * 2
+}
+
+movement KroniiCeremonyMain_Movement_GigiIntroMove {
+	walk_right * 9
+	walk_up * 3
+}
+
+movement KroniiCeremonyMain_Movement_KroniiIntroGo {
+	walk_down * 2
+	walk_left * 8
+}
+
+movement KroniiCeremonyMain_Movement_PlayerDoorWay {
+	walk_left
+	walk_in_place_right
+}
+
+movement KroniiCeremonyMain_Movement_GigiMoveToDoor {
+	delay_8
+	walk_up
+	walk_left
+	walk_in_place_up
+}
+
+movement KroniiCeremonyMain_Movement_GigiGoInDoor {
+	walk_up
+}
+
+movement KroniiCeremonyMain_Movement_PlayerGoDown {
+	walk_down
+}
+
 text KroniiCeremonyMain_Text_KroniiIntro {
-	format("Kroniichiwa!\p"
-	"My name is Ouro Kronii. Nice to see you've taken my offer to help out with my ceremony here.\p"
-	"I'm very gald you chose to help out, so here's a little pass to allow you to go through wherever you need.\p"
-	"I do need some help however with setting up the stage for me to talk about myself, so if you can, please get some people to help me out with it.\p"
-	"I've also invited my friend Gigi here as well, although I'm not sure if she'll be much help, considering who she is.\p"
-	"Do feel free to talk to me if you need any help here.")
+	format("Kronii and Gigi say something here, please add some additional movements for dialog as well.")
+}
+
+text KroniiCeremonyMain_Text_GigiGoInside {
+	format("Gigi says something about going inside.")
 }
 
 text KroniiCeremonyMain_Text_NoWaterGuy {
@@ -38,6 +265,38 @@ text KroniiCeremonyMain_Text_NoWaterGuy {
 
 text KroniiCeremonyMain_Text_SkualperGuyName {
 	"Skualper"
+}
+
+text KroniiCeremonyMain_Text_KindlerName {
+    "Kindler"
+}
+
+text KroniiCeremonyMain_Text_EngineerName {
+    "Engineer"
+}
+
+text KroniiCeremonyMain_Text_HikerName {
+    "Hiker"
+}
+
+text KroniiCeremonyMain_Text_Kronie1Name {
+    "Kronie 1"
+}
+
+text KroniiCeremonyMain_Text_Kronie2Name {
+    "Kronie 2"
+}
+
+text KroniiCeremonyMain_Text_Kronie3Name {
+    "Kronie 3"
+}
+
+text KroniiCeremonyMain_Text_CaveGuardName {
+    "Cave Guard"
+}
+
+text KroniiCeremonyMain_Text_JuiceSellerName {
+    "Juicer Seller"
 }
 
 text KroniiCeremonyMain_Text_SkualperGuyIntro {
@@ -59,8 +318,74 @@ text KroniiCeremonyMain_Text_SkualperGuyDenied {
 	"I'll still be here though if you change your mind.")
 }
 
-raw `
-KroniiCeremonyMain_MapScripts::
-	.byte 0
+text KroniiCeremonyMain_Text_KindlerNormal {
+    format("You ask Kindler to battle.")
+}
 
-`
+text KroniiCeremonyMain_Text_EngineerNormal {
+    format("You ask Engineer to battle.")
+}
+
+text KroniiCeremonyMain_Text_HikerNormal {
+    format("You ask Hiker to battle.")
+}
+
+text KroniiCeremonyMain_Text_KindlerDefeat {
+    "Defeat Text Kindler"
+}
+
+text KroniiCeremonyMain_Text_EngineerDefeat {
+    "Defeat Text Engineer"
+}
+
+text KroniiCeremonyMain_Text_HikerDefeat {
+    "Defeat Text Hiker"
+}
+
+text KroniiCeremonyMain_Text_KindlerRecruit {
+    format("Kindler recruited.")
+}
+
+text KroniiCeremonyMain_Text_EngineerRecruit {
+    format("Engineer recruited.")
+}
+
+text KroniiCeremonyMain_Text_HikerRecruit {
+    format("Hiker recruited.")
+}
+
+text KroniiCeremonyMain_Text_CyanNormal {
+    format("This fan says something interesting about Kronii's ceremony.")
+}
+
+text KroniiCeremonyMain_Text_Kronie1Normal {
+    format("This fan says something about Kronii herself.")
+}
+
+text KroniiCeremonyMain_Text_Kronie2Normal {
+    format("This fan says something about Kronii herself.")
+}
+
+text KroniiCeremonyMain_Text_Kronie3Normal {
+    format("This fan says something about Kronii herself.")
+}
+
+text KroniiCeremonyMain_Text_CaveGuardNormal {
+    format("Cave Guard says something here.")
+}
+
+text KroniiCeremonyMain_Text_JuiceSellerNormal {
+    format("Juice Seller says something here.")
+}
+
+text KroniiCeremonyMain_Text_CantGoToStage {
+    format("Cannot go to stage yet.")
+}
+
+text KroniiCeremonyMain_Text_CaveSign {
+    format("Cave Sign")
+}
+
+text KroniiCeremonyMain_Text_KroniiCeremonySign {
+    format("Kronii Ceremony Sign")
+}

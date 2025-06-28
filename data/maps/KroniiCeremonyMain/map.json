@@ -19,8 +19,8 @@
       "local_id": "LOCALID_CEREMONY_KRONII",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_KRONII",
-      "x": 16,
-      "y": 34,
+      "x": 22,
+      "y": 35,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -28,14 +28,14 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
-      "flag": "0"
+      "flag": "FLAG_CEREMONY_OUTSIDE_KRONII"
     },
     {
       "local_id": "LOCALID_CEREMONY_GIGI",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_GIGI_MURIN",
-      "x": 19,
-      "y": 34,
+      "x": 22,
+      "y": 36,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -43,7 +43,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
-      "flag": "0"
+      "flag": "FLAG_CEREMONY_OUTSIDE_GIGI"
     },
     {
       "type": "object",
@@ -56,7 +56,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "KroniiCeremonyMain_EventScript_CyanFan",
       "flag": "0"
     },
     {
@@ -70,7 +70,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "KroniiCeremonyMain_EventScript_Kronie3",
       "flag": "0"
     },
     {
@@ -84,12 +84,13 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "KroniiCeremonyMain_EventScript_JuiceSeller",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_CEREMONY_KINDLER",
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_KINDLER",
       "x": 6,
       "y": 37,
       "elevation": 0,
@@ -98,13 +99,13 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
+      "script": "KroniiCeremonyMain_EventScript_Kindler",
+      "flag": "FLAG_CEREMONY_OUTSIDE_KINDLER"
     },
     {
       "local_id": "LOCALID_CEREMONY_HIKER",
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_HIKER",
+      "graphics_id": "OBJ_EVENT_GFX_HIKER_2",
       "x": 8,
       "y": 15,
       "elevation": 0,
@@ -113,12 +114,12 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
+      "script": "KroniiCeremonyMain_EventScript_Hiker",
+      "flag": "FLAG_CEREMONY_OUTSIDE_HIKER"
     },
     {
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_MYSTERY_GIFT_MAN",
+      "graphics_id": "OBJ_EVENT_GFX_SUPER_NERD",
       "x": 13,
       "y": 19,
       "elevation": 0,
@@ -127,7 +128,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "KroniiCeremonyMain_EventScript_Kronie1",
       "flag": "0"
     },
     {
@@ -141,7 +142,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "KroniiCeremonyMain_EventScript_CaveGuard",
       "flag": "0"
     },
     {
@@ -155,7 +156,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "KroniiCeremonyMain_EventScript_Kronie2",
       "flag": "0"
     },
     {
@@ -171,6 +172,21 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "KroniiCeremonyMain_EventScript_SuspiciousGuy",
       "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_CEREMONY_ENGINEER",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
+      "x": 29,
+      "y": 25,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "KroniiCeremonyMain_EventScript_Engineer",
+      "flag": "FLAG_CEREMONY_OUTSIDE_ENGINEER"
     }
   ],
   "warp_events": [
@@ -182,6 +198,60 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
-  "bg_events": []
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_HOUSE_LIKE_CARPET_STATE",
+      "var_value": "1",
+      "script": "KroniiCeremonyMain_EventScript_CantGoToStage"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_HOUSE_LIKE_CARPET_STATE",
+      "var_value": "1",
+      "script": "KroniiCeremonyMain_EventScript_CantGoToStage"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_HOUSE_LIKE_CARPET_STATE",
+      "var_value": "1",
+      "script": "KroniiCeremonyMain_EventScript_CantGoToStage"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_HOUSE_LIKE_CARPET_STATE",
+      "var_value": "1",
+      "script": "KroniiCeremonyMain_EventScript_CantGoToStage"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 24,
+      "y": 34,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "KroniiCeremonyMain_EventScript_CaveSign"
+    },
+    {
+      "type": "sign",
+      "x": 19,
+      "y": 25,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "KroniiCeremonyMain_EventScript_KroniiCeremonySign"
+    }
+  ]
 }

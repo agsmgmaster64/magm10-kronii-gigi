@@ -1,1 +1,96 @@
 mapscripts KroniiCeremonyIndoor_MapScripts {}
+
+script KroniiCeremonyIndoor_EventScript_Gigi {
+    lock
+	faceplayer
+    if (flag(FLAG_CEREMONY_OUTSIDE_HIKER) && flag(FLAG_CEREMONY_OUTSIDE_ENGINEER) && flag(FLAG_CEREMONY_OUTSIDE_KINDLER)) {
+        goto(KroniiCeremonyIndoor_EventScript_GigiReady)
+    }
+    setspeakername(gText_Gigi)
+    msgbox(KroniiCeremonyIndoor_Text_GigiNormal, MSGBOX_YESNO)
+	if (var(VAR_RESULT) == FALSE) {
+    	closemessage
+		release
+		end
+	}
+    closemessage
+	call(Common_EventScript_OutOfCenterPartyHeal)
+    release
+    end
+}
+
+script KroniiCeremonyIndoor_EventScript_GigiReady {
+    setspeakername(gText_Gigi)
+    msgbox(KroniiCeremonyIndoor_Text_GigiReady, MSGBOX_YESNO)
+	if (var(VAR_RESULT) == FALSE) {
+    	closemessage
+		release
+		end
+	}
+    closemessage
+    setvar(VAR_HOUSE_LIKE_CARPET_STATE, 2)
+    release
+    end
+}
+
+script KroniiCeremonyIndoor_EventScript_Kindler {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyIndoor_Text_KindlerName)
+    msgbox(KroniiCeremonyIndoor_Text_KindlerNormal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyIndoor_EventScript_Engineer {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyIndoor_Text_EngineerName)
+    msgbox(KroniiCeremonyIndoor_Text_EngineerNormal)
+    closemessage
+    release
+    end
+}
+
+script KroniiCeremonyIndoor_EventScript_Hiker {
+    lock
+	faceplayer
+    setspeakername(KroniiCeremonyIndoor_Text_HikerName)
+    msgbox(KroniiCeremonyIndoor_Text_KindlerNormal)
+    closemessage
+    release
+    end
+}
+
+text KroniiCeremonyIndoor_Text_GigiNormal {
+    format("Gigi asks if you want to be healed.")
+}
+
+text KroniiCeremonyIndoor_Text_GigiReady {
+    format("Gigi knows you got everyone now.")
+}
+
+text KroniiCeremonyIndoor_Text_KindlerNormal {
+    format("Kindler says something here.")
+}
+
+text KroniiCeremonyIndoor_Text_EngineerNormal {
+    format("Engineer says something here.")
+}
+
+text KroniiCeremonyIndoor_Text_HikerNormal {
+    format("Hiker says something here.")
+}
+
+text KroniiCeremonyIndoor_Text_KindlerName {
+    "Kindler"
+}
+
+text KroniiCeremonyIndoor_Text_EngineerName {
+    "Engineer"
+}
+
+text KroniiCeremonyIndoor_Text_HikerName {
+    "Hiker"
+}

@@ -11528,12 +11528,16 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Goliath
-Level: 17
+Chibi Yamame
+Level: 10
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Helper Lunasa
-Level: 17
+Chibi Yuugi
+Level: 10
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Chibi Tenshi
+Level: 10
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TRENT_1 ===
@@ -13182,16 +13186,24 @@ Level: 18
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_BIANCA ===
-Name: BIANCA
-Class: Picnicker
-Pic: Picnicker
-Gender: Female
-Music: Girl
+Name: Kent
+Class: Engineer
+Pic: Engineer
+Gender: Male
+Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Goliath
-Level: 18
+Chibi Shou
+Level: 10
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Chibi Iku
+Level: 10
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Chibi Tojiko
+Level: 10
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_HAYDEN ===
@@ -13203,8 +13215,16 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Goliath
-Level: 18
+Chibi Sunny
+Level: 10
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Chibi Mokou
+Level: 10
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Chibi Utsuho
+Level: 10
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_SOPHIE ===
