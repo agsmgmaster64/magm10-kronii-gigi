@@ -15,11 +15,6 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_HOME_LIKE_CARPET",
-      "offset": -22,
-      "direction": "right"
-    },
-    {
       "map": "MAP_VILLA_LIKE_CARPET",
       "offset": -22,
       "direction": "down"

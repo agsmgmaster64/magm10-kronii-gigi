@@ -1874,6 +1874,7 @@ const struct SpeciesInfo gSpeciesInfoTouhou8[] =
         .frontPicYOffset = 0,
         .frontAnimFrames = sAnims_GenericBlinkingAnim,
         .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .enemyMonElevation = 1,
         .backPic = gMonBackPic_CMokou,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 0,
@@ -1882,6 +1883,7 @@ const struct SpeciesInfo gSpeciesInfoTouhou8[] =
         .shinyPalette = gMonShinyPalette_CMokou,
         .iconSprite = gMonIcon_CMokou,
         .iconPalIndex = 1,
+        SHADOW(0, 9, SHADOW_SIZE_S)
         FOOTPRINT(CMokou)
         .levelUpLearnset = sCMokouLevelUpLearnset,
         .teachableLearnset = sCMokouTeachableLearnset,

@@ -84,8 +84,8 @@ enum
     MENUITEM_MISC_R_BUTTONMODE,
     MENUITEM_MISC_OVERWORLD_SPEED,
     MENUITEM_MISC_MATCHCALL,
-    MENUITEM_MISC_START_MENU,
-    MENUITEM_MISC_DEBUG_MODE,
+    //MENUITEM_MISC_START_MENU,
+    //MENUITEM_MISC_DEBUG_MODE,
     MENUITEM_MISC_CANCEL,
     MENUITEM_MISC_COUNT,
 };
@@ -490,8 +490,8 @@ static const struct OptionFuncs sItemFunctionsMisc[MENUITEM_MISC_COUNT] =
     [MENUITEM_MISC_R_BUTTONMODE] = {DrawChoices_RButtonMode, ProcessInput_Options_Four},
     [MENUITEM_MISC_OVERWORLD_SPEED] = {DrawChoices_OverworldSpeed, ProcessInput_Options_Four},
     [MENUITEM_MISC_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
-    [MENUITEM_MISC_START_MENU]   = {DrawChoices_StartMenu,   ProcessInput_Options_Two},
-    [MENUITEM_MISC_DEBUG_MODE]   = {DrawChoices_DebugMode,   ProcessInput_Options_Two},
+    //[MENUITEM_MISC_START_MENU]   = {DrawChoices_StartMenu,   ProcessInput_Options_Two},
+    //[MENUITEM_MISC_DEBUG_MODE]   = {DrawChoices_DebugMode,   ProcessInput_Options_Two},
     [MENUITEM_MISC_CANCEL]       = {NULL, NULL},
 };
 
@@ -739,8 +739,8 @@ static const u8 *const sOptionMenuItemsNamesMisc[MENUITEM_MISC_COUNT] =
     [MENUITEM_MISC_R_BUTTONMODE] = sText_RButtonMode,
     [MENUITEM_MISC_OVERWORLD_SPEED] = sText_OverworldSpeed,
     [MENUITEM_MISC_MATCHCALL]    = sText_MatchCalls,
-    [MENUITEM_MISC_START_MENU]   = sText_StartMenu,
-    [MENUITEM_MISC_DEBUG_MODE]   = sText_DebugMode,
+    //[MENUITEM_MISC_START_MENU]   = sText_StartMenu,
+    //[MENUITEM_MISC_DEBUG_MODE]   = sText_DebugMode,
     [MENUITEM_MISC_CANCEL]       = sText_OptionMenuSave,
 };
 
@@ -819,8 +819,8 @@ static const u8 *const sOptionMenuItemDescriptionsMisc[MENUITEM_MISC_COUNT][4] =
     [MENUITEM_MISC_R_BUTTONMODE] = {sText_Desc_RButtonMode_None,     sText_Desc_RButtonMode_DexNav, sText_Desc_RButtonMode_Bike,    sText_Desc_RButtonMode_Register},
     [MENUITEM_MISC_OVERWORLD_SPEED] = {sText_Desc_OverworldSpeed,     sText_Empty, sText_Empty,    sText_Empty},
     [MENUITEM_MISC_MATCHCALL]    = {sText_Desc_OverworldCallsOn,     sText_Desc_OverworldCallsOff,  sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_START_MENU]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_DEBUG_MODE]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
+    //[MENUITEM_MISC_START_MENU]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
+    //[MENUITEM_MISC_DEBUG_MODE]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
     [MENUITEM_MISC_CANCEL]       = {sText_Desc_Options_Save,         sText_Empty,                   sText_Empty,                    sText_Empty},
 };
 
@@ -914,8 +914,8 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledMisc[MENUITEM_MISC_COU
     [MENUITEM_MISC_R_BUTTONMODE] = sText_Empty,
     [MENUITEM_MISC_OVERWORLD_SPEED]    = sText_Empty,
     [MENUITEM_MISC_MATCHCALL]    = sText_Empty,
-    [MENUITEM_MISC_START_MENU]   = sText_Empty,
-    [MENUITEM_MISC_DEBUG_MODE]   = sText_Desc_Disabled_DebugMode,
+    //[MENUITEM_MISC_START_MENU]   = sText_Empty,
+    //[MENUITEM_MISC_DEBUG_MODE]   = sText_Desc_Disabled_DebugMode,
     [MENUITEM_MISC_CANCEL]       = sText_Empty,
 };
 
@@ -1476,8 +1476,8 @@ static void OptionsMenu_LoadOptions(u32 optionMode)
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_R_BUTTONMODE] = gSaveBlock2Ptr->optionsRButtonMode;
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_OVERWORLD_SPEED] = gSaveBlock2Ptr->optionsOwSpeed;
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_MATCHCALL]    = gSaveBlock2Ptr->optionsDisableMatchCall;
-        sOptions->selection.optionsPlus.misc[MENUITEM_MISC_DEBUG_MODE]   = gSaveBlock2Ptr->optionsDebugMode;
-        sOptions->selection.optionsPlus.misc[MENUITEM_MISC_START_MENU]   = gSaveBlock2Ptr->optionsFullStartMenu;
+        //sOptions->selection.optionsPlus.misc[MENUITEM_MISC_DEBUG_MODE]   = gSaveBlock2Ptr->optionsDebugMode;
+        //sOptions->selection.optionsPlus.misc[MENUITEM_MISC_START_MENU]   = gSaveBlock2Ptr->optionsFullStartMenu;
 
         sOptions->submenu = 0;
         break;
@@ -1953,8 +1953,8 @@ static void OptionsMenu_SaveOptions(void)
         gSaveBlock2Ptr->optionsRButtonMode      = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_R_BUTTONMODE];
         gSaveBlock2Ptr->optionsOwSpeed          = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_OVERWORLD_SPEED];
         gSaveBlock2Ptr->optionsDisableMatchCall = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_MATCHCALL];
-        gSaveBlock2Ptr->optionsDebugMode        = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_DEBUG_MODE];
-        gSaveBlock2Ptr->optionsFullStartMenu    = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_START_MENU];
+        //gSaveBlock2Ptr->optionsDebugMode        = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_DEBUG_MODE];
+        //gSaveBlock2Ptr->optionsFullStartMenu    = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_START_MENU];
         break;
     case MENUMODE_CHALLENGES:
         switch (sOptions->selection.challenges.randomizer[MENUITEM_RANDOM_STARTER])
@@ -2536,6 +2536,7 @@ static void DrawChoices_MatchCall(int selection, int y)
     DrawOptionMenuChoice(sText_Off, GetStringRightAlignXOffset(1, sText_Off, 198), y, styles[1], active);
 }
 
+/*
 static void DrawChoices_StartMenu(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_MISC_START_MENU);
@@ -2555,6 +2556,7 @@ static void DrawChoices_DebugMode(int selection, int y)
     DrawOptionMenuChoice(sText_On, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_Off, GetStringRightAlignXOffset(1, sText_Off, 198), y, styles[1], active);
 }
+*/
 
 static void DrawChoices_AnimSpeed(int selection, int y)
 {

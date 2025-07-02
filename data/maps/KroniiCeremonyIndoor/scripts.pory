@@ -9,12 +9,19 @@ script KroniiCeremonyIndoor_EventScript_Gigi {
     setspeakername(gText_Gigi)
     msgbox(KroniiCeremonyIndoor_Text_GigiNormal, MSGBOX_YESNO)
 	if (var(VAR_RESULT) == FALSE) {
+        msgbox(KroniiCeremonyIndoor_Text_GigiRemember)
     	closemessage
 		release
 		end
 	}
     closemessage
 	call(Common_EventScript_OutOfCenterPartyHeal)
+    setspeakername(gText_Gigi)
+    msgbox(KroniiCeremonyIndoor_Text_GigiNormal2)
+    closemessage
+    setspeakername(gText_Gigi)
+    msgbox(KroniiCeremonyIndoor_Text_GigiRemember)
+    closemessage
     release
     end
 }
@@ -29,6 +36,10 @@ script KroniiCeremonyIndoor_EventScript_GigiReady {
 	}
     closemessage
     setvar(VAR_HOUSE_LIKE_CARPET_STATE, 2)
+    setflag(FLAG_SPAWN_INVISIBLE)
+    setflag(FLAG_CEREMONU_OUTSIDE_GUARD)
+    clearflag(FLAG_CEREMONY_OUTSIDE_KRONII)
+    warp(MAP_KRONII_CEREMONY_MAIN, WARP_ID_NONE, 17, 11)
     release
     end
 }
@@ -64,23 +75,37 @@ script KroniiCeremonyIndoor_EventScript_Hiker {
 }
 
 text KroniiCeremonyIndoor_Text_GigiNormal {
-    format("Gigi asks if you want to be healed.")
+    format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_NORMAL}What's up, you need a heal here?{DESTROY_MUGSHOT}")
+}
+
+text KroniiCeremonyIndoor_Text_GigiNormal2 {
+    format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_9}There you go, a complete heal from Gigi Murin herself.")
+}
+
+text KroniiCeremonyIndoor_Text_GigiRemember {
+    format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_9}Just remember you need to get me an engineer, hiker, and kindler here for help with Kronii.")
 }
 
 text KroniiCeremonyIndoor_Text_GigiReady {
-    format("Gigi knows you got everyone now.")
+    format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_NORMAL}You got the three people I need for Kronii's ceremony here.\p"
+    "Shall we continue on with the plan then?{DESTROY_MUGSHOT}")
 }
 
 text KroniiCeremonyIndoor_Text_KindlerNormal {
-    format("Kindler says something here.")
+    format("Hey, I know you saw me trying to burn down that tree earlier.\p"
+    "I just want to say that it was kinda stupid in hindsight considering the recent lack of water in this place here.\p"
+    "I didn't know what to do until you got me into this gig here, which I think should bring my skills out better here.")
 }
 
 text KroniiCeremonyIndoor_Text_EngineerNormal {
-    format("Engineer says something here.")
+    format("Something about this sink here, it tells me that whoever cares for it hasn't taken care of it.\p"
+    "You can't even get water out of it anymore, it doesn't even work.")
 }
 
 text KroniiCeremonyIndoor_Text_HikerNormal {
-    format("Hiker says something here.")
+    format("Man, some of these books here are a good read for knowledge here.\p"
+    "Take this for example, 72 Uses for Snails.\p"
+    "Who knew those slimy critters would be useful for so many things?")
 }
 
 text KroniiCeremonyIndoor_Text_KindlerName {

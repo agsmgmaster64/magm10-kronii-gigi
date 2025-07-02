@@ -13,11 +13,11 @@
   "show_map_name": true,
   "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": 0,
+  "connections": null,
   "object_events": [
     {
-      "type": "object",
       "local_id": "LOCALID_MARINE_CAVE_KYOGRE",
+      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_KYOGRE_FRONT",
       "x": 9,
       "y": 22,
@@ -51,7 +51,5 @@
       "script": "MarineCave_End_EventScript_Kyogre"
     }
   ],
-  "bg_events": [
-
-  ]
+  "bg_events": []
 }

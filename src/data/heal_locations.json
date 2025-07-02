@@ -191,8 +191,8 @@
     {
       "id": "HEAL_LOCATION_CARPET_TOWN",
       "map": "MAP_HOME_LIKE_CARPET",
-      "x": 4,
-      "y": 26,
+      "x": 5,
+      "y": 3,
       "respawn_map": "MAP_CARPET_CENTER",
       "respawn_npc": "LOCALID_CARPET_NURSE"
     }

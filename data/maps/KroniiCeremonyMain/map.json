@@ -19,8 +19,8 @@
       "local_id": "LOCALID_CEREMONY_KRONII",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_KRONII",
-      "x": 22,
-      "y": 35,
+      "x": 17,
+      "y": 11,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -46,6 +46,7 @@
       "flag": "FLAG_CEREMONY_OUTSIDE_GIGI"
     },
     {
+      "local_id": "LOCALID_CEREMONY_CYAN",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_GIRL_2",
       "x": 14,
@@ -60,6 +61,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_KRONIE_3",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 22,
@@ -118,6 +120,7 @@
       "flag": "FLAG_CEREMONY_OUTSIDE_HIKER"
     },
     {
+      "local_id": "LOCALID_KRONIE_1",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SUPER_NERD",
       "x": 13,
@@ -132,6 +135,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_CEREMONY_GUARD",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
       "x": 23,
@@ -143,9 +147,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "KroniiCeremonyMain_EventScript_CaveGuard",
-      "flag": "0"
+      "flag": "FLAG_CEREMONU_OUTSIDE_GUARD"
     },
     {
+      "local_id": "LOCALID_KRONIE_2",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 20,
@@ -177,7 +182,7 @@
       "local_id": "LOCALID_CEREMONY_ENGINEER",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ENGINEER",
-      "x": 29,
+      "x": 30,
       "y": 25,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -191,10 +196,19 @@
   ],
   "warp_events": [
     {
+      "warp_id": "WARP_ID_CEREMONY_OUTSIDE_HOUSE",
       "x": 30,
       "y": 31,
       "elevation": 0,
       "dest_map": "MAP_KRONII_CEREMONY_INDOOR",
+      "dest_warp_id": "0"
+    },
+    {
+      "warp_id": "WARP_ID_CEREMONY_OUTSIDE_CAVE",
+      "x": 23,
+      "y": 33,
+      "elevation": 0,
+      "dest_map": "MAP_HOME_LIKE_CARPET",
       "dest_warp_id": "0"
     }
   ],

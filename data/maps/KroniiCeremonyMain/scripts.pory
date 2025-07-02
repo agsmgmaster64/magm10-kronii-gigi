@@ -1,31 +1,76 @@
 mapscripts KroniiCeremonyMain_MapScripts {
     MAP_SCRIPT_ON_FRAME_TABLE [
         VAR_HOUSE_LIKE_CARPET_STATE, 0: KroniiCeremonyMain_EventScript_KroniiGigiIntroduction
+        VAR_HOUSE_LIKE_CARPET_STATE, 2: KroniiCeremonyMain_EventScript_KroniiCeremonyEvent
     ]
 }
 
 script KroniiCeremonyMain_EventScript_KroniiGigiIntroduction {
 	lockall
+	addobject(LOCALID_CEREMONY_KRONII)
+	setobjectxy(LOCALID_CEREMONY_KRONII, 22, 35)
 	applymovement(LOCALID_CEREMONY_KRONII, KroniiCeremonyMain_Movement_KroniiIntroMove)
 	applymovement(LOCALID_CEREMONY_GIGI, KroniiCeremonyMain_Movement_GigiIntroMove)
 	waitmovement(LOCALID_CEREMONY_GIGI)
 	playse(SE_PIN)
 	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_ExclamationMark)
 	waitmovement(LOCALID_CEREMONY_KRONII)
-	waitse
-	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterRight)
-	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterLeft)
-	waitmovement(LOCALID_CEREMONY_GIGI)
+	delay(80)
+
+	// Kronii and Gigi chat about you
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterUp)
+	waitmovement(LOCALID_CEREMONY_KRONII)
 	setspeakername(gText_Kronii)
 	msgbox(KroniiCeremonyMain_Text_KroniiIntro)
 	closemessage
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterUp)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiIntro)
+	closemessage
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterRight)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiIntro2)
+	closemessage
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterLeft)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiIntro2)
+	closemessage
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterRight)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiIntro3)
+	closemessage
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterLeft)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiIntro3)
+	closemessage
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterRight)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiIntro4)
+	closemessage
+
+	// Kronii walks away
 	applymovement(LOCALID_CEREMONY_KRONII, KroniiCeremonyMain_Movement_KroniiIntroGo)
 	waitmovement(LOCALID_CEREMONY_KRONII)
 	removeobject(LOCALID_CEREMONY_KRONII)
+
+	// Gigi gives you your starting team
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterUp)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiGiveStartingTeam)
+	closemessage
+	call(KroniiCeremonyMain_EventScript_GetStartingStuff)
 	setspeakername(gText_Gigi)
 	msgbox(KroniiCeremonyMain_Text_GigiGoInside)
 	closemessage
-	call(KroniiCeremonyMain_EventScript_GetStartingStuff)
+
+	// Gigi walks in the building
 	applymovement(LOCALID_PLAYER, KroniiCeremonyMain_Movement_PlayerDoorWay)
 	applymovement(LOCALID_CEREMONY_GIGI, KroniiCeremonyMain_Movement_GigiMoveToDoor)
 	waitmovement(LOCALID_CEREMONY_GIGI)
@@ -42,11 +87,128 @@ script KroniiCeremonyMain_EventScript_KroniiGigiIntroduction {
 	end
 }
 
+script KroniiCeremonyMain_EventScript_KroniiCeremonyEvent {
+	lockall
+	addobject(LOCALID_CEREMONY_GIGI)
+	addobject(LOCALID_CEREMONY_ENGINEER)
+	addobject(LOCALID_CEREMONY_HIKER)
+	addobject(LOCALID_CEREMONY_KINDLER)
+	setobjectxy(LOCALID_CEREMONY_GIGI, 10, 17)
+	setobjectxy(LOCALID_CEREMONY_ENGINEER, 25, 17)
+	setobjectxy(LOCALID_CEREMONY_HIKER, 25, 17)
+	setobjectxy(LOCALID_CEREMONY_KINDLER, 25, 17)
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceDown)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+
+	// Kronii is in the ceremony about herself
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiCeremonyIntro)
+    closemessage
+
+	// Gigi goes into stage
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiCeremonyHoldOn)
+	closemessage
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterLeft)
+	applymovement(LOCALID_CEREMONY_GIGI, KroniiCeremonyMain_Movement_GigiMoveToStage)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+
+	// Gigi interrupts the ceremony
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiCeremonyInterruption)
+	closemessage
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiCeremonyRudelyInterrupted)
+	closemessage
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiCeremonyCueOthers)
+	closemessage
+
+	// The trio comes on stage
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterDown)
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterDown)
+	applymovement(LOCALID_CEREMONY_HIKER, KroniiCeremonyMain_Movement_HikerWalkToStage)
+	applymovement(LOCALID_CEREMONY_ENGINEER, KroniiCeremonyMain_Movement_EngineerWalkToStage)
+	applymovement(LOCALID_CEREMONY_KINDLER, KroniiCeremonyMain_Movement_KindlerWalkToStage)
+	waitmovement(LOCALID_CEREMONY_KINDLER)
+	playbgm(MUS_B_FACTORY, FALSE)
+	applymovement(LOCALID_CEREMONY_HIKER, KroniiCeremonyMain_Movement_HelpersStageActing)
+	applymovement(LOCALID_CEREMONY_ENGINEER, KroniiCeremonyMain_Movement_HelpersStageActing)
+	applymovement(LOCALID_CEREMONY_KINDLER, KroniiCeremonyMain_Movement_HelpersStageActing)
+	waitmovement(LOCALID_CEREMONY_KINDLER)
+	delay(80)
+
+	// Kronii is sad about the ceremony going wrong
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterLeft)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiCeremonySadAboutCeremony)
+    closemessage
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterRight)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiCeremonyCheckAudience)
+	closemessage
+
+	// Camera pans down
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterDown)
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterDown)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	special(SpawnCameraObject)
+	applymovement(LOCALID_CAMERA, KroniiCeremonyMain_Movement_CameraPanToAudience)
+	waitmovement(LOCALID_CAMERA)
+
+	// The audience reacts
+	applymovement(LOCALID_CEREMONY_CYAN, Common_Movement_WalkInPlaceFasterUp)
+	waitmovement(LOCALID_CEREMONY_CYAN)
+	setspeakername(gText_Cyan)
+	msgbox(KroniiCeremonyMain_Text_CyanReaction)
+    closemessage
+	applymovement(LOCALID_KRONIE_2, Common_Movement_WalkInPlaceFasterUp)
+	waitmovement(LOCALID_KRONIE_2)
+	setspeakername(KroniiCeremonyMain_Text_Kronie2Name)
+	msgbox(KroniiCeremonyMain_Text_Kronie2Reaction)
+    closemessage
+
+	// Camera pans back
+	applymovement(LOCALID_CAMERA, KroniiCeremonyMain_Movement_CameraPanBackToStage)
+	waitmovement(LOCALID_CAMERA)
+	special(RemoveCameraObject)
+	setspeakername(gText_Gigi)
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterRight)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiCeremonySeeAudience)
+	closemessage
+	applymovement(LOCALID_CEREMONY_KRONII, Common_Movement_WalkInPlaceFasterDown)
+	waitmovement(LOCALID_CEREMONY_KRONII)
+	setspeakername(gText_Kronii)
+	msgbox(KroniiCeremonyMain_Text_KroniiCeremonyApologizeGigi)
+    closemessage
+	applymovement(LOCALID_CEREMONY_GIGI, Common_Movement_WalkInPlaceFasterRight)
+	waitmovement(LOCALID_CEREMONY_GIGI)
+	setspeakername(gText_Gigi)
+	msgbox(KroniiCeremonyMain_Text_GigiCeremonyAcceptApology)
+	closemessage
+
+    setvar(VAR_HOUSE_LIKE_CARPET_STATE, 3)
+	setrespawn(HEAL_LOCATION_CARPET_TOWN)
+	fadescreenspeed(FADE_TO_BLACK, 24)
+	special(GameClear)
+	waitstate
+	releaseall
+	end
+}
+
 script KroniiCeremonyMain_EventScript_GetStartingStuff {
 	setflag(FLAG_SYS_POKEMON_GET)
-	givemon(SPECIES_CHIBI_BIJOU, 10, ITEM_NONE, BALL_POKE, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1)
-	givemon(SPECIES_CHIBI_MINORIKO_SANNI, 10, ITEM_NONE, BALL_POKE, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1)
-	givemon(SPECIES_CHIBI_MARISA, 10, ITEM_NONE, BALL_POKE, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1)
+	playfanfare(MUS_RG_OBTAIN_KEY_ITEM)
+	message(KroniiCeremonyMain_Text_YouGotStartingTeam)
+	waitfanfare
+	closemessage
+	givemon(SPECIES_CHIBI_BIJOU, 10, ITEM_BENTO_BOX, ITEM_TOHO_ORB, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MOVE_CHARGE_BEAM, MOVE_CHARM, MOVE_MUD_BOMB, MOVE_NONE)
+	givemon(SPECIES_CHIBI_MINORIKO_SANNI, 10, ITEM_CAMOUFLAGE, ITEM_TOHO_ORB, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MOVE_ABSORB, MOVE_EMBER, MOVE_BURN_POWDER, MOVE_LEECH_SEED)
+	givemon(SPECIES_CHIBI_MARISA, 10, ITEM_NONE, ITEM_TOHO_ORB, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, 0, 0, 0, 0, 0, 0, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MOVE_THUNDERSHOCK, MOVE_THIEF, MOVE_AURORA_BEAM, MOVE_RAZOR_WIND)
 	return
 }
 
@@ -71,6 +233,10 @@ script KroniiCeremonyMain_EventScript_SuspiciousGuy {
 		release
 		end
 	}
+	showmoneybox(0, 0)
+	msgbox(KroniiCeremonyMain_Text_SkualperGuyConvinced, MSGBOX_YESNO)
+	hidemoneybox
+	msgbox(KroniiCeremonyMain_Text_SkualperGuyNotEnoughMoney)
 	release
 	end
 }
@@ -81,6 +247,7 @@ script KroniiCeremonyMain_EventScript_Kindler {
     setspeakername(KroniiCeremonyMain_Text_KindlerName)
     msgbox(KroniiCeremonyMain_Text_KindlerNormal, MSGBOX_YESNO)
 	if (var(VAR_RESULT) == FALSE) {
+   		msgbox(KroniiCeremonyMain_Text_KindlerRejected)
     	closemessage
 		release
 		end
@@ -90,8 +257,10 @@ script KroniiCeremonyMain_EventScript_Kindler {
     setspeakername(KroniiCeremonyMain_Text_KindlerName)
     msgbox(KroniiCeremonyMain_Text_KindlerRecruit)
     closemessage
+	fadescreenswapbuffers(FADE_TO_BLACK)
 	clearflag(FLAG_CEREMONY_INSIDE_KINDLER)
 	removeobject(LOCALID_CEREMONY_KINDLER)
+	fadescreenswapbuffers(FADE_FROM_BLACK)
     release
     end
 }
@@ -102,6 +271,7 @@ script KroniiCeremonyMain_EventScript_Engineer {
     setspeakername(KroniiCeremonyMain_Text_EngineerName)
     msgbox(KroniiCeremonyMain_Text_EngineerNormal, MSGBOX_YESNO)
 	if (var(VAR_RESULT) == FALSE) {
+   		msgbox(KroniiCeremonyMain_Text_EngineerRejected)
     	closemessage
 		release
 		end
@@ -111,8 +281,10 @@ script KroniiCeremonyMain_EventScript_Engineer {
     setspeakername(KroniiCeremonyMain_Text_EngineerName)
     msgbox(KroniiCeremonyMain_Text_EngineerRecruit)
     closemessage
+	fadescreenswapbuffers(FADE_TO_BLACK)
 	clearflag(FLAG_CEREMONY_INSIDE_ENGINEER)
 	removeobject(LOCALID_CEREMONY_ENGINEER)
+	fadescreenswapbuffers(FADE_FROM_BLACK)
     release
     end
 }
@@ -123,6 +295,7 @@ script KroniiCeremonyMain_EventScript_Hiker {
     setspeakername(KroniiCeremonyMain_Text_HikerName)
     msgbox(KroniiCeremonyMain_Text_HikerNormal, MSGBOX_YESNO)
 	if (var(VAR_RESULT) == FALSE) {
+   		msgbox(KroniiCeremonyMain_Text_EngineerRejected)
     	closemessage
 		release
 		end
@@ -132,8 +305,10 @@ script KroniiCeremonyMain_EventScript_Hiker {
     setspeakername(KroniiCeremonyMain_Text_HikerName)
     msgbox(KroniiCeremonyMain_Text_HikerRecruit)
     closemessage
+	fadescreenswapbuffers(FADE_TO_BLACK)
 	clearflag(FLAG_CEREMONY_INSIDE_HIKER)
 	removeobject(LOCALID_CEREMONY_HIKER)
+	fadescreenswapbuffers(FADE_FROM_BLACK)
     release
     end
 }
@@ -195,6 +370,7 @@ script KroniiCeremonyMain_EventScript_JuiceSeller {
     message(KroniiCeremonyMain_Text_JuiceSellerNormal)
 	waitmessage
 	pokemart(KroniiCeremonyMain_Mart_JuiceSellerMart)
+	msgbox(KroniiCeremonyMain_Text_JuiceSellerThankYou)
     closemessage
     release
     end
@@ -241,6 +417,57 @@ movement KroniiCeremonyMain_Movement_GigiMoveToDoor {
 	walk_in_place_up
 }
 
+movement KroniiCeremonyMain_Movement_GigiMoveToStage {
+	walk_up * 5
+	walk_right
+	walk_diag_northeast
+	walk_right * 4
+}
+
+movement KroniiCeremonyMain_Movement_CameraPanToAudience {
+	walk_down * 5
+}
+
+movement KroniiCeremonyMain_Movement_CameraPanBackToStage {
+	walk_up * 5
+}
+
+movement KroniiCeremonyMain_Movement_HikerWalkToStage {
+	walk_up * 5
+	walk_left
+	walk_diag_northwest
+	walk_left
+	walk_down
+	walk_left * 6
+	walk_in_place_down
+}
+
+movement KroniiCeremonyMain_Movement_EngineerWalkToStage {
+	delay_16
+	walk_up * 5
+	walk_left
+	walk_diag_northwest
+	walk_left
+	walk_down
+	walk_left * 5
+	walk_in_place_down
+}
+
+movement KroniiCeremonyMain_Movement_KindlerWalkToStage {
+	delay_16 * 2
+	walk_up * 5
+	walk_left
+	walk_diag_northwest
+	walk_left
+	walk_down
+	walk_left * 4
+	walk_in_place_down
+}
+
+movement KroniiCeremonyMain_Movement_HelpersStageActing {
+	walk_in_place_down * 16
+}
+
 movement KroniiCeremonyMain_Movement_GigiGoInDoor {
 	walk_up
 }
@@ -250,11 +477,103 @@ movement KroniiCeremonyMain_Movement_PlayerGoDown {
 }
 
 text KroniiCeremonyMain_Text_KroniiIntro {
-	format("Kronii and Gigi say something here, please add some additional movements for dialog as well.")
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_NORMAL}Oh, Kroniichiwa! What are you doing here exactly?")
+}
+
+text KroniiCeremonyMain_Text_GigiIntro {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_9}Gi Murin! You wanted some help, right Kronii?\pI managed to find this trainer here to help out with your ceremony here.")
+}
+
+text KroniiCeremonyMain_Text_KroniiIntro2 {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_SERIOUS}Huh, and you think this trainer here will get my ceremony at perfect condition here?")
+}
+
+text KroniiCeremonyMain_Text_GigiIntro2 {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}Not quite. I'm having them help out by getting some people to do some extra stuff as well to make it absolutely memorable here.")
+}
+
+text KroniiCeremonyMain_Text_KroniiIntro3 {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_SERIOUS}That's certainly a plan here, I guess.\pJust don't mess up anything here, I worked hard to get this all set up here for my fans.")
+}
+
+text KroniiCeremonyMain_Text_GigiIntro3 {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_9}Don't worry, I won't make it be a complete mess here, you know me better than that, right Kronii?")
+}
+
+text KroniiCeremonyMain_Text_KroniiIntro4 {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_SERIOUS}Alright, I'm trusting you here then, Gigi.\p"
+	"I need to set up right now, so just make sure whatever you do is all good over here.")
+}
+
+text KroniiCeremonyMain_Text_GigiGiveStartingTeam {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_NORMAL}Oh yeah, I forgot I brought you without your usual team here, so here's a pretty basic one I managed to find here!")
+}
+
+text KroniiCeremonyMain_Text_YouGotStartingTeam {
+	format("You received your stating team from Gigi Murin herself.")
 }
 
 text KroniiCeremonyMain_Text_GigiGoInside {
-	format("Gigi says something about going inside.")
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_NORMAL}You shouldn't need anything more than this to help recruit the three people I need for this.\p"
+	"A hiker, a kindler, and an engineer are the other three people I want to help me with this ceremony here.\p"
+	"Don't worry about training yourself here, everything should be relatively low stakes here with trying to recruit everyone here.\p"
+	"{DESTROY_MUGSHOT}{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}Anyways, I'll be going inside if you need me, whether it'd be for healing or just getting those tips again.")
+}
+
+text KroniiCeremonyMain_Text_KroniiCeremonyIntro {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_NORMAL}Kroniichiwa! Hello everyone who made it here today to my ceremony.\p"
+	"You all know me as Ouro Kronii, the Warden of Time herself, and today, I would like to celebrate the achievement of my tenth star here.\p"
+	"Now, without further ado-")
+}
+
+text KroniiCeremonyMain_Text_GigiCeremonyHoldOn {
+	format("Hey Kronii! Guess who's here to join you for this ceremony.")
+}
+
+text KroniiCeremonyMain_Text_GigiCeremonyInterruption {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_9}Gi Murin! Hello everyone, the name's Gigi Murin here, and I've come to help Kronii with her ceremony here.")
+}
+
+text KroniiCeremonyMain_Text_KroniiCeremonyRudelyInterrupted {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_SERIOUS}What the hell are you doing, Gigi?\pThis is supposed to be MY ceremony here.")
+}
+
+text KroniiCeremonyMain_Text_GigiCeremonyCueOthers {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}I thought you wanted some help getting it to work though, which is why I managed to get some other guys here.\p"
+	"{DESTROY_MUGSHOT}{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_NORMAL}Hit it, you three!")
+}
+
+text KroniiCeremonyMain_Text_KroniiCeremonySadAboutCeremony {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_SAD}No, my ceremony, the thing I planned for a while now."
+	"Gigi, why would you ruin this moment for me here?")
+}
+
+text KroniiCeremonyMain_Text_GigiCeremonyCheckAudience {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}Hey, I mean, the audience doesn't seem like they're bothered at all here.")
+}
+
+text KroniiCeremonyMain_Text_CyanReaction {
+	format("WOOHH! YEAH, GO KRONII AND GIGI!\p"
+	"YOU TWO MAKE THIS CEREMONY EPIC HERE!")
+}
+
+text KroniiCeremonyMain_Text_Kronie2Reaction {
+	format("I won't lie, this certainly is more exciting here than what I was gonna do originally.")
+}
+
+text KroniiCeremonyMain_Text_GigiCeremonySeeAudience {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}See, the audience loves what you're doing here right now.\p"
+	"I told you I wouldn't just ruin it for you here.")
+}
+
+text KroniiCeremonyMain_Text_KroniiCeremonyApologizeGigi {
+	format("{CREATE_MUGSHOT MUGSHOT_KRONII EMOTE_SAD}I guess I judged you too quick here with what you were doing.\p"
+	"I'm sorry I thought you tried to ruin my ceremony here, it's just that I was looking forwards to it for a while now.")
+}
+
+text KroniiCeremonyMain_Text_GigiCeremonyAcceptApology {
+	format("{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}It's all good Kronii, it's your event after all.\p"
+	"{DESTROY_MUGSHOT}{CREATE_MUGSHOT MUGSHOT_GIGI EMOTE_ALT_8}Now, let's just enjoy the music here for this ceremony here.")
 }
 
 text KroniiCeremonyMain_Text_NoWaterGuy {
@@ -280,15 +599,15 @@ text KroniiCeremonyMain_Text_HikerName {
 }
 
 text KroniiCeremonyMain_Text_Kronie1Name {
-    "Kronie 1"
+    "Darkie"
 }
 
 text KroniiCeremonyMain_Text_Kronie2Name {
-    "Kronie 2"
+    "Napper"
 }
 
 text KroniiCeremonyMain_Text_Kronie3Name {
-    "Kronie 3"
+    "Machro"
 }
 
 text KroniiCeremonyMain_Text_CaveGuardName {
@@ -318,74 +637,124 @@ text KroniiCeremonyMain_Text_SkualperGuyDenied {
 	"I'll still be here though if you change your mind.")
 }
 
+text KroniiCeremonyMain_Text_SkualperGuyConvinced {
+	format("Sweet, it'll be ¥10000 if you can get that for me.")
+}
+
+text KroniiCeremonyMain_Text_SkualperGuyNotEnoughMoney {
+	format("Darn. Guess you won't do for helping me out- I mean getting this sweet opportunity for this event here.\p"
+	"Come back once you have enough for this ticket here.\p"
+	"Oh, and if you can, ignore the lack of water here as well, I had nothing to with it, I swear.")
+}
+
 text KroniiCeremonyMain_Text_KindlerNormal {
-    format("You ask Kindler to battle.")
+    format("Oh hey, don't mind me trying to hone in my skills here with this tree.\p"
+	"What's that, you need me for a ceremony here?")
+}
+
+text KroniiCeremonyMain_Text_KindlerRejected {
+    format("Alright then, let me just continue on with this tree here then.")
 }
 
 text KroniiCeremonyMain_Text_EngineerNormal {
-    format("You ask Engineer to battle.")
+    format("Have you seen this lack of water here?\p"
+	"It's absurd, it's like somebody just drained it entirely before this event was going to happen.\p"
+	"Huh, you need me to help out with this event here?")
+}
+
+text KroniiCeremonyMain_Text_EngineerRejected {
+    format("Weird, but alright, I just wanted to know who or what caused this lake to be like such.")
 }
 
 text KroniiCeremonyMain_Text_HikerNormal {
-    format("You ask Hiker to battle.")
+    format("This certainly doesn't seem natural at all, this once lake here.\p"
+	"I bet whoever came for this event here is certainly disappointed with the lack of water in this place.\p"
+	"Oh, you're asking for my assistance for this event here?")
+}
+
+text KroniiCeremonyMain_Text_HikerRejected {
+    format("I'll just be doing my thing here then, wondering what happened to the water here.")
 }
 
 text KroniiCeremonyMain_Text_KindlerDefeat {
-    "Defeat Text Kindler"
+    "Man, you've burnt me out here."
 }
 
 text KroniiCeremonyMain_Text_EngineerDefeat {
-    "Defeat Text Engineer"
+    "Jeez, I'm gonna need a drink to cool me down again."
 }
 
 text KroniiCeremonyMain_Text_HikerDefeat {
-    "Defeat Text Hiker"
+    "Huh, you're some trainer here alright."
 }
 
 text KroniiCeremonyMain_Text_KindlerRecruit {
-    format("Kindler recruited.")
+    format("Well, you mentioned you wanting me to join someone named Gigi, right?\p"
+	"I guess if she can help me out with these skills here, then I'll help her out with what she needs then.")
 }
 
 text KroniiCeremonyMain_Text_EngineerRecruit {
-    format("Engineer recruited.")
+    format("I've been beat now, huh?\p"
+	"In that case then, I guess I'll have to hear you out on this case then.\p"
+	"So this Gigi needs my help for something here, huh?\p"
+	"I guess I can see what she needs me to do then.")
 }
 
 text KroniiCeremonyMain_Text_HikerRecruit {
-    format("Hiker recruited.")
+    format("So what's the deal with this Gigi person, then?\p"
+	"She needs me to help out with this ceremony here, huh?\p"
+	"I guess I got nothing else better to do then, that and I don't want to be left out of this here.")
 }
 
 text KroniiCeremonyMain_Text_CyanNormal {
-    format("This fan says something interesting about Kronii's ceremony.")
+    format("HOWDY!!\pI can't believe I got invited to this event here by both Kronii and Gigi herself, isn't that cool?\p"
+	"It's like I get to see them in their own private concert here.\p"
+	"I think it has to do with something about her getting a tenth star or something, but I'm here for both her and Gigi.")
 }
 
 text KroniiCeremonyMain_Text_Kronie1Normal {
-    format("This fan says something about Kronii herself.")
+    format("Kronii's pretty cool, I won't lie.\p"
+	"She may not be the best all around, but you can tell she tries with what she can do.")
 }
 
 text KroniiCeremonyMain_Text_Kronie2Normal {
-    format("This fan says something about Kronii herself.")
+    format("You know, I honestly didn't expect being here originally.\p"
+	"I was gonna play some DELTARUNE considering the newly released chapters 3 and 4 here.\p"
+	"But you know, I had the chance to join this ceremony hosted by Kronii herself, and I couldn't resist coming here.\p"
+	"It's a shame I'm missing out a bit on the lore of DELTARUNE, but hey, maybe Kronii is related to it, so I'll stay here.")
 }
 
 text KroniiCeremonyMain_Text_Kronie3Normal {
-    format("This fan says something about Kronii herself.")
+    format("You know, I do wonder what happened to the lake that was supposed to be here.\p"
+	"It feels like somebody just took all the water away for some reason.\p"
+	"It's a bit sad really, how the lake here would make this ceremony feel better.")
 }
 
 text KroniiCeremonyMain_Text_CaveGuardNormal {
-    format("Cave Guard says something here.")
+    format("Halt! You don't have any authority to go inside currently.\p"
+	"The warden told me anyone who knows about this event must stay until it is over.\p"
+	"You don't seem like the warden herself, so I can't allow you to go further right now unfortunately.")
 }
 
 text KroniiCeremonyMain_Text_JuiceSellerNormal {
-    format("Juice Seller says something here.")
+    format("Hey, I'm the Juice Seller here.\p"
+	"For some reason, all the natural water in this place went away for some weird reason.\p"
+	"Fortunately, I've brought over the next best thing, natural Berry Juice, if you want to buy some of course.")
+}
+
+text KroniiCeremonyMain_Text_JuiceSellerThankYou {
+    format("Thank you for at least checking out my shop here.")
 }
 
 text KroniiCeremonyMain_Text_CantGoToStage {
-    format("Cannot go to stage yet.")
+    format("Seems like you can't just go on stage alone with the people here already.")
 }
 
 text KroniiCeremonyMain_Text_CaveSign {
-    format("Cave Sign")
+    format("Exit over this cave here")
 }
 
 text KroniiCeremonyMain_Text_KroniiCeremonySign {
-    format("Kronii Ceremony Sign")
+    format("Kronii's Official Tenth Star Ceremony\p"
+	"Invitation Only")
 }

@@ -3216,48 +3216,33 @@ gBattleAnimMove_BugBite::
 	end
 
 gBattleAnimMove_ChargeBeam::
-	loadspritegfx ANIM_TAG_ELECTRIC_ORBS
-	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
-	loadspritegfx ANIM_TAG_ELECTRICITY
-	loadspritegfx ANIM_TAG_SPARK_2
-	setalpha 12, 8
-	simplepaletteblend selector=F_PAL_BG, delay=4, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
+	loadspritegfx ANIM_TAG_RED_ORB
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 11, ANIM_ATTACKER, 0
 	waitforvisualfinish
-	createvisualtask AnimTask_ElectricChargingParticles, 2, ANIM_ATTACKER, 20, 0, 2
-	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
-	delay 12
-	createsprite gGrowingShockWaveOrbSpriteTemplate, ANIM_ATTACKER, 2
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 0, 11, RGB(31, 31, 22)
-	delay 50
-	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 16, 0, 5
-	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 0, 4, 50, 1
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 50, 1
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 11, 0, RGB(31, 31, 22)
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 11, RGB(31, 31, 22)
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	call SparkBeam
-	delay 20
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 11, 0, RGB(31, 31, 22)
-	waitforvisualfinish
-	simplepaletteblend selector=F_PAL_BG, delay=4, initial_blend_y=4, target_blend_y=0, color=RGB_BLACK
-	blendoff
+	delay 30
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB(31, 31, 19), 12, 5, 1
+	delay 4
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 11, ANIM_ATTACKER, 0
+	playsewithpan SE_M_REVERSAL, SOUND_PAN_ATTACKER
+	createsprite gHiddenPowerOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 0
+	createsprite gHiddenPowerOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 42
+	createsprite gHiddenPowerOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 84
+	createsprite gHiddenPowerOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 126
+	createsprite gHiddenPowerOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 168
+	createsprite gHiddenPowerOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 210
+	delay 52
+	setarg 7, 0xFFFF
+	playsewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 11, ANIM_ATTACKER, 0
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 0
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 32
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 64
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 96
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 128
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 160
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 192
+	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 224
 	end
 
 SparkBeam:

@@ -5368,12 +5368,12 @@
     {
       "id": "LAYOUT_HOME_LIKE_CARPET",
       "name": "HomeLikeCarpet_Layout",
-      "width": 20,
-      "height": 36,
+      "width": 12,
+      "height": 12,
       "border_width": 2,
       "border_height": 2,
       "primary_tileset": "gTileset_RG_General",
-      "secondary_tileset": "gTileset_RG_SeviiIslands123",
+      "secondary_tileset": "gTileset_RG_Cave",
       "border_filepath": "data/layouts/HomeLikeCarpet/border.bin",
       "blockdata_filepath": "data/layouts/HomeLikeCarpet/map.bin"
     },

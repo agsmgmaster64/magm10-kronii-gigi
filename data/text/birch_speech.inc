@@ -1,39 +1,37 @@
 gText_Birch_Welcome::
-	.string "Hi! Sorry to keep you waiting!\p"
-	.string "Welcome to the world of POKéMON!\p"
-	.string "My name is BIRCH.\p"
-	.string "But everyone calls me the POKéMON\n"
-	.string "PROFESSOR.\p"
+	.string "Shiorin! Welcome fellow trainer\n"
+	.string "to a neat scenario here:\l"
+	.string "Touhoumon Timechaser's Ceremony\p"
+	.string "My name is Shiori.\p"
+	.string "But that's not really important\n"
+	.string "for where you're going.\p"
 	.string "$"
 
 gText_Birch_Pokemon::
-	.string "This is what we call a “POKéMON.”\p"
+	.string "This is what we call a “Puppet.”\p"
 	.string "\n"
 	.string "$"
 
 gText_Birch_MainSpeech::
-	.string "This world is widely inhabited by\n"
-	.string "creatures known as POKéMON.\p"
-	.string "We humans live alongside POKéMON,\n"
-	.string "at times as friendly playmates, and\l"
-	.string "at times as cooperative workmates.\p"
-	.string "And sometimes, we band together\n"
-	.string "and battle others like us.\p"
-	.string "But despite our closeness, we don't\n"
-	.string "know everything about POKéMON.\p"
-	.string "In fact, there are many, many\n"
-	.string "secrets surrounding POKéMON.\p"
-	.string "To unravel POKéMON mysteries,\n"
-	.string "I've been undertaking research.\l"
-	.string "That's what I do.\p"
+	.string "This Puppet I brough here as\n"
+	.string "an example for what you'll be\l"
+	.string "coming across in this little\l"
+	.string "scenario here.\p"
+	.string "You'll be assisting my fellow\n"
+	.string "friends Kronii and Gigi with a\l"
+	.string "ceremony they're preparing.\p"
+	.string "They certainly need the assistance\n"
+	.string "here, after all.\p"
+	.string "But enough about the two here,\n"
+	.string "what about you here?\p"
 	.string "$"
 
 gText_Birch_AndYouAre::
 	.string "And you are?$"
 
 gText_Birch_BoyOrGirl::
-	.string "Are you a boy?\n"
-	.string "Or are you a girl?$"
+	.string "Are you tomboyish?\n"
+	.string "Or are you girly?$"
 
 gText_Birch_WhatsYourName::
 	.string "All right.\n"
@@ -44,8 +42,8 @@ gText_Birch_SoItsPlayer::
 
 gText_Birch_YourePlayer::
 	.string "Ah, okay!\p"
-	.string "You're {PLAYER}{KUN} who's moving to my\n"
-	.string "hometown of LITTLEROOT.\l"
+	.string "You're {PLAYER}{KUN} who's in this\n"
+	.string "this little scenario here.\l"
 	.string "I get it now!\p"
 	.string "$"
 
@@ -54,8 +52,8 @@ gText_Birch_AreYouReady::
 	.string "Your very own adventure is about\n"
 	.string "to unfold.\p"
 	.string "Take courage, and leap into the\n"
-	.string "world of POKéMON where dreams,\l"
+	.string "world of Puppets where dreams,\l"
 	.string "adventure, and friendships await!\p"
-	.string "Well, I'll be expecting you later.\n"
-	.string "Come see me in my POKéMON LAB.\p"
+	.string "Well, I hope you have a good time\n"
+	.string "in this scenario here.\p"
 	.string "$"
