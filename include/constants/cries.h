@@ -97,6 +97,8 @@ enum PokemonCry
     CRY_TEIREIDA,
     CRY_SATONO,
     CRY_OKINA,
+    CRY_SAKI,
+    CRY_TAKANE,
     CRY_SUIKA,
     CRY_IKU,
     CRY_TENSHI,

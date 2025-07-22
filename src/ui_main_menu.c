@@ -575,7 +575,6 @@ static bool8 MainMenu_DoGfxSetup(void)
             gMain.state++;
         break;
     case 4:
-        DebugPrintfLevel(MGBA_LOG_DEBUG, "You made it past MainMenu_LoadGraphics");
         LoadMessageBoxAndBorderGfx();
         MainMenu_InitWindows();
         gMain.state++;

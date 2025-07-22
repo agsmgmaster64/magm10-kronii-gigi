@@ -79,7 +79,8 @@ struct BagMenu
     u8 numItemStacks[POCKETS_COUNT];
     u8 numShownItems[POCKETS_COUNT];
     s16 graphicsLoadState;
-    u8 unused2[14];
+    u8 registerSubMenu;
+    u8 unused2[13];
     u8 ALIGNED(4) pocketNameBuffer[32][32];
     u8 unused3[4];
 };

@@ -1275,7 +1275,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_GORILLA_TACTICS, ABILITY_NONE, ABILITY_ZEN_MODE },
+        .abilities = { ABILITY_ONI_TACTICS, ABILITY_NONE, ABILITY_ZEN_MODE },
         .sourceGame = SOURCE_POFV,
         .speciesName = _("Darmanitan"),
         .cryId = CRY_PORYGON,
@@ -1341,7 +1341,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_GORILLA_TACTICS, ABILITY_NONE, ABILITY_ZEN_MODE },
+        .abilities = { ABILITY_ONI_TACTICS, ABILITY_NONE, ABILITY_ZEN_MODE },
         .sourceGame = SOURCE_POFV,
         .speciesName = _("Darmanitan"),
         .cryId = CRY_PORYGON,
@@ -2646,10 +2646,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sVanilliteLevelUpLearnset,
         .teachableLearnset = sVanilliteTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_VANILLISH}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_CHIBI_EIKA}),
     },
 
-    [SPECIES_VANILLISH] =
+    [SPECIES_CHIBI_EIKA] =
     {
         .baseHP        = 51,
         .baseAttack    = 65,
@@ -2719,10 +2719,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sVanillishLevelUpLearnset,
         .teachableLearnset = sVanillishTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 47, SPECIES_VANILLUXE}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 47, SPECIES_NORMAL_EIKA}),
     },
 
-    [SPECIES_VANILLUXE] =
+    [SPECIES_NORMAL_EIKA] =
     {
         .baseHP        = 71,
         .baseAttack    = 95,
@@ -3458,10 +3458,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sKarrablastLevelUpLearnset,
         .teachableLearnset = sKarrablastTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_ESCAVALIER, CONDITIONS({IF_TRADE_PARTNER_SPECIES, SPECIES_SHELMET})}),
+        .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_CHIBI_KUTAKA, CONDITIONS({IF_TRADE_PARTNER_SPECIES, SPECIES_SHELMET})}),
     },
 
-    [SPECIES_ESCAVALIER] =
+    [SPECIES_CHIBI_KUTAKA] =
     {
         .baseHP        = 70,
         .baseAttack    = 135,
@@ -3530,7 +3530,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
 #endif //P_FAMILY_KARRABLAST
 
 #if P_FAMILY_FOONGUS
-    [SPECIES_FOONGUS] =
+    [SPECIES_NORMAL_KUTAKA] =
     {
         .baseHP        = 69,
         .baseAttack    = 55,
@@ -4136,10 +4136,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sFerroseedLevelUpLearnset,
         .teachableLearnset = sFerroseedTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 40, SPECIES_FERROTHORN}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 40, SPECIES_CHIBI_KEIKI}),
     },
 
-    [SPECIES_FERROTHORN] =
+    [SPECIES_CHIBI_KEIKI] =
     {
         .baseHP        = 74,
         .baseAttack    = 94,
@@ -4216,7 +4216,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
 #endif //P_FAMILY_FERROSEED
 
 #if P_FAMILY_KLINK
-    [SPECIES_KLINK] =
+    [SPECIES_NORMAL_KEIKI] =
     {
         .baseHP        = 40,
         .baseAttack    = 55,
@@ -4355,164 +4355,10 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sKlangLevelUpLearnset,
         .teachableLearnset = sKlangTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 49, SPECIES_KLINKLANG}),
-    },
-
-    [SPECIES_KLINKLANG] =
-    {
-        .baseHP        = 60,
-        .baseAttack    = 100,
-        .baseDefense   = 115,
-        .baseSpeed     = 90,
-        .baseSpAttack  = 70,
-        .baseSpDefense = 85,
-        .types = MON_TYPES(TYPE_STEEL),
-        .catchRate = 30,
-        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 260 : 234,
-        .evYield_Defense = 3,
-        .genderRatio = MON_GENDERLESS,
-        .eggCycles = 20,
-        .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_MEDIUM_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MINERAL),
-        .abilities = { ABILITY_PLUS, ABILITY_MINUS, ABILITY_HAKUREI_MIKO },
-        .sourceGame = SOURCE_IN,
-        .noFlip = TRUE,
-        .speciesName = _("Klinklang"),
-        .cryId = CRY_PORYGON,
-        .natDexNum = NATIONAL_DEX_KLINKLANG,
-        .categoryName = _("Gear"),
-        .height = 6,
-        .weight = 810,
-        .description = COMPOUND_STRING(
-            "Its red core functions as an energy tank.\n"
-            "It is rotated at high speed for a rapid\n"
-            "energy charge. It fires the charged energy\n"
-            "through its spikes into an area."),
-        .pokemonScale = 422,
-        .pokemonOffset = 12,
-        .trainerScale = 256,
-        .trainerOffset = 0,
-        .frontPic = gMonFrontPic_Klinklang,
-        .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 2,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 10),
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 20),
-        ),
-        .frontAnimId = ANIM_CIRCULAR_STRETCH_TWICE,
-        .enemyMonElevation = 4,
-        .backPic = gMonBackPic_Klinklang,
-        .backPicSize = MON_COORDS_SIZE(64, 64),
-        .backPicYOffset = 7,
-        .backAnimId = BACK_ANIM_CIRCLE_COUNTERCLOCKWISE,
-        .palette = gMonPalette_Klinklang,
-        .shinyPalette = gMonShinyPalette_Klinklang,
-        .iconSprite = gMonIcon_Klinklang,
-        .iconPalIndex = 0,
-        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(0, 13, SHADOW_SIZE_L)
-        FOOTPRINT(Klinklang)
-        OVERWORLD(
-            sPicTable_Klinklang,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            sAnimTable_Following,
-            gOverworldPalette_Klinklang,
-            gShinyOverworldPalette_Klinklang
-        )
-        .levelUpLearnset = sKlinklangLevelUpLearnset,
-        .teachableLearnset = sKlinklangTeachableLearnset,
     },
 #endif //P_FAMILY_KLINK
 
 #if P_FAMILY_TYNAMO
-    [SPECIES_TYNAMO] =
-    {
-        .baseHP        = 35,
-        .baseAttack    = 55,
-        .baseDefense   = 40,
-        .baseSpeed     = 60,
-        .baseSpAttack  = 45,
-        .baseSpDefense = 40,
-        .types = MON_TYPES(TYPE_WIND),
-        .catchRate = 190,
-        .expYield = 55,
-        .evYield_Speed = 1,
-        .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 20,
-        .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_AMORPHOUS),
-        .abilities = { ABILITY_LEVITATE, ABILITY_NONE, ABILITY_NONE },
-        .sourceGame = SOURCE_POFV,
-        .speciesName = _("Tynamo"),
-        .cryId = CRY_PORYGON,
-        .natDexNum = NATIONAL_DEX_TYNAMO,
-        .categoryName = _("EleFish"),
-        .height = 2,
-        .weight = 3,
-        .description = COMPOUND_STRING(
-            "These Pokémon move in schools.\n"
-            "One alone can emit only a trickle of\n"
-            "electricity, so a group of them gathers\n"
-            "to unleash a powerful electric shock."),
-        .pokemonScale = 682,
-        .pokemonOffset = 24,
-        .trainerScale = 256,
-        .trainerOffset = 0,
-        .frontPic = gMonFrontPic_Tynamo,
-        .frontPicSize = MON_COORDS_SIZE(40, 24),
-        .frontPicYOffset = 22,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 25),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-            ANIMCMD_FRAME(1, 5),
-            ANIMCMD_FRAME(0, 5),
-        ),
-        .frontAnimId = ANIM_V_SLIDE_WOBBLE_SMALL,
-        .enemyMonElevation = 16,
-        .backPic = gMonBackPic_Tynamo,
-        .backPicSize = MON_COORDS_SIZE(64, 24),
-        .backPicYOffset = 21,
-        .backAnimId = BACK_ANIM_H_SLIDE,
-        .palette = gMonPalette_Tynamo,
-        .shinyPalette = gMonShinyPalette_Tynamo,
-        .iconSprite = gMonIcon_Tynamo,
-        .iconPalIndex = 0,
-        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-3, 5, SHADOW_SIZE_S)
-        FOOTPRINT(Tynamo)
-        OVERWORLD(
-            sPicTable_Tynamo,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            sAnimTable_Following,
-            gOverworldPalette_Tynamo,
-            gShinyOverworldPalette_Tynamo
-        )
-        .tmIlliterate = TRUE,
-        .levelUpLearnset = sTynamoLevelUpLearnset,
-        .teachableLearnset = sTynamoTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 39, SPECIES_EELEKTRIK}),
-    },
-
     [SPECIES_EELEKTRIK] =
     {
         .baseHP        = 65,
@@ -5019,283 +4865,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
     },
 #endif //P_FAMILY_LITWICK
 
-#if P_FAMILY_AXEW
-    [SPECIES_AXEW] =
-    {
-        .baseHP        = 46,
-        .baseAttack    = 87,
-        .baseDefense   = 60,
-        .baseSpeed     = 57,
-        .baseSpAttack  = 30,
-        .baseSpDefense = 40,
-        .types = MON_TYPES(TYPE_FAITH),
-        .catchRate = 75,
-        .expYield = 64,
-        .evYield_Attack = 1,
-        .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 40,
-        .friendship = 35,
-        .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_RIVALRY, ABILITY_MOLD_BREAKER, ABILITY_UNNERVE },
-        .sourceGame = SOURCE_LLS,
-        .speciesName = _("Axew"),
-        .cryId = CRY_PORYGON,
-        .natDexNum = NATIONAL_DEX_AXEW,
-        .categoryName = _("Tusk"),
-        .height = 6,
-        .weight = 180,
-        .description = COMPOUND_STRING(
-            "They mark their territory by leaving\n"
-            "gashes in trees with their tusks. If a\n"
-            "tusk breaks, a new one grows in quickly,\n"
-            "harder and sturdier than the last."),
-        .pokemonScale = 422,
-        .pokemonOffset = 13,
-        .trainerScale = 256,
-        .trainerOffset = 0,
-        .frontPic = gMonFrontPic_Axew,
-        .frontPicSize = MON_COORDS_SIZE(40, 48),
-        .frontPicYOffset = 12,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 40),
-            ANIMCMD_FRAME(0, 5),
-        ),
-        .frontAnimId = ANIM_H_SHAKE,
-        .backPic = gMonBackPic_Axew,
-        .backPicSize = MON_COORDS_SIZE(48, 56),
-        .backPicYOffset = 8,
-        .backAnimId = BACK_ANIM_CONCAVE_ARC_SMALL,
-        .palette = gMonPalette_Axew,
-        .shinyPalette = gMonShinyPalette_Axew,
-        .iconSprite = gMonIcon_Axew,
-        .iconPalIndex = 1,
-        .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
-        SHADOW(2, 1, SHADOW_SIZE_S)
-        FOOTPRINT(Axew)
-        OVERWORLD(
-            sPicTable_Axew,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            sAnimTable_Following,
-            gOverworldPalette_Axew,
-            gShinyOverworldPalette_Axew
-        )
-        .levelUpLearnset = sAxewLevelUpLearnset,
-        .teachableLearnset = sAxewTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 38, SPECIES_FRAXURE}),
-    },
-
-    [SPECIES_FRAXURE] =
-    {
-        .baseHP        = 66,
-        .baseAttack    = 117,
-        .baseDefense   = 70,
-        .baseSpeed     = 67,
-        .baseSpAttack  = 40,
-        .baseSpDefense = 50,
-        .types = MON_TYPES(TYPE_FAITH),
-        .catchRate = 60,
-        .expYield = 144,
-        .evYield_Attack = 2,
-        .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 40,
-        .friendship = 35,
-        .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_RIVALRY, ABILITY_MOLD_BREAKER, ABILITY_UNNERVE },
-        .sourceGame = SOURCE_LLS,
-        .speciesName = _("Fraxure"),
-        .cryId = CRY_PORYGON,
-        .natDexNum = NATIONAL_DEX_FRAXURE,
-        .categoryName = _("Axe Jaw"),
-        .height = 10,
-        .weight = 360,
-        .description = COMPOUND_STRING(
-            "Their tusks can shatter rocks.\n"
-            "A broken tusk will not grow back,\n"
-            "so it diligently sharpens its tusks on\n"
-            "river rocks after the end of a battle."),
-        .pokemonScale = 305,
-        .pokemonOffset = 7,
-        .trainerScale = 257,
-        .trainerOffset = 0,
-        .frontPic = gMonFrontPic_Fraxure,
-        .frontPicSize = MON_COORDS_SIZE(56, 56),
-        .frontPicYOffset = 5,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 15),
-            ANIMCMD_FRAME(0, 15),
-        ),
-        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
-        .backPic = gMonBackPic_Fraxure,
-        .backPicSize = MON_COORDS_SIZE(64, 48),
-        .backPicYOffset = 13,
-        .backAnimId = BACK_ANIM_V_SHAKE_H_SLIDE,
-        .palette = gMonPalette_Fraxure,
-        .shinyPalette = gMonShinyPalette_Fraxure,
-        .iconSprite = gMonIcon_Fraxure,
-        .iconPalIndex = 1,
-        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(-2, 8, SHADOW_SIZE_L)
-        FOOTPRINT(Fraxure)
-        OVERWORLD(
-            sPicTable_Fraxure,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            sAnimTable_Following,
-            gOverworldPalette_Fraxure,
-            gShinyOverworldPalette_Fraxure
-        )
-        .levelUpLearnset = sFraxureLevelUpLearnset,
-        .teachableLearnset = sFraxureTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 48, SPECIES_HAXORUS}),
-    },
-
-    [SPECIES_HAXORUS] =
-    {
-        .baseHP        = 76,
-        .baseAttack    = 147,
-        .baseDefense   = 90,
-        .baseSpeed     = 97,
-        .baseSpAttack  = 60,
-        .baseSpDefense = 70,
-        .types = MON_TYPES(TYPE_FAITH),
-        .catchRate = 45,
-        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 270 : 243,
-        .evYield_Attack = 3,
-        .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 40,
-        .friendship = 35,
-        .growthRate = GROWTH_SLOW,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_RIVALRY, ABILITY_MOLD_BREAKER, ABILITY_UNNERVE },
-        .sourceGame = SOURCE_PODD,
-        .speciesName = _("Haxorus"),
-        .cryId = CRY_PORYGON,
-        .natDexNum = NATIONAL_DEX_HAXORUS,
-        .categoryName = _("Axe Jaw"),
-        .height = 18,
-        .weight = 1055,
-        .description = COMPOUND_STRING(
-            "They are kind but can be relentless\n"
-            "when defending territory. Their sturdy\n"
-            "tusks will stay sharp even if used to cut\n"
-            "steel beams."),
-        .pokemonScale = 267,
-        .pokemonOffset = 2,
-        .trainerScale = 286,
-        .trainerOffset = 1,
-        .frontPic = gMonFrontPic_Haxorus,
-        .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 0,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 20),
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 10),
-        ),
-        .frontAnimId = ANIM_H_SHAKE,
-        .backPic = gMonBackPic_Haxorus,
-        .backPicSize = MON_COORDS_SIZE(64, 56),
-        .backPicYOffset = 8,
-        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
-        .palette = gMonPalette_Haxorus,
-        .shinyPalette = gMonShinyPalette_Haxorus,
-        .iconSprite = gMonIcon_Haxorus,
-        .iconPalIndex = 2,
-        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
-        SHADOW(2, 9, SHADOW_SIZE_L)
-        FOOTPRINT(Haxorus)
-        OVERWORLD(
-            sPicTable_Haxorus,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            sAnimTable_Following,
-            gOverworldPalette_Haxorus,
-            gShinyOverworldPalette_Haxorus
-        )
-        .levelUpLearnset = sHaxorusLevelUpLearnset,
-        .teachableLearnset = sHaxorusTeachableLearnset,
-    },
-#endif //P_FAMILY_AXEW
-
 #if P_FAMILY_CUBCHOO
-    [SPECIES_CUBCHOO] =
-    {
-        .baseHP        = 55,
-        .baseAttack    = 70,
-        .baseDefense   = 40,
-        .baseSpeed     = 40,
-        .baseSpAttack  = 60,
-        .baseSpDefense = 40,
-        .types = MON_TYPES(TYPE_ICE),
-        .catchRate = 120,
-        .expYield = 61,
-        .evYield_Attack = 1,
-        .genderRatio = PERCENT_FEMALE(50),
-        .eggCycles = 20,
-        .friendship = STANDARD_FRIENDSHIP,
-        .growthRate = GROWTH_MEDIUM_FAST,
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-    #if P_UPDATED_ABILITIES >= GEN_7
-        .abilities = { ABILITY_SNOW_CLOAK, ABILITY_SLUSH_RUSH, ABILITY_RATTLED },
-    #else
-        .abilities = { ABILITY_SNOW_CLOAK, ABILITY_NONE, ABILITY_RATTLED },
-    #endif
-        .sourceGame = SOURCE_POFV,
-        .speciesName = _("Cubchoo"),
-        .cryId = CRY_PORYGON,
-        .natDexNum = NATIONAL_DEX_CUBCHOO,
-        .categoryName = _("Chill"),
-        .height = 5,
-        .weight = 85,
-        .description = COMPOUND_STRING(
-            "Its nose is always running.\n"
-            "Their snot is a barometer of health.\n"
-            "When healthy, their snot is sticky and\n"
-            "the power of their ice moves increases."),
-        .pokemonScale = 432,
-        .pokemonOffset = 15,
-        .trainerScale = 256,
-        .trainerOffset = 0,
-        .frontPic = gMonFrontPic_Cubchoo,
-        .frontPicSize = MON_COORDS_SIZE(32, 40),
-        .frontPicYOffset = 12,
-        .frontAnimFrames = ANIM_FRAMES(
-            ANIMCMD_FRAME(0, 20),
-            ANIMCMD_FRAME(1, 10),
-            ANIMCMD_FRAME(0, 10),
-        ),
-        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
-        .backPic = gMonBackPic_Cubchoo,
-        .backPicSize = MON_COORDS_SIZE(40, 40),
-        .backPicYOffset = 12,
-        .backAnimId = BACK_ANIM_H_SLIDE,
-        .palette = gMonPalette_Cubchoo,
-        .shinyPalette = gMonShinyPalette_Cubchoo,
-        .iconSprite = gMonIcon_Cubchoo,
-        .iconPalIndex = 0,
-        .pokemonJumpType = PKMN_JUMP_TYPE_FAST,
-        SHADOW(-2, 0, SHADOW_SIZE_S)
-        FOOTPRINT(Cubchoo)
-        OVERWORLD(
-            sPicTable_Cubchoo,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            sAnimTable_Following,
-            gOverworldPalette_Cubchoo,
-            gShinyOverworldPalette_Cubchoo
-        )
-        .levelUpLearnset = sCubchooLevelUpLearnset,
-        .teachableLearnset = sCubchooTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 37, SPECIES_BEARTIC}),
-    },
-
     [SPECIES_BEARTIC] =
     {
         .baseHP        = 95,

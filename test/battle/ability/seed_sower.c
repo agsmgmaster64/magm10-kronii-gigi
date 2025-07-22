@@ -4,7 +4,7 @@
 SINGLE_BATTLE_TEST("Seed Sower sets up Grassy Terrain when hit by an attack")
 {
     GIVEN {
-        PLAYER(SPECIES_ARBOLIVA) { Ability(ABILITY_SEED_SOWER); }
+        PLAYER(SPECIES_ARBOLIVA) { Ability(ABILITY_FOUL_AROMA); }
         OPPONENT(SPECIES_CHIBI_YUUGI);
     } WHEN {
         TURN { MOVE(opponent, MOVE_SCRATCH); }
@@ -16,10 +16,10 @@ SINGLE_BATTLE_TEST("Seed Sower sets up Grassy Terrain when hit by an attack")
     }
 }
 
-#define ABILITY_PARAM(n)(abilities[n] = (k == n) ? ABILITY_SEED_SOWER : ABILITY_HARVEST)
+#define ABILITY_PARAM(n)(abilities[n] = (k == n) ? ABILITY_FOUL_AROMA : ABILITY_HARVEST)
 #define MOVE_HIT(target, position)                      \
 {                                                       \
-    if (abilities[position] == ABILITY_SEED_SOWER) {    \
+    if (abilities[position] == ABILITY_FOUL_AROMA) {    \
         ABILITY_POPUP(target);                          \
         MESSAGE("Grass grew to cover the battlefield!");\
     }                                                   \

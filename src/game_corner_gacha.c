@@ -2095,14 +2095,14 @@ static inline bool32 CheckIfOwned(u16 species)
     return GetSetPokedexFlag(nationalDexNo, FLAG_GET_CAUGHT);
 }
 
-bool32 IsNotValidOwnedSpecies(u16 species)
+static inline bool32 IsNotValidOwnedSpecies(u16 species)
 {
     if (species == SPECIES_NONE)
         return TRUE;
     return !CheckIfOwned(species);
 }
 
-bool32 IsNotValidUnownedSpecies(u16 species)
+static inline bool32 IsNotValidUnownedSpecies(u16 species)
 {
     if (species == SPECIES_NONE)
         return TRUE;

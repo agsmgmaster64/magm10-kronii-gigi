@@ -79867,7 +79867,7 @@
     "LevelMoves": [
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,
@@ -82667,7 +82667,7 @@
     "LevelMoves": [
       {
         "Level": 1,
-        "Move": "MOVE_FAIRY_LOCK"
+        "Move": "MOVE_DEMON_BOOK"
       },
       {
         "Level": 1,

@@ -5,7 +5,7 @@ DOUBLE_BATTLE_TEST("Grim Neigh raises Sp. Attack by one stage after directly cau
 {
     u32 species = 0, ability = 0, abilityPopUp = 0;
     PARAMETRIZE { species = SPECIES_SPECTRIER;            ability = ABILITY_DETERMINATOR;          abilityPopUp = ABILITY_DETERMINATOR; }
-    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_AS_ONE_SHADOW_RIDER; abilityPopUp = ABILITY_DETERMINATOR; }
+    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_YIN_AND_YANG; abilityPopUp = ABILITY_DETERMINATOR; }
     GIVEN {
         ASSUME(GetMoveTarget(MOVE_DISCHARGE) == MOVE_TARGET_FOES_AND_ALLY);
         PLAYER(species) { Ability(ability); }
@@ -35,7 +35,7 @@ DOUBLE_BATTLE_TEST("Grim Neigh does not trigger if Pokemon faint to indirect dam
 {
     u32 species = 0, ability = 0, abilityPopUp = 0;
     PARAMETRIZE { species = SPECIES_SPECTRIER;            ability = ABILITY_DETERMINATOR;          abilityPopUp = ABILITY_DETERMINATOR; }
-    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_AS_ONE_SHADOW_RIDER; abilityPopUp = ABILITY_DETERMINATOR; }
+    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_YIN_AND_YANG; abilityPopUp = ABILITY_DETERMINATOR; }
     GIVEN {
         PLAYER(species) { Ability(ability); }
         PLAYER(SPECIES_SNORUNT) { HP(1); Status1(STATUS1_POISON); }
@@ -72,7 +72,7 @@ DOUBLE_BATTLE_TEST("Grim Neigh does not increase damage done by the same move th
     s16 damage[2];
     u32 species = 0, ability = 0, abilityPopUp = 0;
     PARAMETRIZE { species = SPECIES_SPECTRIER;            ability = ABILITY_DETERMINATOR;          abilityPopUp = ABILITY_DETERMINATOR; }
-    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_AS_ONE_SHADOW_RIDER; abilityPopUp = ABILITY_DETERMINATOR; }
+    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_YIN_AND_YANG; abilityPopUp = ABILITY_DETERMINATOR; }
 
     GIVEN {
         ASSUME(GetMoveTarget(MOVE_DISCHARGE) == MOVE_TARGET_FOES_AND_ALLY);

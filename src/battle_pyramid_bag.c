@@ -210,17 +210,17 @@ static const struct WindowTemplate sWindowTemplates[] =
     [WIN_LIST] = {
         .bg = 0,
         .tilemapLeft = 14,
-        .tilemapTop = 2,
+        .tilemapTop = 1,
         .width = 15,
-        .height = 16,
+        .height = 12,
         .paletteNum = 15,
         .baseBlock = 30
     },
     [WIN_INFO] = {
         .bg = 0,
         .tilemapLeft = 0,
-        .tilemapTop = 13,
-        .width = 14,
+        .tilemapTop = 14,
+        .width = 25,
         .height = 6,
         .paletteNum = 15,
         .baseBlock = 270
@@ -634,10 +634,6 @@ static void CopyBagItemName(u8 *dst, u16 itemId)
             ConvertIntToDecimalStringN(gStringVar1, itemId - ITEM_HM01 + 1, STR_CONV_MODE_LEADING_ZEROS, 1);
             StringExpandPlaceholders(dst, gText_NumberItem_HM);
         }
-        else if (itemId == ITEM_TM100)
-        {
-            StringExpandPlaceholders(dst, gText_NumberItem_TM100);
-        }
         else
         {
             // Get TM number
@@ -710,7 +706,9 @@ static void PrintItemDescription(s32 listMenuId)
     const u8 *desc;
     if (listMenuId != LIST_CANCEL)
     {
-        desc = GetItemDescription(gSaveBlock2Ptr->frontier.pyramidBag.itemId[gSaveBlock2Ptr->frontier.lvlMode][listMenuId]);
+        desc = GetItemLongDescription(gSaveBlock2Ptr->frontier.pyramidBag.itemId[gSaveBlock2Ptr->frontier.lvlMode][listMenuId]);
+        if (desc == NULL)
+            desc = GetItemDescription(gSaveBlock2Ptr->frontier.pyramidBag.itemId[gSaveBlock2Ptr->frontier.lvlMode][listMenuId]);
     }
     else
     {
@@ -725,7 +723,7 @@ static void PrintItemDescription(s32 listMenuId)
 static void AddScrollArrows(void)
 {
     if (gPyramidBagMenu->scrollIndicatorsTaskId == TASK_NONE)
-        gPyramidBagMenu->scrollIndicatorsTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 172, 12, 148,
+        gPyramidBagMenu->scrollIndicatorsTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 172, 10, 104,
                                                                                             gPyramidBagMenu->listMenuCount - gPyramidBagMenu->listMenuMaxShown,
                                                                                             TAG_SCROLL_ARROW, TAG_SCROLL_ARROW,
                                                                                             &gPyramidBagMenuState.scrollPosition);
@@ -844,8 +842,8 @@ void UpdatePyramidBagList(void)
             gPyramidBagMenu->listMenuCount++;
     }
     gPyramidBagMenu->listMenuCount++;
-    if (gPyramidBagMenu->listMenuCount > 8)
-        gPyramidBagMenu->listMenuMaxShown = 8;
+    if (gPyramidBagMenu->listMenuCount > 6)
+        gPyramidBagMenu->listMenuMaxShown = 6;
     else
         gPyramidBagMenu->listMenuMaxShown = gPyramidBagMenu->listMenuCount;
 }
@@ -1652,5 +1650,5 @@ static void SetSwapLineInvisibility(bool8 invisible)
 
 static void UpdateSwapLinePos(u8 y)
 {
-    UpdateSwapLineSpritesPos(&gPyramidBagMenu->spriteIds[PBAG_SPRITE_SWAP_LINE_START], NUM_SWAP_LINE_SPRITES | SWAP_LINE_HAS_MARGIN, 120, (y + 1) * 16);
+    UpdateSwapLineSpritesPos(&gPyramidBagMenu->spriteIds[PBAG_SPRITE_SWAP_LINE_START], NUM_SWAP_LINE_SPRITES | SWAP_LINE_HAS_MARGIN, 120, ((y + 1) * 16) - 8);
 }

@@ -9,7 +9,7 @@ DOUBLE_BATTLE_TEST("Aromatic Mist raises Sp. Defense of a target ally by 1 stage
         OPPONENT(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WYNAUT);
     } WHEN {
-        TURN { MOVE(playerLeft, MOVE_AROMATIC_MIST); }
+        TURN { MOVE(playerLeft, MOVE_GROUP_PRANK); }
     } SCENE {
         MESSAGE("Weezing used Aromatic Mist!");
         ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, playerRight);
@@ -27,7 +27,7 @@ SINGLE_BATTLE_TEST("Aromatic Mist fails in Single Battles")
         PLAYER(SPECIES_WEEZING_GALAR);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
-        TURN { MOVE(player, MOVE_AROMATIC_MIST); }
+        TURN { MOVE(player, MOVE_GROUP_PRANK); }
     } SCENE {
         MESSAGE("Weezing used Aromatic Mist!");
         MESSAGE("But it failed!");

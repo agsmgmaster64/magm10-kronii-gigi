@@ -69,6 +69,7 @@ enum
     MENUITEM_BATTLE_IV_VIEW,
     MENUITEM_BATTLE_EFFECTIVENESS,
     MENUITEM_BATTLE_SHOW_TYPES,
+    MENUITEM_BATTLE_BATTLEMENU,
     MENUITEM_BATTLE_CANCEL,
     MENUITEM_BATTLE_COUNT,
 };
@@ -313,6 +314,7 @@ static void DrawChoices_UniqueColors(int selection, int y);
 static void DrawChoices_IvView(int selection, int y);
 static void DrawChoices_Effectiveness(int selection, int y);
 static void DrawChoices_ShowTypes(int selection, int y);
+static void DrawChoices_BattleMenu(int selection, int y);
 static void DrawChoices_MonAnimations(int selection, int y);
 static void DrawChoices_MusicVolume(int selection, int y);
 static void DrawChoices_SFXVolume(int selection, int y);
@@ -388,17 +390,11 @@ static const u16 sScrollBgPalette[] = INCBIN_U16("graphics/ui_options_plus/scrol
 #define TEXT_COLOR_OPTIONS_RED_DARK_FG          13
 #define TEXT_COLOR_OPTIONS_RED_DARK_SHADOW      14
 
-// Menu draw and input functions
-static const struct OptionFuncs sItemFunctionsVisuals[MENUITEM_VISUALS_COUNT] =
-{
-    [MENUITEM_VISUALS_TEXTSPEED]     = {DrawChoices_TextSpeed,     ProcessInput_Options_Four},
-    [MENUITEM_VISUALS_FONT]          = {DrawChoices_Font,          ProcessInput_Options_Two},
-    [MENUITEM_VISUALS_FRAMETYPE]     = {DrawChoices_FrameType,     ProcessInput_FrameType},
-    [MENUITEM_VISUALS_UNIQUE_COLORS] = {DrawChoices_UniqueColors,  ProcessInput_Options_Two},
-    [MENUITEM_VISUALS_ANIMATIONS]    = {DrawChoices_MonAnimations, ProcessInput_Options_Two},
-    [MENUITEM_VISUALS_CANCEL]        = {NULL, NULL},
-};
+static const u8 sText_Empty[]                   = _("");
+static const u8 sText_OptionMenuSave[]          = _("SAVE");
+static const u8 sText_Desc_Options_Save[]       = _("Save your settings.");
 
+// Menu draw and input functions
 static const struct OptionInfo sItemInfoVisuals[MENUITEM_VISUALS_COUNT] =
 {
     [MENUITEM_VISUALS_TEXTSPEED] =
@@ -432,7 +428,7 @@ static const struct OptionInfo sItemInfoVisuals[MENUITEM_VISUALS_COUNT] =
             COMPOUND_STRING("Choose the frame surrounding the\nwindows."),
         },
         .dontScrollDescription = TRUE,
-        .optionDisabledDescription = COMPOUND_STRING("Text can only be in a set\nspeed."),
+        .optionDisabledDescription = COMPOUND_STRING("Only this text frame can be\nused."),
     },
     [MENUITEM_VISUALS_UNIQUE_COLORS] =
     {
@@ -443,7 +439,7 @@ static const struct OptionInfo sItemInfoVisuals[MENUITEM_VISUALS_COUNT] =
             COMPOUND_STRING("Enables unique colors for\nPuppets."),
             COMPOUND_STRING("Disables unique colors for\nPuppets."),
         },
-        .optionDisabledDescription = COMPOUND_STRING("Fonts cannot be changed\ncurrectly."),
+        .optionDisabledDescription = COMPOUND_STRING("Unique colors cannot be enabled\ncurrently."),
     },
     [MENUITEM_VISUALS_ANIMATIONS] =
     {
@@ -454,45 +450,270 @@ static const struct OptionInfo sItemInfoVisuals[MENUITEM_VISUALS_COUNT] =
             COMPOUND_STRING("Animations will play for\nPuppets."),
             COMPOUND_STRING("Animations are disabled for\nPuppets."),
         },
-        .optionDisabledDescription = COMPOUND_STRING(""),
+        .optionDisabledDescription = sText_Empty,
     },
     [MENUITEM_VISUALS_CANCEL] =
     {
-        .optionName = COMPOUND_STRING("SAVE"),
+        .optionName = sText_OptionMenuSave,
         .optionDescriptions = {
-            COMPOUND_STRING("Save your settings."),
+            sText_Desc_Options_Save,
         },
-        .optionDisabledDescription = COMPOUND_STRING(""),
+        .optionDisabledDescription = sText_Empty,
     },
 };
 
-static const struct OptionFuncs sItemFunctionsBattle[MENUITEM_BATTLE_COUNT] =
+
+static const struct OptionInfo sItemInfoBattle[MENUITEM_BATTLE_COUNT] =
 {
-    [MENUITEM_BATTLE_BATTLESCENE]   = {DrawChoices_BattleScene,   ProcessInput_Options_Two},
-    [MENUITEM_BATTLE_BATTLESTYLE]   = {DrawChoices_BattleStyle,   ProcessInput_Options_Two},
-    [MENUITEM_BATTLE_HP_BAR]        = {DrawChoices_BarSpeed,      ProcessInput_Options_Eleven},
-    [MENUITEM_BATTLE_EXP_BAR]       = {DrawChoices_BarSpeed,      ProcessInput_Options_Eleven},
-    [MENUITEM_BATTLE_ANIM_SPEED]    = {DrawChoices_AnimSpeed,     ProcessInput_Options_Four},
-    [MENUITEM_BATTLE_IV_VIEW]       = {DrawChoices_IvView,        ProcessInput_Options_Two},
-    [MENUITEM_BATTLE_EFFECTIVENESS] = {DrawChoices_Effectiveness, ProcessInput_Options_Two},
-    [MENUITEM_BATTLE_SHOW_TYPES]    = {DrawChoices_ShowTypes,     ProcessInput_Options_Two},
-    [MENUITEM_BATTLE_CANCEL]        = {NULL, NULL},
+    [MENUITEM_BATTLE_BATTLESCENE] =
+    {
+        .drawChoices = DrawChoices_BattleScene,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("BATTLE SCENE"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Show the Puppet battle animations."),
+            COMPOUND_STRING("Skip the Puppet battle animations."),
+        },
+        .optionDisabledDescription = COMPOUND_STRING("Text can only be in a set\nspeed."),
+    },
+    [MENUITEM_BATTLE_BATTLESTYLE] =
+    {
+        .drawChoices = DrawChoices_BattleStyle,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("BATTLE STYLE"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Get the option to switch your\nPuppet after the enemies faints."),
+            COMPOUND_STRING("No free switch after fainting the\nenemy Puppets."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_BATTLE_HP_BAR] =
+    {
+        .drawChoices = DrawChoices_BarSpeed,
+        .processInput = ProcessInput_Options_Eleven,
+        .optionName = COMPOUND_STRING("HP BAR"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Choose how fast the HP BAR will get\ndrained in battles."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = COMPOUND_STRING("HP bar speed can only be in a\nset speed."),
+    },
+    [MENUITEM_BATTLE_EXP_BAR] =
+    {
+        .drawChoices = DrawChoices_BarSpeed,
+        .processInput = ProcessInput_Options_Eleven,
+        .optionName = COMPOUND_STRING("EXP BAR"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Choose how fast the EXP BAR will get\nfilled in battles."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = COMPOUND_STRING("EXP bar speed can only be in a\nset speed."),
+    },
+    [MENUITEM_BATTLE_ANIM_SPEED] =
+    {
+        .drawChoices = DrawChoices_AnimSpeed,
+        .processInput = ProcessInput_Options_Four,
+        .optionName = COMPOUND_STRING("ANIM. SPEED"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Choose the speed for battle\nanimations."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = COMPOUND_STRING("Animation speed can only be in\na set speed."),
+    },
+    [MENUITEM_BATTLE_IV_VIEW] =
+    {
+        .drawChoices = DrawChoices_IvView,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("IV VIEW"),
+        .optionDescriptions = {
+            COMPOUND_STRING("IVs can be viewed in the\nsummary by pressing {A_BUTTON}."),
+            COMPOUND_STRING("IVs cannot be viewed in the\nsummary."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_BATTLE_EFFECTIVENESS] =
+    {
+        .drawChoices = DrawChoices_Effectiveness,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("EFFECTIVENESS"),
+        .optionDescriptions = {
+            COMPOUND_STRING("If foe was seen before, moves will\nshow effectiveness when selecting."),
+            COMPOUND_STRING("Moves won't show effectivenes\nwhen selecting."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_BATTLE_SHOW_TYPES] =
+    {
+        .drawChoices = DrawChoices_ShowTypes,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("SHOW TYPES"),
+        .optionDescriptions = {
+            COMPOUND_STRING("If foe was caught, their types will\nshow when selecting a move."),
+            COMPOUND_STRING("Puppet types will not be shown\nin battle."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_BATTLE_BATTLEMENU] =
+    {
+        .drawChoices = DrawChoices_BattleMenu,
+        .processInput = ProcessInput_Options_Four,
+        .optionName = COMPOUND_STRING("SELECT MENU"),
+        .optionDescriptions = {
+            COMPOUND_STRING("NONE"),
+            COMPOUND_STRING("REGULAR"),
+            COMPOUND_STRING("PLUS"),
+            COMPOUND_STRING("DEBUG"),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_BATTLE_CANCEL] =
+    {
+        .optionName = sText_OptionMenuSave,
+        .optionDescriptions = {
+            sText_Desc_Options_Save,
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
 };
 
-static const struct OptionFuncs sItemFunctionsMisc[MENUITEM_MISC_COUNT] =
+
+static const struct OptionInfo sItemInfoMisc[MENUITEM_MISC_COUNT] =
 {
-    [MENUITEM_MISC_SOUND]        = {DrawChoices_Sound,       ProcessInput_Options_Two},
-    [MENUITEM_MISC_MUSIC_VOLUME] = {DrawChoices_MusicVolume, ProcessInput_MusicVolume},
-    [MENUITEM_MISC_SFX_VOLUME]   = {DrawChoices_SFXVolume,   ProcessInput_SoundVolume},
-    [MENUITEM_MISC_CRIES_VOLUME] = {DrawChoices_CriesVolume, ProcessInput_SoundVolume},
-    [MENUITEM_MISC_UNIT_SYSTEM]  = {DrawChoices_UnitSystem,  ProcessInput_Options_Two},
-    [MENUITEM_MISC_L_BUTTONMODE] = {DrawChoices_LButtonMode, ProcessInput_Options_Four},
-    [MENUITEM_MISC_R_BUTTONMODE] = {DrawChoices_RButtonMode, ProcessInput_Options_Four},
-    [MENUITEM_MISC_OVERWORLD_SPEED] = {DrawChoices_OverworldSpeed, ProcessInput_Options_Four},
-    [MENUITEM_MISC_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
-    //[MENUITEM_MISC_START_MENU]   = {DrawChoices_StartMenu,   ProcessInput_Options_Two},
-    //[MENUITEM_MISC_DEBUG_MODE]   = {DrawChoices_DebugMode,   ProcessInput_Options_Two},
-    [MENUITEM_MISC_CANCEL]       = {NULL, NULL},
+    [MENUITEM_MISC_SOUND] =
+    {
+        .drawChoices = DrawChoices_Sound,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("SPEAKERS"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Sound is the same in all speakers.\nRecommended for original hardware."),
+            COMPOUND_STRING("Play the left and right audio channel\nseparately. Great with headphones."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_MUSIC_VOLUME] =
+    {
+        .drawChoices = DrawChoices_MusicVolume,
+        .processInput = ProcessInput_MusicVolume,
+        .optionName = COMPOUND_STRING("MUSIC VOLUME"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Adjust the volume of background music\nhere."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_SFX_VOLUME] =
+    {
+        .drawChoices = DrawChoices_SFXVolume,
+        .processInput = ProcessInput_SoundVolume,
+        .optionName = COMPOUND_STRING("SFX VOLUME"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Adjust the volume of all sound effects\nand fanfares here."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_CRIES_VOLUME] =
+    {
+        .drawChoices = DrawChoices_CriesVolume,
+        .processInput = ProcessInput_SoundVolume,
+        .optionName = COMPOUND_STRING("CRIES VOLUME"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Adjust the volume of all Puppet cries\nhere."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_UNIT_SYSTEM] =
+    {
+        .drawChoices = DrawChoices_UnitSystem,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("UNIT SYSTEM"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Display Berry and Puppet weight\nand size in pounds and inches."),
+            COMPOUND_STRING("Display Berry and Puppet weight\nand size in kilograms and meters."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_L_BUTTONMODE] =
+    {
+        .drawChoices = DrawChoices_LButtonMode,
+        .processInput = ProcessInput_Options_Four,
+        .optionName = COMPOUND_STRING("L BUTTON"),
+        .optionDescriptions = {
+            COMPOUND_STRING("The L button works as normal."),
+            COMPOUND_STRING("The L button acts as another A\nbutton for one-handed play."),
+            COMPOUND_STRING("Running can be toggled by\nthe L Button."),
+            COMPOUND_STRING("An item registered can be used with\nthe L Button."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_R_BUTTONMODE] =
+    {
+        .drawChoices = DrawChoices_RButtonMode,
+        .processInput = ProcessInput_Options_Four,
+        .optionName = COMPOUND_STRING("R BUTTON"),
+        .optionDescriptions = {
+            COMPOUND_STRING("The R button works as normal."),
+            COMPOUND_STRING("When available, the R Button searches\nfor the registered DexNav species."),
+            COMPOUND_STRING("Bike modes can be toggled by\nthe R button."),
+            COMPOUND_STRING("An item registered can be used with\nthe R Button."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_OVERWORLD_SPEED] =
+    {
+        .drawChoices = DrawChoices_OverworldSpeed,
+        .processInput = ProcessInput_Options_Four,
+        .optionName = COMPOUND_STRING("OW. SPEED"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Choose the speed for the\noverworld."),
+        },
+        .dontScrollDescription = TRUE,
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_MATCHCALL] =
+    {
+        .drawChoices = DrawChoices_MatchCall,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("OVERWORLD CALLS"),
+        .optionDescriptions = {
+            COMPOUND_STRING("Trainers will be able to call you,\noffering rematches and info."),
+            COMPOUND_STRING("You will not receive calls.\nSpecial events will still occur."),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    /*
+    [MENUITEM_MISC_START_MENU] =
+    {
+        .drawChoices = DrawChoices_StartMenu,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("START MENU"),
+        .optionDescriptions = {
+            COMPOUND_STRING("ORIGINAL"),
+            COMPOUND_STRING("FULL"),
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
+    [MENUITEM_MISC_DEBUG_MODE] =
+    {
+        .drawChoices = DrawChoices_DebugMode,
+        .processInput = ProcessInput_Options_Two,
+        .optionName = COMPOUND_STRING("DEBUG MODE"),
+        .optionDescriptions = {
+            COMPOUND_STRING("WARNING! Please use at your own\nrisk."),
+            COMPOUND_STRING("Enabling this option will enable\ndebug mode options."),
+        },
+        .optionDisabledDescription = COMPOUND_STRING("Debug mode cannot be enabled\ncurrently."),
+    },
+    */
+    [MENUITEM_MISC_CANCEL] =
+    {
+        .optionName = sText_OptionMenuSave,
+        .optionDescriptions = {
+            sText_Desc_Options_Save,
+        },
+        .optionDisabledDescription = sText_Empty,
+    },
 };
 
 static const struct OptionFuncs sItemFunctionsRandom[MENUITEM_RANDOM_COUNT] =
@@ -537,34 +758,6 @@ static const struct OptionFuncs sItemFunctionsDifficulty[MENUITEM_DIFFICULTY_COU
 };
 
 // Menu left side option names text
-static const u8 sText_OptionMenuSave[] = _("SAVE");
-
-static const u8 sText_TextSpeed[]    = _("TEXT SPEED");
-static const u8 sText_Font[]         = _("FONT");
-static const u8 sText_Frame[]        = _("FRAME");
-static const u8 sText_UniqueColors[] = _("UNIQUE COLORS");
-static const u8 sText_Animations[]   = _("ANIMATIONS");
-static const u8 sText_BattleScene[]    = _("BATTLE SCENE");
-static const u8 sText_BattleStyle[]    = _("BATTLE STYLE");
-static const u8 sText_HpBar[]          = _("HP BAR");
-static const u8 sText_ExpBar[]         = _("EXP BAR");
-static const u8 sText_AnimSpeed[]      = _("ANIM. SPEED");
-static const u8 sText_IvView[]         = _("IV VIEW");
-static const u8 sText_Effectiveness[]  = _("EFFECTIVENESS");
-static const u8 sText_ShowTypes[]      = _("SHOW TYPES");
-static const u8 sText_Sound[]        = _("SPEAKERS");
-static const u8 sText_MusicVolume[]  = _("MUSIC VOLUME");
-static const u8 sText_SFXVolume[]    = _("SFX VOLUME");
-static const u8 sText_CriesVolume[]  = _("CRIES VOLUME");
-static const u8 sText_ButtonMode[]   = _("BUTTON MODE");
-static const u8 sText_UnitSystem[]   = _("UNIT SYSTEM");
-static const u8 sText_MatchCalls[]   = _("OVERWORLD CALLS");
-static const u8 sText_LButtonMode[]  = _("L BUTTON");
-static const u8 sText_RButtonMode[]  = _("R BUTTON");
-static const u8 sText_DebugMode[]    = _("DEBUG MODE");
-static const u8 sText_StartMenu[]    = _("START MENU");
-static const u8 sText_OverworldSpeed[] = _("OW. SPEED");
-
 static const u8 sText_Randomizer[] =                _("RANDOMIZER");
 static const u8 sText_Starter[] =                   _("STARTER POKéMON");
 static const u8 sText_WildPkmn[] =                  _("WILD POKéMON");
@@ -596,49 +789,6 @@ static const u8 sText_ScalingEVs[]          = _("TRAINER EVs");
 static const u8 sText_Save[]                = _("SAVE");
 
 // Descriptions
-static const u8 sText_Empty[]                   = _("");
-static const u8 sText_Desc_Options_Save[]               = _("Save your settings.");
-static const u8 sText_Desc_Visuals_TextSpeed[]          = _("Choose one of the four text-display\nspeeds.");
-static const u8 sText_Desc_Visuals_FontType[]           = _("Choose the font design.");
-static const u8 sText_Desc_Visuals_FrameType[]          = _("Choose the frame surrounding the\nwindows.");
-static const u8 sText_Desc_Visuals_UniqueColorsOn[]     = _("Enables unique colors for\nPuppets.");
-static const u8 sText_Desc_Visuals_UniqueColorsOff[]    = _("Disables unique colors for\nPuppets.");
-static const u8 sText_Desc_Visuals_MonAnimationsOn[]    = _("Animations will play for\nPuppets.");
-static const u8 sText_Desc_Visuals_MonAnimationsOff[]   = _("Animations are disabled\nfor Puppets.");
-static const u8 sText_Desc_Battle_BattleScene_On[]     = _("Show the Puppet battle animations.");
-static const u8 sText_Desc_Battle_BattleScene_Off[]    = _("Skip the Puppet battle animations.");
-static const u8 sText_Desc_Battle_BattleStyle_Shift[]  = _("Get the option to switch your\nPuppet after the enemies faints.");
-static const u8 sText_Desc_Battle_BattleStyle_Set[]    = _("No free switch after fainting the\nenemy Puppets.");
-static const u8 sText_Desc_Battle_HpBar[]              = _("Choose how fast the HP BAR will get\ndrained in battles.");
-static const u8 sText_Desc_Battle_ExpBar[]             = _("Choose how fast the EXP BAR will get\nfilled in battles.");
-static const u8 sText_Desc_Battle_AnimSpeed[]          = _("Choose the speed for battle\nanimations.");
-static const u8 sText_Desc_IvViewOn[]           = _("IVs can be viewed in the\nsummary by pressing {A_BUTTON}.");
-static const u8 sText_Desc_IvViewOff[]          = _("IVs cannot be viewed in the\nsummary.");
-static const u8 sText_Desc_Battle_EffectivenessOn[]    = _("If foe was seen before, moves will\nshow effectiveness when selecting.");
-static const u8 sText_Desc_Battle_EffectivenessOff[]   = _("Moves won't show effectivenes\nwhen selecting.");
-static const u8 sText_Desc_ShowTypesOn[]        = _("If foe was caught, their types will\nshow when selecting a move.");
-static const u8 sText_Desc_ShowTypesOff[]       = _("Puppet types will not be shown\nin battle.");
-static const u8 sText_Desc_SoundMono[]          = _("Sound is the same in all speakers.\nRecommended for original hardware.");
-static const u8 sText_Desc_SoundStereo[]        = _("Play the left and right audio channel\nseperatly. Great with headphones.");
-static const u8 sText_Desc_MusicVolume[]        = _("Adjust the volume of background music\nhere.");
-static const u8 sText_Desc_SFXVolume[]          = _("Adjust the volume of all sound effects\nand fanfares here.");
-static const u8 sText_Desc_CriesVolume[]        = _("Adjust the volume of all Puppet cries\nhere");
-static const u8 sText_Desc_LButtonMode_None[]   = _("The L button works as normal.");
-static const u8 sText_Desc_LButtonMode_LA[]     = _("The L button acts as another A\nbutton for one-handed play.");
-static const u8 sText_Desc_LButtonMode_AutoRun[] = _("Running can be toggled by\nthe L Button.");
-static const u8 sText_Desc_LButtonMode_Register[] = _("An item registered can be used with\nthe L Button.");
-static const u8 sText_Desc_RButtonMode_None[]   = _("The R button works as normal.");
-static const u8 sText_Desc_RButtonMode_DexNav[] = _("When available, the R Button searches\nfor the registered DexNav species.");
-static const u8 sText_Desc_RButtonMode_Bike[]   = _("Bike modes can be toggled by\nthe R button.");
-static const u8 sText_Desc_RButtonMode_Register[] = _("An item registered can be used with\nthe R Button.");
-static const u8 sText_Desc_UnitSystemImperial[] = _("Display Berry and Puppet weight\nand size in pounds and inches.");
-static const u8 sText_Desc_UnitSystemMetric[]   = _("Display Berry and Puppet weight\nand size in kilograms and meters.");
-static const u8 sText_Desc_OverworldCallsOn[]   = _("TRAINERs will be able to call you,\noffering rematches and info.");
-static const u8 sText_Desc_OverworldCallsOff[]  = _("You will not receive calls.\nSpecial events will still occur.");
-static const u8 sText_Desc_DebugModeOn[]        = _("WARNING! Please use at your own\nrisk.");
-static const u8 sText_Desc_DebugModeOff[]       = _("Enabling this option will enable\ndebug mode options.");
-static const u8 sText_Desc_OverworldSpeed[]          = _("Choose the speed for the\noverworld.");
-
 static const u8 sText_Desc_Randomizer_Off[]                  = _("Game will not be randomized.");
 static const u8 sText_Desc_Randomizer_On[]                   = _("Play the game randomized.\nSettings below!");
 static const u8 sText_Desc_Random_Starter_Off[]              = _("Standard starter Puppets.");
@@ -705,45 +855,6 @@ static const u8 sText_Desc_Difficulty_ScalingEVs_Hard[]          = _("All Traine
 static const u8 sText_Desc_Difficulty_ScalingEVs_Extreme[]       = _("All Trainer POKéMON have {COLOR 7}{COLOR 8}252 EVs!\nVery Hard!");
 static const u8 sText_Desc_Challenges_Save[]    = _("Save choices and continue...");
 
-static const u8 *const sOptionMenuItemsNamesVisuals[MENUITEM_VISUALS_COUNT] =
-{
-    [MENUITEM_VISUALS_TEXTSPEED]     = sText_TextSpeed,
-    [MENUITEM_VISUALS_FONT]          = sText_Font,
-    [MENUITEM_VISUALS_FRAMETYPE]     = sText_Frame,
-    [MENUITEM_VISUALS_UNIQUE_COLORS] = sText_UniqueColors,
-    [MENUITEM_VISUALS_ANIMATIONS]    = sText_Animations,
-    [MENUITEM_VISUALS_CANCEL]        = sText_OptionMenuSave,
-};
-
-static const u8 *const sOptionMenuItemsNamesBattle[MENUITEM_BATTLE_COUNT] =
-{
-    [MENUITEM_BATTLE_BATTLESCENE]   = sText_BattleScene,
-    [MENUITEM_BATTLE_BATTLESTYLE]   = sText_BattleStyle,
-    [MENUITEM_BATTLE_HP_BAR]        = sText_HpBar,
-    [MENUITEM_BATTLE_EXP_BAR]       = sText_ExpBar,
-    [MENUITEM_BATTLE_ANIM_SPEED]    = sText_AnimSpeed,
-    [MENUITEM_BATTLE_IV_VIEW]       = sText_IvView,
-    [MENUITEM_BATTLE_EFFECTIVENESS] = sText_Effectiveness,
-    [MENUITEM_BATTLE_SHOW_TYPES]    = sText_ShowTypes,
-    [MENUITEM_BATTLE_CANCEL]        = sText_OptionMenuSave,
-};
-
-static const u8 *const sOptionMenuItemsNamesMisc[MENUITEM_MISC_COUNT] =
-{
-    [MENUITEM_MISC_SOUND]        = sText_Sound,
-    [MENUITEM_MISC_MUSIC_VOLUME] = sText_MusicVolume,
-    [MENUITEM_MISC_SFX_VOLUME]   = sText_SFXVolume,
-    [MENUITEM_MISC_CRIES_VOLUME] = sText_CriesVolume,
-    [MENUITEM_MISC_UNIT_SYSTEM]  = sText_UnitSystem,
-    [MENUITEM_MISC_L_BUTTONMODE] = sText_LButtonMode,
-    [MENUITEM_MISC_R_BUTTONMODE] = sText_RButtonMode,
-    [MENUITEM_MISC_OVERWORLD_SPEED] = sText_OverworldSpeed,
-    [MENUITEM_MISC_MATCHCALL]    = sText_MatchCalls,
-    //[MENUITEM_MISC_START_MENU]   = sText_StartMenu,
-    //[MENUITEM_MISC_DEBUG_MODE]   = sText_DebugMode,
-    [MENUITEM_MISC_CANCEL]       = sText_OptionMenuSave,
-};
-
 static const u8 *const sOptionMenuItemsNamesRandom[MENUITEM_RANDOM_COUNT] =
 {
     [MENUITEM_RANDOM_OFF_ON]                    = sText_Randomizer,
@@ -783,45 +894,6 @@ static const u8 *const sOptionMenuItemsNamesDifficulty[MENUITEM_DIFFICULTY_COUNT
     [MENUITEM_DIFFICULTY_SCALING_IVS]           = sText_ScalingIVs,
     [MENUITEM_DIFFICULTY_SCALING_EVS]           = sText_ScalingEVs,
     [MENUITEM_DIFFICULTY_SAVE]                  = sText_Save,
-};
-
-static const u8 *const sOptionMenuItemDescriptionsVisuals[MENUITEM_VISUALS_COUNT][2] =
-{
-    [MENUITEM_VISUALS_TEXTSPEED]     = {sText_Desc_Visuals_TextSpeed,          sText_Empty},
-    [MENUITEM_VISUALS_FONT]          = {sText_Desc_Visuals_FontType,           sText_Desc_Visuals_FontType},
-    [MENUITEM_VISUALS_FRAMETYPE]     = {sText_Desc_Visuals_FrameType,          sText_Empty},
-    [MENUITEM_VISUALS_UNIQUE_COLORS] = {sText_Desc_Visuals_UniqueColorsOn,     sText_Desc_Visuals_UniqueColorsOff},
-    [MENUITEM_VISUALS_ANIMATIONS]    = {sText_Desc_Visuals_MonAnimationsOn,    sText_Desc_Visuals_MonAnimationsOff},
-    [MENUITEM_VISUALS_CANCEL]        = {sText_Desc_Options_Save,               sText_Empty},
-};
-
-static const u8 *const sOptionMenuItemDescriptionsBattle[MENUITEM_BATTLE_COUNT][2] =
-{
-    [MENUITEM_BATTLE_BATTLESCENE]   = {sText_Desc_Battle_BattleScene_On,     sText_Desc_Battle_BattleScene_Off},
-    [MENUITEM_BATTLE_BATTLESTYLE]   = {sText_Desc_Battle_BattleStyle_Shift,  sText_Desc_Battle_BattleStyle_Set},
-    [MENUITEM_BATTLE_HP_BAR]        = {sText_Desc_Battle_HpBar,              sText_Empty},
-    [MENUITEM_BATTLE_EXP_BAR]       = {sText_Desc_Battle_ExpBar,             sText_Empty},
-    [MENUITEM_BATTLE_ANIM_SPEED]    = {sText_Desc_Battle_AnimSpeed,          sText_Empty},
-    [MENUITEM_BATTLE_IV_VIEW]       = {sText_Desc_IvViewOn,           sText_Desc_IvViewOff},
-    [MENUITEM_BATTLE_EFFECTIVENESS] = {sText_Desc_Battle_EffectivenessOn,    sText_Desc_Battle_EffectivenessOff},
-    [MENUITEM_BATTLE_SHOW_TYPES]    = {sText_Desc_ShowTypesOn,        sText_Desc_ShowTypesOff},
-    [MENUITEM_BATTLE_CANCEL]        = {sText_Desc_Options_Save,              sText_Empty},
-};
-
-static const u8 *const sOptionMenuItemDescriptionsMisc[MENUITEM_MISC_COUNT][4] =
-{
-    [MENUITEM_MISC_SOUND]        = {sText_Desc_SoundMono,            sText_Desc_SoundStereo,        sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_MUSIC_VOLUME] = {sText_Desc_MusicVolume,          sText_Empty,                   sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_SFX_VOLUME]   = {sText_Desc_SFXVolume,            sText_Empty,                   sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_CRIES_VOLUME] = {sText_Desc_CriesVolume,          sText_Empty,                   sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_UNIT_SYSTEM]  = {sText_Desc_UnitSystemImperial,   sText_Desc_UnitSystemMetric,   sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_L_BUTTONMODE] = {sText_Desc_LButtonMode_None,     sText_Desc_LButtonMode_LA,     sText_Desc_LButtonMode_AutoRun, sText_Desc_LButtonMode_Register},
-    [MENUITEM_MISC_R_BUTTONMODE] = {sText_Desc_RButtonMode_None,     sText_Desc_RButtonMode_DexNav, sText_Desc_RButtonMode_Bike,    sText_Desc_RButtonMode_Register},
-    [MENUITEM_MISC_OVERWORLD_SPEED] = {sText_Desc_OverworldSpeed,     sText_Empty, sText_Empty,    sText_Empty},
-    [MENUITEM_MISC_MATCHCALL]    = {sText_Desc_OverworldCallsOn,     sText_Desc_OverworldCallsOff,  sText_Empty,                    sText_Empty},
-    //[MENUITEM_MISC_START_MENU]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
-    //[MENUITEM_MISC_DEBUG_MODE]   = {sText_Desc_DebugModeOn,          sText_Desc_DebugModeOff,       sText_Empty,                    sText_Empty},
-    [MENUITEM_MISC_CANCEL]       = {sText_Desc_Options_Save,         sText_Empty,                   sText_Empty,                    sText_Empty},
 };
 
 static const u8 *const sOptionMenuItemDescriptionsRandomizer[MENUITEM_RANDOM_COUNT][3] =
@@ -866,58 +938,10 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIFFICULTY
 };
 
 // Disabled Descriptions
-static const u8 sText_Desc_Disabled_Textspeed[]     = _("Text can only be in a set\nspeed.");
-static const u8 sText_Desc_Disabled_FontType[]      = _("Fonts cannot be changed\ncurrectly.");
-static const u8 sText_Desc_Disabled_FrameType[]     = _("Only this text frame can be\nused.");
-static const u8 sText_Desc_Disabled_UniqueColors[]  = _("Unique colors cannot be enabled\ncurrently.");
-static const u8 sText_Desc_Disabled_BattleHPBar[]     = _("HP bar speed can only be in a\nset speed.");
-static const u8 sText_Desc_Disabled_BattleExpBar[]    = _("Exp bar speed can only be in a\nset speed.");
-static const u8 sText_Desc_Disabled_BattleAnimSpeed[] = _("Animation speed can only be in\na set speed.");
-static const u8 sText_Desc_Disabled_DebugMode[]    = _("Debug mode cannot be enabled\ncurrently.");
-
 static const u8 sText_Description_Disabled_Random_SimiliarEvolutionLevel[]  = _("Only usable with random starter,\nTrainer, wild or static Puppets.");
 static const u8 sText_Description_Disabled_Random_IncludeLegendaries[]      = _("Only usable with random starter,\nTrainer, wild or static Puppets.");
 static const u8 sText_Description_Disabled_Random_Chaos_Mode[]              = _("Only usable if other random options\nare activated.");
 static const u8 sText_Description_Disabled_Nuzlocke_Nuzlocke[]   = _("Only usable with Nuzlocke!");
-
-static const u8 *const sOptionMenuItemDescriptionsDisabledVisuals[MENUITEM_VISUALS_COUNT] =
-{
-    [MENUITEM_VISUALS_TEXTSPEED]     = sText_Desc_Disabled_Textspeed,
-    [MENUITEM_VISUALS_FONT]          = sText_Desc_Disabled_FontType,
-    [MENUITEM_VISUALS_FRAMETYPE]     = sText_Desc_Disabled_FrameType,
-    [MENUITEM_VISUALS_UNIQUE_COLORS] = sText_Desc_Disabled_UniqueColors,
-    [MENUITEM_VISUALS_ANIMATIONS]    = sText_Empty,
-    [MENUITEM_VISUALS_CANCEL]        = sText_Empty,
-};
-
-static const u8 *const sOptionMenuItemDescriptionsDisabledBattle[MENUITEM_BATTLE_COUNT] =
-{
-    [MENUITEM_BATTLE_BATTLESCENE]   = sText_Empty,
-    [MENUITEM_BATTLE_BATTLESTYLE]   = sText_Empty,
-    [MENUITEM_BATTLE_HP_BAR]        = sText_Desc_Disabled_BattleHPBar,
-    [MENUITEM_BATTLE_EXP_BAR]       = sText_Desc_Disabled_BattleExpBar,
-    [MENUITEM_BATTLE_ANIM_SPEED]    = sText_Desc_Disabled_BattleAnimSpeed,
-    [MENUITEM_BATTLE_IV_VIEW]       = sText_Empty,
-    [MENUITEM_BATTLE_EFFECTIVENESS] = sText_Empty,
-    [MENUITEM_BATTLE_SHOW_TYPES]    = sText_Empty,
-    [MENUITEM_BATTLE_CANCEL]        = sText_Empty,
-};
-
-static const u8 *const sOptionMenuItemDescriptionsDisabledMisc[MENUITEM_MISC_COUNT] =
-{
-    [MENUITEM_MISC_SOUND]        = sText_Empty,
-    [MENUITEM_MISC_MUSIC_VOLUME] = sText_Empty,
-    [MENUITEM_MISC_SFX_VOLUME]   = sText_Empty,
-    [MENUITEM_MISC_CRIES_VOLUME] = sText_Empty,
-    [MENUITEM_MISC_UNIT_SYSTEM]  = sText_Empty,
-    [MENUITEM_MISC_L_BUTTONMODE] = sText_Empty,
-    [MENUITEM_MISC_R_BUTTONMODE] = sText_Empty,
-    [MENUITEM_MISC_OVERWORLD_SPEED]    = sText_Empty,
-    [MENUITEM_MISC_MATCHCALL]    = sText_Empty,
-    //[MENUITEM_MISC_START_MENU]   = sText_Empty,
-    //[MENUITEM_MISC_DEBUG_MODE]   = sText_Desc_Disabled_DebugMode,
-    [MENUITEM_MISC_CANCEL]       = sText_Empty,
-};
 
 static const u8 *const sOptionMenuItemDescriptionsDisabledRandomizer[MENUITEM_RANDOM_COUNT] =
 {
@@ -968,11 +992,11 @@ static const u8 *OptionTextRight(u8 menuItem)
         switch (sOptions->submenu)
         {
         case OPTIONSPLUS_MENU_VISUALS:
-            return sOptionMenuItemsNamesVisuals[menuItem];
+            return sItemInfoVisuals[menuItem].optionName;
         case OPTIONSPLUS_MENU_BATTLE:
-            return sOptionMenuItemsNamesBattle[menuItem];
+            return sItemInfoBattle[menuItem].optionName;
         case OPTIONSPLUS_MENU_MISC:
-            return sOptionMenuItemsNamesMisc[menuItem];
+            return sItemInfoMisc[menuItem].optionName;
         }
         break;
     case MENUMODE_CHALLENGES:
@@ -1089,25 +1113,25 @@ static const u8 *const OptionTextDescription(void)
         {
         case OPTIONSPLUS_MENU_VISUALS:
             if (!CheckConditions(menuItem))
-                return sOptionMenuItemDescriptionsDisabledVisuals[menuItem];
+                return sItemInfoVisuals[menuItem].optionDisabledDescription;
             selection = sOptions->selection.optionsPlus.visuals[menuItem];
-            if (menuItem == MENUITEM_VISUALS_TEXTSPEED || menuItem == MENUITEM_VISUALS_FRAMETYPE)
+            if (sItemInfoVisuals[menuItem].dontScrollDescription)
                 selection = 0;
-            return sOptionMenuItemDescriptionsVisuals[menuItem][selection];
+            return sItemInfoVisuals[menuItem].optionDescriptions[selection];
         case OPTIONSPLUS_MENU_BATTLE:
             if (!CheckConditions(menuItem))
-                return sOptionMenuItemDescriptionsDisabledBattle[menuItem];
+                return sItemInfoBattle[menuItem].optionDisabledDescription;
             selection = sOptions->selection.optionsPlus.battle[menuItem];
-            if (menuItem == MENUITEM_BATTLE_HP_BAR || menuItem == MENUITEM_BATTLE_EXP_BAR || menuItem == MENUITEM_BATTLE_ANIM_SPEED)
+            if (sItemInfoBattle[menuItem].dontScrollDescription)
                 selection = 0;
-            return sOptionMenuItemDescriptionsBattle[menuItem][selection];
+            return sItemInfoBattle[menuItem].optionDescriptions[selection];
         case OPTIONSPLUS_MENU_MISC:
             if (!CheckConditions(menuItem))
-                return sOptionMenuItemDescriptionsDisabledMisc[menuItem];
+                return sItemInfoMisc[menuItem].optionDisabledDescription;
             selection = sOptions->selection.optionsPlus.misc[menuItem];
-            if (menuItem == MENUITEM_MISC_MUSIC_VOLUME || menuItem == MENUITEM_MISC_SFX_VOLUME || menuItem == MENUITEM_MISC_CRIES_VOLUME || menuItem == MENUITEM_MISC_OVERWORLD_SPEED)
+            if (sItemInfoMisc[menuItem].dontScrollDescription)
                 selection = 0;
-            return sOptionMenuItemDescriptionsMisc[menuItem][selection];
+            return sItemInfoMisc[menuItem].optionDescriptions[selection];
         }
         break;
     case MENUMODE_CHALLENGES:
@@ -1366,16 +1390,16 @@ static void DrawChoices(u32 id, int y) //right side draw function
         switch (sOptions->submenu)
         {
         case OPTIONSPLUS_MENU_VISUALS:
-            if (sItemFunctionsVisuals[id].drawChoices != NULL)
-                sItemFunctionsVisuals[id].drawChoices(sOptions->selection.optionsPlus.visuals[id], y);
+            if (sItemInfoVisuals[id].drawChoices != NULL)
+                sItemInfoVisuals[id].drawChoices(sOptions->selection.optionsPlus.visuals[id], y);
             break;
         case OPTIONSPLUS_MENU_BATTLE:
-            if (sItemFunctionsBattle[id].drawChoices != NULL)
-                sItemFunctionsBattle[id].drawChoices(sOptions->selection.optionsPlus.battle[id], y);
+            if (sItemInfoBattle[id].drawChoices != NULL)
+                sItemInfoBattle[id].drawChoices(sOptions->selection.optionsPlus.battle[id], y);
             break;
         case OPTIONSPLUS_MENU_MISC:
-            if (sItemFunctionsMisc[id].drawChoices != NULL)
-                sItemFunctionsMisc[id].drawChoices(sOptions->selection.optionsPlus.misc[id], y);
+            if (sItemInfoMisc[id].drawChoices != NULL)
+                sItemInfoMisc[id].drawChoices(sOptions->selection.optionsPlus.misc[id], y);
             break;
         }
         break;
@@ -1466,6 +1490,7 @@ static void OptionsMenu_LoadOptions(u32 optionMode)
         sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_IV_VIEW]       = gSaveBlock2Ptr->optionsSummaryIvView;
         sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_EFFECTIVENESS] = gSaveBlock2Ptr->optionsEffectiveness;
         sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_SHOW_TYPES]    = gSaveBlock2Ptr->optionsShowTypes;
+        sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_BATTLEMENU]    = gSaveBlock2Ptr->optionsBattleMenu;
 
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_SOUND]        = gSaveBlock2Ptr->optionsSound;
         sOptions->selection.optionsPlus.misc[MENUITEM_MISC_MUSIC_VOLUME] = gSaveBlock2Ptr->optionsVolumeBGM;
@@ -1785,9 +1810,9 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 previousOption = sOptions->selection.optionsPlus.visuals[cursor];
                 if (CheckConditions(cursor))
                 {
-                    if (sItemFunctionsVisuals[cursor].processInput != NULL)
+                    if (sItemInfoVisuals[cursor].processInput != NULL)
                     {
-                        sOptions->selection.optionsPlus.visuals[cursor] = sItemFunctionsVisuals[cursor].processInput(previousOption);
+                        sOptions->selection.optionsPlus.visuals[cursor] = sItemInfoVisuals[cursor].processInput(previousOption);
                         ReDrawAll();
                         DrawDescriptionText();
                     }
@@ -1800,9 +1825,9 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 previousOption = sOptions->selection.optionsPlus.battle[cursor];
                 if (CheckConditions(cursor))
                 {
-                    if (sItemFunctionsBattle[cursor].processInput != NULL)
+                    if (sItemInfoBattle[cursor].processInput != NULL)
                     {
-                        sOptions->selection.optionsPlus.battle[cursor] = sItemFunctionsBattle[cursor].processInput(previousOption);
+                        sOptions->selection.optionsPlus.battle[cursor] = sItemInfoBattle[cursor].processInput(previousOption);
                         ReDrawAll();
                         DrawDescriptionText();
                     }
@@ -1815,9 +1840,9 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 previousOption = sOptions->selection.optionsPlus.misc[cursor];
                 if (CheckConditions(cursor))
                 {
-                    if (sItemFunctionsMisc[cursor].processInput != NULL)
+                    if (sItemInfoMisc[cursor].processInput != NULL)
                     {
-                        sOptions->selection.optionsPlus.misc[cursor] = sItemFunctionsMisc[cursor].processInput(previousOption);
+                        sOptions->selection.optionsPlus.misc[cursor] = sItemInfoMisc[cursor].processInput(previousOption);
                         ReDrawAll();
                         DrawDescriptionText();
                     }
@@ -1943,6 +1968,7 @@ static void OptionsMenu_SaveOptions(void)
         gSaveBlock2Ptr->optionsSummaryIvView    = sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_IV_VIEW];
         gSaveBlock2Ptr->optionsEffectiveness    = sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_EFFECTIVENESS];
         gSaveBlock2Ptr->optionsShowTypes        = sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_SHOW_TYPES];
+        gSaveBlock2Ptr->optionsBattleMenu       = sOptions->selection.optionsPlus.battle[MENUITEM_BATTLE_BATTLEMENU];
 
         gSaveBlock2Ptr->optionsSound            = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_SOUND];
         gSaveBlock2Ptr->optionsVolumeBGM        = sOptions->selection.optionsPlus.misc[MENUITEM_MISC_MUSIC_VOLUME];
@@ -2338,8 +2364,8 @@ static const u8 sText_Register[] = _("REGISTER");
 static const u8 sText_DexNav[] = _("DEXNAV");
 static const u8 sText_BikeSwitch[] = _("BIKE SWITCH");
 static const u8 sText_Placeholder[] = _("WIP");
-static const u8 sText_Fullscreen[] = _("FULLSCREEN");
-static const u8 sText_Original[] = _("ORIGINAL");
+static const u8 sText_Fullscreen[] = _("FULL");
+static const u8 sText_Original[] = _("CLASSIC");
 
 static const u8 sText_Random[]  = _("RANDOM");
 static const u8 sText_3Stage[]  = _("EVO");
@@ -2543,8 +2569,8 @@ static void DrawChoices_StartMenu(int selection, int y)
     u8 styles[2] = {0};
     styles[selection] = 1;
 
-    DrawOptionMenuChoice(sText_Fullscreen, 104, y, styles[0], active);
-    DrawOptionMenuChoice(sText_Original, GetStringRightAlignXOffset(1, sText_Original, 198), y, styles[1], active);
+    DrawOptionMenuChoice(sText_Original, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_Fullscreen, GetStringRightAlignXOffset(1, sText_Fullscreen, 198), y, styles[1], active);
 }
 
 static void DrawChoices_DebugMode(int selection, int y)
@@ -2602,6 +2628,12 @@ static void DrawChoices_ShowTypes(int selection, int y)
 
     DrawOptionMenuChoice(sText_On, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_Off, GetStringRightAlignXOffset(1, sText_Off, 198), y, styles[1], active);
+}
+
+static void DrawChoices_BattleMenu(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_BATTLE_BATTLEMENU);
+    DrawChoices_Options_Four(sAnimSpeedStrings, selection, y, active);
 }
 
 static void DrawChoices_MonAnimations(int selection, int y)

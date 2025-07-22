@@ -10,7 +10,7 @@ static void AnimLightning(struct Sprite *);
 static void AnimLightning_Step(struct Sprite *);
 static void AnimUnusedSpinningFist(struct Sprite *);
 static void AnimUnusedSpinningFist_Step(struct Sprite *);
-static void AnimUnusedCirclingShock(struct Sprite *);
+static void AnimCirclingElectricShock(struct Sprite *);
 static void AnimZapCannonSpark_Step(struct Sprite *);
 static void AnimThunderboltOrb(struct Sprite *);
 static void AnimThunderboltOrb_Step(struct Sprite *);
@@ -83,7 +83,9 @@ static const struct SpriteTemplate sUnusedSpinningFistSpriteTemplate =
     .callback = AnimUnusedSpinningFist,
 };
 
-static const union AnimCmd sAnim_UnusedCirclingShock[] =
+// Previously an unused function named sAnim_CirclingElectricShock
+// Now used for Tera Blast Electric
+static const union AnimCmd sAnim_CirclingElectricShock[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -94,21 +96,24 @@ static const union AnimCmd sAnim_UnusedCirclingShock[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sAnims_UnusedCirclingShock[] =
+// Previously an unused function named sAnims_UnusedCirclingShock
+// Now used for Tera Blast Electric
+const union AnimCmd *const sAnims_CirclingElectricShock[] =
 {
-    sAnim_UnusedCirclingShock,
+    sAnim_CirclingElectricShock,
 };
 
-// Unused
-static const struct SpriteTemplate sUnusedCirclingShockSpriteTemplate =
+// Previously named sUnusedCirclingShockSpriteTemplate
+// Still unused, but renamed for consistency
+static const struct SpriteTemplate sCirclingElectricShockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SHOCK,
     .paletteTag = ANIM_TAG_SHOCK,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = sAnims_UnusedCirclingShock,
+    .anims = sAnims_CirclingElectricShock,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimUnusedCirclingShock,
+    .callback = AnimCirclingElectricShock,
 };
 
 const struct SpriteTemplate gSparkElectricitySpriteTemplate =
@@ -675,7 +680,7 @@ static void AnimUnusedSpinningFist_Step(struct Sprite *sprite)
         DestroySpriteAndMatrix(sprite);
 }
 
-static void AnimUnusedCirclingShock(struct Sprite *sprite)
+static void AnimCirclingElectricShock(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
@@ -1299,7 +1304,7 @@ static bool8 CreateVoltTackleBolt(struct Task *task, u8 taskId)
     u32 spriteId;
     switch(gAnimMoveIndex)
     {
-        case MOVE_FAIRY_LOCK:
+        case MOVE_DEMON_BOOK:
             spriteId = CreateSprite(&gFairyLockChainsSpriteTemplate, task->data[3], task->data[5] + 10, 35);
             break;
         case MOVE_COLLISION_COURSE:
@@ -1308,13 +1313,13 @@ static bool8 CreateVoltTackleBolt(struct Task *task, u8 taskId)
         default:
             spriteId = CreateSprite(&gVoltTackleBoltSpriteTemplate, task->data[3], task->data[5], 35);
     }
-    bool32 doDestroyOamMatrix = (gAnimMoveIndex == MOVE_FAIRY_LOCK) || (gAnimMoveIndex == MOVE_COLLISION_COURSE);
+    bool32 doDestroyOamMatrix = (gAnimMoveIndex == MOVE_DEMON_BOOK) || (gAnimMoveIndex == MOVE_COLLISION_COURSE);
 
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].data[6] = taskId;
         gSprites[spriteId].data[7] = 7;
-        gSprites[spriteId].data[1] = (gAnimMoveIndex == MOVE_FAIRY_LOCK) ? 25 : 12; // How long the chains / bolts stay on screen.
+        gSprites[spriteId].data[1] = (gAnimMoveIndex == MOVE_DEMON_BOOK) ? 25 : 12; // How long the chains / bolts stay on screen.
         gSprites[spriteId].data[2] = doDestroyOamMatrix; // Whether to destroy the Oam Matrix.
         task->data[7]++;
     }

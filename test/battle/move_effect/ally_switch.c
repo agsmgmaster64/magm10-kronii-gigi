@@ -94,7 +94,7 @@ DOUBLE_BATTLE_TEST("Ally Switch does not redirect moves done by pokemon with Sta
 {
     u16 ability;
     PARAMETRIZE { ability = ABILITY_STALWART; }
-    PARAMETRIZE { ability = ABILITY_PROPELLER_TAIL; }
+    PARAMETRIZE { ability = ABILITY_FOUL_AROMA; }
     PARAMETRIZE { ability = ABILITY_TELEPATHY; }
 
     GIVEN {
@@ -111,7 +111,7 @@ DOUBLE_BATTLE_TEST("Ally Switch does not redirect moves done by pokemon with Sta
 
         MESSAGE("The opposing Kadabra used Scratch!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SCRATCH, opponentLeft);
-        HP_BAR((ability == ABILITY_STALWART || ability == ABILITY_PROPELLER_TAIL) ? playerLeft : playerRight);
+        HP_BAR((ability == ABILITY_STALWART || ability == ABILITY_FOUL_AROMA) ? playerLeft : playerRight);
     }
 }
 
@@ -147,7 +147,7 @@ DOUBLE_BATTLE_TEST("Ally Switch - move fails if the target was ally which change
     u32 move = MOVE_NONE;
 
     PARAMETRIZE { move = MOVE_COACHING; }
-    PARAMETRIZE { move = MOVE_AROMATIC_MIST; }
+    PARAMETRIZE { move = MOVE_GROUP_PRANK; }
     PARAMETRIZE { move = MOVE_HOLD_HANDS; }
 
     GIVEN {
@@ -308,6 +308,28 @@ DOUBLE_BATTLE_TEST("Ally Switch swaps Illusion data")
         TURN { MOVE(playerLeft, MOVE_ALLY_SWITCH); }
     } THEN {
         EXPECT(&gPlayerParty[2] == gBattleStruct->illusion[0].mon);
+    }
+}
+
+DOUBLE_BATTLE_TEST("Ally switch updates last used moves for Mimic")
+{
+    GIVEN {
+        PLAYER(SPECIES_XATU)     { Speed(100); }
+        PLAYER(SPECIES_RIOLU)    { Speed(150); }
+        OPPONENT(SPECIES_FEAROW) { Speed(20); }
+        OPPONENT(SPECIES_ARON)   { Speed(30); }
+    } WHEN {
+        TURN { MOVE(playerRight, MOVE_FAKE_OUT, target: opponentRight); MOVE(playerLeft, MOVE_ALLY_SWITCH); 
+               MOVE(opponentLeft, MOVE_MIMIC, target: playerLeft);
+             }
+    } SCENE {
+        MESSAGE("Riolu used Fake Out!");
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_FAKE_OUT, playerRight);
+        MESSAGE("Xatu used Ally Switch!");
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_ALLY_SWITCH, playerLeft);
+        MESSAGE("Xatu and Riolu switched places!");
+        MESSAGE("The opposing Fearow used Mimic!");
+        MESSAGE("The opposing Fearow learned Fake Out!");
     }
 }
 

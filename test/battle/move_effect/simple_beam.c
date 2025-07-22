@@ -58,7 +58,7 @@ SINGLE_BATTLE_TEST("Simple Beam fails if target has an ability that can't be ove
     PARAMETRIZE { species = SPECIES_CRAMORANT; ability = ABILITY_GULP_MISSILE; }
     PARAMETRIZE { species = SPECIES_EISCUE; ability = ABILITY_ICE_FACE; }
     PARAMETRIZE { species = SPECIES_CALYREX_ICE; ability = ABILITY_HOLY_SURGE; }
-    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_AS_ONE_SHADOW_RIDER; }
+    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_YIN_AND_YANG; }
     PARAMETRIZE { species = SPECIES_PALAFIN_ZERO; ability = ABILITY_ZERO_TO_HERO; }
     PARAMETRIZE { species = SPECIES_TATSUGIRI; ability = ABILITY_COMMANDER; }
 

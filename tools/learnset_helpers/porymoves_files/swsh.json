@@ -32155,7 +32155,7 @@
       },
       {
         "Level": 8,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 12,
@@ -55235,7 +55235,7 @@
     "LevelMoves": [
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,
@@ -58027,7 +58027,7 @@
     "LevelMoves": [
       {
         "Level": 1,
-        "Move": "MOVE_FAIRY_LOCK"
+        "Move": "MOVE_DEMON_BOOK"
       },
       {
         "Level": 1,
@@ -61177,7 +61177,7 @@
       "MOVE_DAZZLING_GLEAM"
     ],
     "EggMoves": [
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_MOONBLAST",
       "MOVE_STICKY_WEB"
     ],
@@ -61289,7 +61289,7 @@
       "MOVE_POLLEN_PUFF"
     ],
     "EggMoves": [
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_MOONBLAST",
       "MOVE_STICKY_WEB"
     ],
@@ -63147,7 +63147,7 @@
       },
       {
         "Level": 32,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 36,
@@ -63232,7 +63232,7 @@
       },
       {
         "Level": 40,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 46,
@@ -63342,7 +63342,7 @@
       },
       {
         "Level": 40,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 46,
@@ -65674,7 +65674,7 @@
       },
       {
         "Level": 30,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 35,
@@ -72568,7 +72568,7 @@
       },
       {
         "Level": 6,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 12,
@@ -72665,7 +72665,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,
@@ -72827,7 +72827,7 @@
     ],
     "EggMoves": [
       "MOVE_AFTER_YOU",
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_NUZZLE",
       "MOVE_QUASH"
     ],
@@ -72924,7 +72924,7 @@
     ],
     "EggMoves": [
       "MOVE_AFTER_YOU",
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_NUZZLE",
       "MOVE_QUASH"
     ],
@@ -73042,7 +73042,7 @@
     ],
     "EggMoves": [
       "MOVE_AFTER_YOU",
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_NUZZLE",
       "MOVE_QUASH"
     ],
@@ -74313,7 +74313,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 5,
@@ -74397,7 +74397,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,
@@ -79849,7 +79849,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 12,

@@ -36921,7 +36921,7 @@
       },
       {
         "Level": 8,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 12,
@@ -59901,7 +59901,7 @@
       },
       {
         "Level": 16,
-        "Move": "MOVE_FAIRY_LOCK"
+        "Move": "MOVE_DEMON_BOOK"
       },
       {
         "Level": 20,
@@ -63493,7 +63493,7 @@
       "MOVE_SKITTER_SMACK"
     ],
     "EggMoves": [
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_MOONBLAST",
       "MOVE_STICKY_WEB"
     ],
@@ -63603,7 +63603,7 @@
       "MOVE_PSYCHIC_NOISE"
     ],
     "EggMoves": [
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_MOONBLAST",
       "MOVE_STICKY_WEB"
     ],
@@ -64999,7 +64999,7 @@
       },
       {
         "Level": 32,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       }
     ],
     "PreEvoMoves": [],
@@ -65082,7 +65082,7 @@
       },
       {
         "Level": 40,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 46,
@@ -65185,7 +65185,7 @@
       },
       {
         "Level": 40,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 46,
@@ -70446,7 +70446,7 @@
       },
       {
         "Level": 6,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 12,
@@ -70541,7 +70541,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,
@@ -70649,7 +70649,7 @@
       },
       {
         "Level": 15,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 20,
@@ -70747,7 +70747,7 @@
       },
       {
         "Level": 15,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 20,
@@ -70849,7 +70849,7 @@
       },
       {
         "Level": 15,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 20,
@@ -71432,7 +71432,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 5,
@@ -71517,7 +71517,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 15,
@@ -91623,7 +91623,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,

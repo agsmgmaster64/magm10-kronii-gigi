@@ -26,7 +26,7 @@ SINGLE_BATTLE_TEST("Gastro Acid fails if target has a banned ability")
     // Needs confirmation since those abilities can be suppressed by Neutralizing Gas
     // PARAMETRIZE { species = SPECIES_IRON_MOTH; ability = ABILITY_QUARK_DRIVE; }
     // PARAMETRIZE { species = SPECIES_WALKING_WAKE; ability = ABILITY_PROTOSYNTHESIS; }
-    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_AS_ONE_SHADOW_RIDER; }
+    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_YIN_AND_YANG; }
     PARAMETRIZE { species = SPECIES_CALYREX_ICE; ability = ABILITY_HOLY_SURGE; }
 
     GIVEN {

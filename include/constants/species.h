@@ -591,37 +591,37 @@
 #define SPECIES_CHIBI_MIYOI                             580
 #define SPECIES_NORMAL_MIYOI                            581
 #define SPECIES_VANILLITE                               582 // Placeholder
-#define SPECIES_VANILLISH                               583
-#define SPECIES_VANILLUXE                               584
-#define SPECIES_DEERLING_SPRING                         585
-#define SPECIES_SAWSBUCK_SPRING                         586
+#define SPECIES_CHIBI_EIKA                              583
+#define SPECIES_NORMAL_EIKA                             584
+#define SPECIES_DEERLING_SPRING                         585 // Placeholder
+#define SPECIES_SAWSBUCK_SPRING                         586 // Urumi
 #define SPECIES_EMOLGA                                  587
 #define SPECIES_KARRABLAST                              588
-#define SPECIES_ESCAVALIER                              589
-#define SPECIES_FOONGUS                                 590
-#define SPECIES_AMOONGUSS                               591
-#define SPECIES_FRILLISH                                592
+#define SPECIES_CHIBI_KUTAKA                            589
+#define SPECIES_NORMAL_KUTAKA                           590
+#define SPECIES_AMOONGUSS                               591 // Placeholder
+#define SPECIES_FRILLISH                                592 // Yachie
 #define SPECIES_JELLICENT                               593
 #define SPECIES_ALOMOMOLA                               594
-#define SPECIES_JOLTIK                                  595
+#define SPECIES_JOLTIK                                  595 // Mayumi
 #define SPECIES_GALVANTULA                              596
 #define SPECIES_FERROSEED                               597
-#define SPECIES_FERROTHORN                              598
-#define SPECIES_KLINK                                   599
-#define SPECIES_KLANG                                   600
-#define SPECIES_KLINKLANG                               601
-#define SPECIES_TYNAMO                                  602
-#define SPECIES_EELEKTRIK                               603
-#define SPECIES_EELEKTROSS                              604
+#define SPECIES_CHIBI_KEIKI                             598
+#define SPECIES_NORMAL_KEIKI                            599
+#define SPECIES_KLANG                                   600 // Placeholder
+#define SPECIES_CHIBI_SAKI                              601
+#define SPECIES_NORMAL_SAKI                             602
+#define SPECIES_EELEKTRIK                               603 // Placeholder
+#define SPECIES_EELEKTROSS                              604 // Yuuma
 #define SPECIES_ELGYEM                                  605
 #define SPECIES_BEHEEYEM                                606
-#define SPECIES_LITWICK                                 607
+#define SPECIES_LITWICK                                 607 // Mike (Deltarune)
 #define SPECIES_LAMPENT                                 608
 #define SPECIES_CHANDELURE                              609
-#define SPECIES_AXEW                                    610
-#define SPECIES_FRAXURE                                 611
-#define SPECIES_HAXORUS                                 612
-#define SPECIES_CUBCHOO                                 613
+#define SPECIES_CHIBI_TAKANE                            610
+#define SPECIES_NORMAL_TAKANE                           611
+#define SPECIES_DEFENSE_TAKANE                          612
+#define SPECIES_TECH_TAKANE                             613
 #define SPECIES_BEARTIC                                 614
 #define SPECIES_CRYOGONAL                               615
 #define SPECIES_SHELMET                                 616

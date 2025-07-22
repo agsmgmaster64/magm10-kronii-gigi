@@ -5,6 +5,7 @@
 #include "battle_main.h"
 #include "battle_message.h"
 #include "battle_setup.h"
+#include "battle_environment.h"
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"
@@ -26,6 +27,7 @@
 #include "constants/trainers.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_partner.h"
+#include "data/battle_environment.h"
 
 // .rodata
 
@@ -609,329 +611,8 @@ const struct WindowTemplate *const gBattleWindowTemplates[] =
     [B_WIN_TYPE_ARENA]  = sBattleArenaWindowTemplates,
 };
 
-const struct BattleBackground sBattleEnvironmentTable[] =
-{
-    [BATTLE_ENVIRONMENT_GRASS] =
-    {
-        .tileset = gBattleEnvironmentTiles_TallGrass,
-        .tilemap = gBattleEnvironmentTilemap_TallGrass,
-        .entryTileset = gBattleEnvironmentAnimTiles_TallGrass,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_TallGrass,
-        .palette = gBattleEnvironmentPalette_TallGrass,
-    },
-
-    [BATTLE_ENVIRONMENT_LONG_GRASS] =
-    {
-        .tileset = gBattleEnvironmentTiles_LongGrass,
-        .tilemap = gBattleEnvironmentTilemap_LongGrass,
-        .entryTileset = gBattleEnvironmentAnimTiles_LongGrass,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_LongGrass,
-        .palette = gBattleEnvironmentPalette_LongGrass,
-    },
-
-    [BATTLE_ENVIRONMENT_SAND] =
-    {
-        .tileset = gBattleEnvironmentTiles_Sand,
-        .tilemap = gBattleEnvironmentTilemap_Sand,
-        .entryTileset = gBattleEnvironmentAnimTiles_Sand,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Sand,
-        .palette = gBattleEnvironmentPalette_Sand,
-    },
-
-    [BATTLE_ENVIRONMENT_UNDERWATER] =
-    {
-        .tileset = gBattleEnvironmentTiles_Underwater,
-        .tilemap = gBattleEnvironmentTilemap_Underwater,
-        .entryTileset = gBattleEnvironmentAnimTiles_Underwater,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Underwater,
-        .palette = gBattleEnvironmentPalette_Underwater,
-    },
-
-    [BATTLE_ENVIRONMENT_WATER] =
-    {
-        .tileset = gBattleEnvironmentTiles_Water,
-        .tilemap = gBattleEnvironmentTilemap_Water,
-        .entryTileset = gBattleEnvironmentAnimTiles_Water,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Water,
-        .palette = gBattleEnvironmentPalette_Water,
-    },
-
-    [BATTLE_ENVIRONMENT_POND] =
-    {
-        .tileset = gBattleEnvironmentTiles_PondWater,
-        .tilemap = gBattleEnvironmentTilemap_PondWater,
-        .entryTileset = gBattleEnvironmentAnimTiles_PondWater,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_PondWater,
-        .palette = gBattleEnvironmentPalette_PondWater,
-    },
-
-    [BATTLE_ENVIRONMENT_MOUNTAIN] =
-    {
-        .tileset = gBattleEnvironmentTiles_Rock,
-        .tilemap = gBattleEnvironmentTilemap_Rock,
-        .entryTileset = gBattleEnvironmentAnimTiles_Rock,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Rock,
-        .palette = gBattleEnvironmentPalette_Rock,
-    },
-
-    [BATTLE_ENVIRONMENT_CAVE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Cave,
-        .tilemap = gBattleEnvironmentTilemap_Cave,
-        .entryTileset = gBattleEnvironmentAnimTiles_Cave,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Cave,
-        .palette = gBattleEnvironmentPalette_Cave,
-    },
-
-    [BATTLE_ENVIRONMENT_BUILDING] =
-    {
-        .tileset = gBattleEnvironmentTiles_Building,
-        .tilemap = gBattleEnvironmentTilemap_Building,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Building,
-    },
-
-    [BATTLE_ENVIRONMENT_PLAIN] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_SOARING] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_SKY_PILLAR] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_BURIAL_GROUND] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_PUDDLE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_MARSH] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_SNOW] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_TallGrass,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_TallGrass,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_ICE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Ice,
-        .tilemap = gBattleEnvironmentTilemap_Ice,
-        .entryTileset = gBattleEnvironmentAnimTiles_Cave,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Cave,
-        .palette = gBattleEnvironmentPalette_Ice,
-    },
-
-    [BATTLE_ENVIRONMENT_VOLCANO] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_DISTORTION_WORLD] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_SPACE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_ULTRA_SPACE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Plain,
-        .tilemap = gBattleEnvironmentTilemap_Plain,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Plain,
-    },
-
-    [BATTLE_ENVIRONMENT_FRONTIER] =
-    {
-        .tileset = gBattleEnvironmentTiles_Building,
-        .tilemap = gBattleEnvironmentTilemap_Building,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_Frontier,
-    },
-
-    [BATTLE_ENVIRONMENT_GYM] =
-    {
-        .tileset = gBattleEnvironmentTiles_Building,
-        .tilemap = gBattleEnvironmentTilemap_Building,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_BuildingGym,
-    },
-
-    [BATTLE_ENVIRONMENT_LEADER] =
-    {
-        .tileset = gBattleEnvironmentTiles_Building,
-        .tilemap = gBattleEnvironmentTilemap_Building,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_BuildingLeader,
-    },
-
-    [BATTLE_ENVIRONMENT_MAGMA] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumMagma,
-    },
-
-    [BATTLE_ENVIRONMENT_AQUA] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumAqua,
-    },
-
-    [BATTLE_ENVIRONMENT_SIDNEY] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumSidney,
-    },
-
-    [BATTLE_ENVIRONMENT_PHOEBE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumPhoebe,
-    },
-
-    [BATTLE_ENVIRONMENT_GLACIA] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumGlacia,
-    },
-
-    [BATTLE_ENVIRONMENT_DRAKE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumDrake,
-    },
-
-    [BATTLE_ENVIRONMENT_CHAMPION] =
-    {
-        .tileset = gBattleEnvironmentTiles_Stadium,
-        .tilemap = gBattleEnvironmentTilemap_Stadium,
-        .entryTileset = gBattleEnvironmentAnimTiles_Building,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
-        .palette = gBattleEnvironmentPalette_StadiumWallace,
-    },
-
-    [BATTLE_ENVIRONMENT_GROUDON] =
-    {
-        .tileset = gBattleEnvironmentTiles_Cave,
-        .tilemap = gBattleEnvironmentTilemap_Cave,
-        .entryTileset = gBattleEnvironmentAnimTiles_Cave,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Cave,
-        .palette = gBattleEnvironmentPalette_Groudon,
-    },
-
-    [BATTLE_ENVIRONMENT_KYOGRE] =
-    {
-        .tileset = gBattleEnvironmentTiles_Water,
-        .tilemap = gBattleEnvironmentTilemap_Water,
-        .entryTileset = gBattleEnvironmentAnimTiles_Underwater,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Underwater,
-        .palette = gBattleEnvironmentPalette_Kyogre,
-    },
-
-    [BATTLE_ENVIRONMENT_RAYQUAZA] =
-    {
-        .tileset = gBattleEnvironmentTiles_Rayquaza,
-        .tilemap = gBattleEnvironmentTilemap_Rayquaza,
-        .entryTileset = gBattleEnvironmentAnimTiles_Rayquaza,
-        .entryTilemap = gBattleEnvironmentAnimTilemap_Rayquaza,
-        .palette = gBattleEnvironmentPalette_Rayquaza,
-    },
-};
-
-static const struct {
-    u8 mapScene;
-    u8 battleEnvironment;
-} sMapBattleSceneMapping[] = {
-    {MAP_BATTLE_SCENE_GYM,      BATTLE_ENVIRONMENT_GYM},
-    {MAP_BATTLE_SCENE_MAGMA,    BATTLE_ENVIRONMENT_MAGMA},
-    {MAP_BATTLE_SCENE_AQUA,     BATTLE_ENVIRONMENT_AQUA},
-    {MAP_BATTLE_SCENE_SIDNEY,   BATTLE_ENVIRONMENT_SIDNEY},
-    {MAP_BATTLE_SCENE_PHOEBE,   BATTLE_ENVIRONMENT_PHOEBE},
-    {MAP_BATTLE_SCENE_GLACIA,   BATTLE_ENVIRONMENT_GLACIA},
-    {MAP_BATTLE_SCENE_DRAKE,    BATTLE_ENVIRONMENT_DRAKE},
-    {MAP_BATTLE_SCENE_FRONTIER, BATTLE_ENVIRONMENT_FRONTIER}
-};
-
+// If current map scene equals any of the values in sMapBattleSceneMapping,
+// use its battle terrain value. Otherwise, use the default.
 static u8 GetBattleEnvironmentByMapScene(u8 mapBattleScene)
 {
     int i;
@@ -943,32 +624,34 @@ static u8 GetBattleEnvironmentByMapScene(u8 mapBattleScene)
     return BATTLE_ENVIRONMENT_PLAIN;
 }
 
-static void LoadBattleEnvironmentGfx(u8 environment)
+// Loads the initial battle terrain.
+static void LoadBattleEnvironmentGfx(u16 terrain)
 {
-    if (environment >= NELEMS(sBattleEnvironmentTable))
-        environment = BATTLE_ENVIRONMENT_PLAIN;
+    if (terrain >= NELEMS(gBattleEnvironmentInfo))
+        terrain = BATTLE_ENVIRONMENT_PLAIN;  // If higher than the number of entries in gBattleEnvironmentInfo, use the default.
     // Copy to bg3
-    DecompressDataWithHeaderVram(sBattleEnvironmentTable[environment].tileset, (void *)BG_CHAR_ADDR(2));
-    DecompressDataWithHeaderVram(sBattleEnvironmentTable[environment].tilemap, (void *)BG_SCREEN_ADDR(26));
-    LoadPalette(sBattleEnvironmentTable[environment].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[terrain].background.tileset, (void *)(BG_CHAR_ADDR(2)));
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[terrain].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
+    LoadPalette(gBattleEnvironmentInfo[terrain].background.palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
 }
 
-static void LoadBattleEnvironmentEntryGfx(u8 environment)
+// Loads the entry associated with the battle terrain.
+// This can be the grass moving on the screen at the start of a wild encounter in tall grass.
+static void LoadBattleEnvironmentEntryGfx(u16 terrain)
 {
-    if (environment >= NELEMS(sBattleEnvironmentTable))
-        environment = BATTLE_ENVIRONMENT_PLAIN;
+    if (terrain >= NELEMS(gBattleEnvironmentInfo))
+        terrain = BATTLE_ENVIRONMENT_PLAIN;
     // Copy to bg1
-    DecompressDataWithHeaderVram(sBattleEnvironmentTable[environment].entryTileset, (void *)BG_CHAR_ADDR(1));
-    DecompressDataWithHeaderVram(sBattleEnvironmentTable[environment].entryTilemap, (void *)BG_SCREEN_ADDR(28));
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[terrain].background.entryTileset, (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[terrain].background.entryTilemap, (void *)BG_SCREEN_ADDR(28));
 }
 
 static u8 GetBattleEnvironmentOverride(void)
 {
-    u8 battleScene;
+    u8 battleScene = GetCurrentMapBattleScene();
+
     if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
-    {
         return BATTLE_ENVIRONMENT_FRONTIER;
-    }
     else if (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY)
     {
         switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL))
@@ -979,25 +662,22 @@ static u8 GetBattleEnvironmentOverride(void)
             return BATTLE_ENVIRONMENT_KYOGRE;
         case SPECIES_LAST_WORD_KANAKO:
             return BATTLE_ENVIRONMENT_RAYQUAZA;
+        default:
+            return gBattleEnvironment;
         }
     }
     else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
-        enum TrainerClassID trainerClass = GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA);
+        u32 trainerClass = GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA);
         if (trainerClass == TRAINER_CLASS_LEADER)
-        {
             return BATTLE_ENVIRONMENT_LEADER;
-        }
         else if (trainerClass == TRAINER_CLASS_CHAMPION)
-        {
             return BATTLE_ENVIRONMENT_CHAMPION;
-        }
     }
-    battleScene = GetCurrentMapBattleScene();
+
     if (battleScene == MAP_BATTLE_SCENE_NORMAL)
-    {
         return gBattleEnvironment;
-    }
+
     return GetBattleEnvironmentByMapScene(battleScene);
 }
 
@@ -1399,7 +1079,7 @@ void DrawBattleEntryBackground(void)
         }
         else
         {
-            LoadBattleEnvironmentEntryGfx(BATTLE_ENVIRONMENT_BUILDING);
+            LoadBattleEnvironmentEntryGfx(gBattleEnvironment);
         }
     }
 }
@@ -1421,13 +1101,13 @@ bool8 LoadChosenBattleElement(u8 caseId)
         LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         break;
     case 3:
-        DecompressDataWithHeaderVram(sBattleEnvironmentTable[GetBattleEnvironmentOverride()].tileset, (void *)BG_CHAR_ADDR(2));
+        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
         break;
     case 4:
-        DecompressDataWithHeaderVram(sBattleEnvironmentTable[GetBattleEnvironmentOverride()].tilemap, (void *)BG_SCREEN_ADDR(26));
+        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
         break;
     case 5:
-        LoadPalette(sBattleEnvironmentTable[GetBattleEnvironmentOverride()].palette, 0x20, 0x60);
+        LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
         break;
     case 6:
         LoadBattleMenuWindowGfx();

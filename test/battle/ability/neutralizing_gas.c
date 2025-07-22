@@ -278,7 +278,7 @@ SINGLE_BATTLE_TEST("Neutralizing Gas exiting the field does not activate abiliti
     u32 species, ability;
     // These are the only abilities that could immediately activate again
     PARAMETRIZE { species = SPECIES_KOMALA; ability = ABILITY_COMATOSE; }
-    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_AS_ONE_SHADOW_RIDER; }
+    PARAMETRIZE { species = SPECIES_CALYREX_SHADOW; ability = ABILITY_YIN_AND_YANG; }
     PARAMETRIZE { species = SPECIES_CALYREX_ICE; ability = ABILITY_AS_ONE_ICE_RIDER; }
 
     GIVEN {

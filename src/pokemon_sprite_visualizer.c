@@ -3,6 +3,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_gfx_sfx_util.h"
+#include "battle_environment.h"
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"
@@ -42,7 +43,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
-extern const struct BattleBackground sBattleEnvironmentTable[];
+extern const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT];
 extern const struct CompressedSpriteSheet gSpriteSheet_EnemyShadow;
 extern const struct CompressedSpriteSheet gSpriteSheet_EnemyShadowsSized;
 extern const struct SpriteTemplate gSpriteTemplate_EnemyShadow;
@@ -407,6 +408,7 @@ const u8 gBattleBackgroundTerrainNames[][26] =
     [BATTLE_ENVIRONMENT_KYOGRE]           = _("KYOGRE                   "),
     [BATTLE_ENVIRONMENT_RAYQUAZA]         = _("RAYQUAZA                 "),
 };
+
 const u8 sShadowSizeLabels[][4] =
 {
     [SHADOW_SIZE_S]                 = _(" S"),
@@ -414,6 +416,7 @@ const u8 sShadowSizeLabels[][4] =
     [SHADOW_SIZE_L]                 = _(" L"),
     [SHADOW_SIZE_XL_BATTLE_ONLY]    = _(" XL"),
 };
+
 //Function declarations
 static void PrintDigitChars(struct PokemonSpriteVisualizer *data);
 static void SetUpModifyArrows(struct PokemonSpriteVisualizer *data);
@@ -930,11 +933,11 @@ static void LoadAndCreateEnemyShadowSpriteCustom(struct PokemonSpriteVisualizer 
 }
 
 //Battle background functions
-static void LoadBattleBg(enum BattleEnvironment battleEnvironment)
+static void LoadBattleBg(enum BattleEnvironments battleEnvironment)
 {
-    DecompressDataWithHeaderVram(sBattleEnvironmentTable[battleEnvironment].tileset, (void*)(BG_CHAR_ADDR(2)));
-    DecompressDataWithHeaderVram(sBattleEnvironmentTable[battleEnvironment].tilemap, (void*)(BG_SCREEN_ADDR(26)));
-    LoadPalette(sBattleEnvironmentTable[battleEnvironment].palette, 0x20, 0x60);
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[battleEnvironment].background.tileset, (void*)(BG_CHAR_ADDR(2)));
+    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[battleEnvironment].background.tilemap, (void*)(BG_SCREEN_ADDR(26)));
+    LoadPalette(gBattleEnvironmentInfo[battleEnvironment].background.palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
 }
 
 static void PrintBattleBgName(u8 taskId)
@@ -943,7 +946,7 @@ static void PrintBattleBgName(u8 taskId)
     u8 fontId = 0;
     u8 text[30+1];
 
-    StringCopy(text, gBattleBackgroundTerrainNames[data->battleTerrain]);
+    StringCopy(text, gBattleBackgroundTerrainNames[data->battleEnvironment]);
     AddTextPrinterParameterized(WIN_BOTTOM_RIGHT, fontId, text, 0, 24, 0, NULL);
 }
 
@@ -953,22 +956,22 @@ static void UpdateBattleBg(u8 taskId, bool8 increment)
 
     if (increment)
     {
-        if (data->battleTerrain == BATTLE_ENVIRONMENT_RAYQUAZA)
-            data->battleTerrain = BATTLE_ENVIRONMENT_GRASS;
+        if (data->battleEnvironment == BATTLE_ENVIRONMENT_RAYQUAZA)
+            data->battleEnvironment = BATTLE_ENVIRONMENT_GRASS;
         else
-            data->battleTerrain += 1;
+            data->battleEnvironment += 1;
     }
     else
     {
-        if (data->battleTerrain == BATTLE_ENVIRONMENT_GRASS)
-            data->battleTerrain = BATTLE_ENVIRONMENT_RAYQUAZA;
+        if (data->battleEnvironment == BATTLE_ENVIRONMENT_GRASS)
+            data->battleEnvironment = BATTLE_ENVIRONMENT_RAYQUAZA;
         else
-            data->battleTerrain -= 1;
+            data->battleEnvironment -= 1;
     }
 
     PrintBattleBgName(taskId);
 
-    LoadBattleBg(data->battleTerrain);
+    LoadBattleBg(data->battleEnvironment);
 }
 
 // *******************************
@@ -1580,12 +1583,12 @@ static void HandleInput_PokemonSpriteVisualizer(u8 taskId)
 
     if (JOY_NEW(L_BUTTON)  && (Backsprite->callback == SpriteCallbackDummy))
     {
-        PlayCryInternal(data->currentmonId, 0, 120, 10, 0);
+        PlayCryInternal(data->currentmonId, 0, 120, 10, CRY_MODE_NORMAL);
         LaunchAnimationTaskForBackSprite(Backsprite, data->animIdBack-1);
     }
     if (JOY_NEW(R_BUTTON) && (Frontsprite->callback == SpriteCallbackDummy))
     {
-        PlayCryInternal(data->currentmonId, 0, 120, 10, 0);
+        PlayCryInternal(data->currentmonId, 0, 120, 10, CRY_MODE_NORMAL);
         if (HasTwoFramesAnimation(data->currentmonId))
             StartSpriteAnim(Frontsprite, 1);
 

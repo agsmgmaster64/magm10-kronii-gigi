@@ -842,7 +842,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_SCRAPPY] =
     {
         .name = _("Scrappy"),
-        .description = COMPOUND_STRING("Hits Ghost-type Pokémon."),
+        .description = COMPOUND_STRING("Hits Ghost-type Puppets."),
         .aiRating = 6,
     },
 
@@ -926,7 +926,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_BAD_DREAMS] =
     {
         .name = _("Bad Dreams"),
-        .description = COMPOUND_STRING("Damages sleeping Pokémon."),
+        .description = COMPOUND_STRING("Damages sleeping Puppets."),
         .aiRating = 4,
     },
 
@@ -983,7 +983,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_HEALER] =
     {
         .name = _("Healer"),
-        .description = COMPOUND_STRING("Heals partner Pokémon."),
+        .description = COMPOUND_STRING("Heals partner Puppet."),
         .aiRating = 0,
     },
 
@@ -1140,9 +1140,9 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 6,
     },
 
-    [ABILITY_MUMMY] =
+    [ABILITY_CONTAGION] =
     {
-        .name = _("Mummy"),
+        .name = _("Contagion"),
         .description = COMPOUND_STRING("Spreads with contact."),
         .aiRating = 5,
     },
@@ -1807,10 +1807,10 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 3,
     },
 
-    [ABILITY_PROPELLER_TAIL] =
+    [ABILITY_CONSECRATE] =
     {
-        .name = _("Propeller Tail"),
-        .description = COMPOUND_STRING("Ignores foe's redirection."),
+        .name = _("Consecrate"),
+        .description = COMPOUND_STRING("Illusion moves become Faith."),
         .aiRating = 2,
     },
 
@@ -1855,10 +1855,10 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .breakable = TRUE,
     },
 
-    [ABILITY_SAND_SPIT] =
+    [ABILITY_SUNBATHING] =
     {
-        .name = _("Sand Spit"),
-        .description = COMPOUND_STRING("Creates a sandstorm if hit."),
+        .name = _("Sunbathing"),
+        .description = COMPOUND_STRING("Cures status in sun."),
         .aiRating = 5,
     },
 
@@ -1893,9 +1893,10 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
 
     [ABILITY_BLANK_CARD] =
     {
-        .name = _("Power Spot"),
-        .description = COMPOUND_STRING("Powers up ally moves."),
+        .name = _("Blank Card"),
+        .description = COMPOUND_STRING("Copies member's ability."),
         .aiRating = 2,
+        .cantBeCopied = TRUE,
     },
 
     [ABILITY_MIMICRY] =
@@ -1933,9 +1934,9 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 2,
     },
 
-    [ABILITY_GORILLA_TACTICS] =
+    [ABILITY_ONI_TACTICS] =
     {
-        .name = _("Gorilla Tactics"),
+        .name = _("Oni Tactics"),
         .description = COMPOUND_STRING("Ups Attack and locks move."),
         .aiRating = 4,
     },
@@ -2026,16 +2027,11 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 8,
     },
 
-    [ABILITY_AS_ONE_SHADOW_RIDER] =
+    [ABILITY_YIN_AND_YANG] =
     {
-        .name = _("As One"),
-        .description = COMPOUND_STRING("Unnerve and Grim Neigh."),
+        .name = _("Yin and Yang"),
+        .description = COMPOUND_STRING("Boosts lower attack stat."),
         .aiRating = 10,
-        .cantBeCopied = TRUE,
-        .cantBeSwapped = TRUE,
-        .cantBeTraced = TRUE,
-        .cantBeSuppressed = TRUE,
-        .cantBeOverwritten = TRUE,
     },
 
     [ABILITY_CLEAR_VOICE] =
@@ -2045,10 +2041,10 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 6,
     },
 
-    [ABILITY_SEED_SOWER] =
+    [ABILITY_FOUL_AROMA] =
     {
-        .name = _("Seed Sower"),
-        .description = COMPOUND_STRING("Affects terrain when hit."),
+        .name = _("Foul Aroma"),
+        .description = COMPOUND_STRING("Confuses foe on contact."),
         .aiRating = 5,
     },
 

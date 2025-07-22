@@ -456,7 +456,7 @@ static void HandleInputChooseAction(u32 battler)
     {
         SwapHpBarsWithHpText();
     }
-    else if (gSaveBlock2Ptr->optionsDebugMode == 0 && JOY_NEW(SELECT_BUTTON))
+    else if (gSaveBlock2Ptr->optionsBattleMenu && JOY_NEW(SELECT_BUTTON))
     {
         BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_DEBUG, 0);
         BtlController_Complete(battler);
@@ -1080,7 +1080,7 @@ void HandleMoveSwitching(u32 battler)
                 gBattleMons[battler].pp[i] = moveInfo->currentPp[i];
             }
 
-            if (!(gBattleMons[battler].status2 & STATUS2_TRANSFORMED))
+            if (!(gBattleMons[battler].volatiles.transformed))
             {
                 for (i = 0; i < MAX_MON_MOVES; i++)
                 {
@@ -2371,8 +2371,15 @@ static void Controller_WaitForDebug(u32 battler)
 static void PlayerHandleBattleDebug(u32 battler)
 {
     BeginNormalPaletteFade(-1, 0, 0, 0x10, 0);
-    FreeAllWindowBuffers();
-    UI_Battle_Menu_Init(ReshowBattleScreenAfterMenu);
+    if (gSaveBlock2Ptr->optionsBattleMenu != 3)
+    {
+        FreeAllWindowBuffers();
+        UI_Battle_Menu_Init(ReshowBattleScreenAfterMenu);
+    }
+    else
+    {
+        SetMainCallback2(CB2_BattleDebugMenu);
+    }
     gBattlerControllerFuncs[battler] = Controller_WaitForDebug;
 }
 
@@ -2381,9 +2388,11 @@ enum
 {
     EFFECTIVENESS_CANNOT_VIEW,
     EFFECTIVENESS_NO_EFFECT,
+    EFFECTIVENESS_MOSTLY_INEFFECTIVE,
     EFFECTIVENESS_NOT_VERY_EFFECTIVE,
     EFFECTIVENESS_NORMAL,
     EFFECTIVENESS_SUPER_EFFECTIVE,
+    EFFECTIVENESS_EXTREMELY_EFFECTIVE,
 };
 
 static bool32 ShouldShowTypeEffectiveness(u32 targetId)
@@ -2418,8 +2427,12 @@ static u32 CheckTypeEffectiveness(u32 battlerAtk, u32 battlerDef)
 
     if (modifier == UQ_4_12(0.0))
         return EFFECTIVENESS_NO_EFFECT; // No effect
+    else if (modifier <= UQ_4_12(0.25))
+        return EFFECTIVENESS_MOSTLY_INEFFECTIVE; // Mostly ineffective
     else if (modifier <= UQ_4_12(0.5))
         return EFFECTIVENESS_NOT_VERY_EFFECTIVE; // Not very effective
+    else if (modifier >= UQ_4_12(4.0))
+        return EFFECTIVENESS_EXTREMELY_EFFECTIVE; // Extremely effective
     else if (modifier >= UQ_4_12(2.0))
         return EFFECTIVENESS_SUPER_EFFECTIVE; // Super effective
     return EFFECTIVENESS_NORMAL; // Normal effectiveness
@@ -2449,6 +2462,8 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
     static const u8 effectiveIcon[] =  _("{CIRCLE_HOLLOW}");
     static const u8 superEffectiveIcon[] =  _("{CIRCLE_DOT}");
     static const u8 notVeryEffectiveIcon[] =  _("{TRIANGLE}");
+    static const u8 extremelyEffectiveIcon[] =  _("{STAR_ICON}");
+    static const u8 mostlyIneffectiveIcon[] =  _("{DOWN_TRIANGLE}");
     static const u8 immuneIcon[] =  _("{BIG_MULT_X}");
     static const u8 teraIcon[] =  _("{UP_ARROW}");
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
@@ -2486,6 +2501,12 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, u32 batt
             break;
         case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
             StringCopy(txtPtr, notVeryEffectiveIcon);
+            break;
+        case EFFECTIVENESS_EXTREMELY_EFFECTIVE:
+            StringCopy(txtPtr, extremelyEffectiveIcon);
+            break;
+        case EFFECTIVENESS_MOSTLY_INEFFECTIVE:
+            StringCopy(txtPtr, mostlyIneffectiveIcon);
             break;
         case EFFECTIVENESS_NO_EFFECT:
             StringCopy(txtPtr, immuneIcon);

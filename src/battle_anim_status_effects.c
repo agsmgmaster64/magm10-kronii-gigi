@@ -24,6 +24,7 @@ static void AnimTask_FrozenIceCube_Step4(u8 taskId);
 static void Task_DoStatusAnimation(u8 taskId);
 static void AnimFlashingCircleImpact(struct Sprite *sprite);
 static void AnimFlashingCircleImpact_Step(struct Sprite *sprite);
+static void AnimApollon2(struct Sprite *sprite);
 
 static const union AnimCmd sAnim_FlickeringOrb[] =
 {
@@ -83,6 +84,28 @@ const struct SpriteTemplate gWeatherBallUpSpriteTemplate =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimWeatherBallUp,
+};
+
+const struct SpriteTemplate gGroupPrankUpSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_ITEM_BAG,
+    .paletteTag = ANIM_TAG_ITEM_BAG,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_WeatherBallNormal,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWeatherBallUp,
+};
+
+const struct SpriteTemplate gGroupPrankFallSpriteTemplate =    
+{
+    .tileTag = ANIM_TAG_ITEM_BAG,
+    .paletteTag = ANIM_TAG_ITEM_BAG,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimApollon2,
 };
 
 const struct SpriteTemplate gWeatherBallNormalDownSpriteTemplate =
@@ -587,6 +610,27 @@ void AnimTask_StatsChange(u8 taskId)
 }
 
 #undef CASE
+
+static void AnimApollon2(struct Sprite *sprite)
+{
+    u8 coordType;
+
+    if (!(gBattleAnimArgs[5] & 0xFF))
+        coordType = BATTLER_COORD_Y_PIC_OFFSET;
+    else
+        coordType = BATTLER_COORD_Y;
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X);
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y);
+    sprite->x += gBattleAnimArgs[0];
+    sprite->y += gBattleAnimArgs[1];
+
+    TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, 0x8000);
+    sprite->data[0] = gBattleAnimArgs[4];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, coordType) + gBattleAnimArgs[3];
+    sprite->callback = StartAnimLinearTranslation;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
 
 void LaunchStatusAnimation(u8 battler, u8 statusAnimId)
 {

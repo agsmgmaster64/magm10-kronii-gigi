@@ -88815,7 +88815,7 @@
     "LevelMoves": [
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,
@@ -91919,7 +91919,7 @@
     "LevelMoves": [
       {
         "Level": 1,
-        "Move": "MOVE_FAIRY_LOCK"
+        "Move": "MOVE_DEMON_BOOK"
       },
       {
         "Level": 1,
@@ -94826,7 +94826,7 @@
     "EggMoves": [
       "MOVE_AMNESIA",
       "MOVE_MYSTIC_WATER",
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_CHARM",
       "MOVE_PERISH_SONG",
       "MOVE_WONDER_ROOM"
@@ -94950,7 +94950,7 @@
     "EggMoves": [
       "MOVE_AMNESIA",
       "MOVE_MYSTIC_WATER",
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_CHARM",
       "MOVE_PERISH_SONG",
       "MOVE_WONDER_ROOM"
@@ -95090,7 +95090,7 @@
     "EggMoves": [
       "MOVE_AMNESIA",
       "MOVE_MYSTIC_WATER",
-      "MOVE_AROMATIC_MIST",
+      "MOVE_GROUP_PRANK",
       "MOVE_CHARM",
       "MOVE_PERISH_SONG",
       "MOVE_WONDER_ROOM"
@@ -98691,7 +98691,7 @@
       },
       {
         "Level": 33,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       }
     ],
     "PreEvoMoves": [],
@@ -98797,7 +98797,7 @@
       },
       {
         "Level": 33,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 37,
@@ -98929,7 +98929,7 @@
       },
       {
         "Level": 33,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 37,
@@ -101829,7 +101829,7 @@
       },
       {
         "Level": 1,
-        "Move": "MOVE_AROMATIC_MIST"
+        "Move": "MOVE_GROUP_PRANK"
       },
       {
         "Level": 1,

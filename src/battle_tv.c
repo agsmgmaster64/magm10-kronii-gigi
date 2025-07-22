@@ -180,12 +180,16 @@ void BattleTv_SetDataBasedOnString(enum StringID stringId)
         break;
     case STRINGID_NOTVERYEFFECTIVE:
     case STRINGID_NOTVERYEFFECTIVETWOFOES:
+    case STRINGID_MOSTLYINEFFECTIVE:
+    case STRINGID_MOSTLYINEFFECTIVETWOFOES:
         AddMovePoints(PTS_EFFECTIVENESS, moveSlot, 1, 0);
         if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && GetMonData(defMon, MON_DATA_HP, NULL) != 0)
             TrySetBattleSeminarShow();
         break;
     case STRINGID_SUPEREFFECTIVE:
     case STRINGID_SUPEREFFECTIVETWOFOES:
+    case STRINGID_EXTREMELYEFFECTIVE:
+    case STRINGID_EXTREMELYEFFECTIVETWOFOES:
         AddMovePoints(PTS_EFFECTIVENESS, moveSlot, 0, 0);
         break;
     case STRINGID_PKMNFORESAWATTACK:
@@ -840,10 +844,6 @@ static void AddMovePoints(u8 caseId, u16 arg1, u8 arg2, u8 arg3)
             const struct AdditionalEffect *additionalEffect = GetMoveAdditionalEffectById(move, i);
             switch (additionalEffect->moveEffect)
             {
-            case MOVE_EFFECT_STEAL_ITEM:
-                if ((additionalEffect->chance == 100 || additionalEffect->chance == 0))
-                    baseFromEffect += 3;
-                break;
             case MOVE_EFFECT_THRASH:
                 if (additionalEffect->self == TRUE)
                     baseFromEffect += 3;
@@ -866,6 +866,8 @@ static void AddMovePoints(u8 caseId, u16 arg1, u8 arg2, u8 arg3)
             case MOVE_EFFECT_EVS_MINUS_2:
                 if (additionalEffect->self == TRUE && (additionalEffect->chance == 100 || additionalEffect->chance == 0))
                     baseFromEffect += 2;
+                break;
+            default:
                 break;
             }
         }
