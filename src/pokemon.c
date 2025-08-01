@@ -2028,6 +2028,20 @@ u32 GetMonData2(struct Pokemon *mon, s32 field)
     return GetMonData3(mon, field, NULL);
 }
 
+
+static ALWAYS_INLINE bool32 IsBadEgg(struct BoxPokemon *boxMon)
+{
+    if (boxMon->isBadEgg)
+        return TRUE;
+
+    return FALSE;
+}
+
+static ALWAYS_INLINE bool32 IsEggOrBadEgg(struct BoxPokemon *boxMon)
+{
+    return boxMon->isEgg || IsBadEgg(boxMon);
+}
+
 /* GameFreak called GetBoxMonData with either 2 or 3 arguments, for type
  * safety we have a GetBoxMonData macro (in include/pokemon.h) which
  * dispatches to either GetBoxMonData2 or GetBoxMonData3 based on the
@@ -2094,7 +2108,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
     case MON_DATA_NICKNAME:
     case MON_DATA_NICKNAME10:
     {
-        if (boxMon->isBadEgg)
+        if (IsBadEgg(boxMon))
         {
             for (retVal = 0;
                 retVal < POKEMON_NAME_LENGTH && gText_BadEgg[retVal] != EOS;
@@ -2178,7 +2192,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         break;
     }
     case MON_DATA_SPECIES:
-        retVal = boxMon->isBadEgg ? SPECIES_EGG : boxMon->species;
+        retVal = IsBadEgg(boxMon) ? SPECIES_EGG : boxMon->species;
         break;
     case MON_DATA_HELD_ITEM:
         retVal = boxMon->heldItem;
@@ -2271,7 +2285,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         retVal = boxMon->spDefenseIV;
         break;
     case MON_DATA_IS_EGG:
-        retVal = boxMon->isEgg;
+        retVal = IsEggOrBadEgg(boxMon);
         break;
     case MON_DATA_ABILITY_NUM:
         retVal = boxMon->abilityNum;
@@ -2287,7 +2301,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         break;
     case MON_DATA_SPECIES_OR_EGG:
         retVal = boxMon->species;
-        if (boxMon->species && (boxMon->isEgg || boxMon->isBadEgg))
+        if (retVal && IsEggOrBadEgg(boxMon))
             retVal = SPECIES_EGG;
         break;
     case MON_DATA_IVS:
@@ -2299,7 +2313,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
                 | (boxMon->spDefenseIV << 25);
         break;
     case MON_DATA_KNOWN_MOVES:
-        if (boxMon->species && !boxMon->isEgg)
+        if (boxMon->species && !IsEggOrBadEgg(boxMon))
         {
             u16 *moves = (u16 *)data;
             s32 i = 0;
@@ -2318,7 +2332,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         break;
     case MON_DATA_RIBBON_COUNT:
         retVal = 0;
-        if (boxMon->species && !boxMon->isEgg)
+        if (boxMon->species && !IsEggOrBadEgg(boxMon))
         {
             retVal += boxMon->championRibbon;
             retVal += boxMon->nuzlockeRibbon;
@@ -2327,7 +2341,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         break;
     case MON_DATA_RIBBONS:
         retVal = 0;
-        if (boxMon->species && !boxMon->isEgg)
+        if (boxMon->species && !IsEggOrBadEgg(boxMon))
         {
             retVal = boxMon->championRibbon
                 | (boxMon->nuzlockeRibbon << 1)
@@ -2590,20 +2604,14 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         SET8(boxMon->metLocation);
         break;
     case MON_DATA_MET_LEVEL:
-    {
-        u8 metLevel = *data;
-        boxMon->metLevel = metLevel;
+        SET8(boxMon->metLevel);
         break;
-    }
     case MON_DATA_MET_GAME:
         SET8(boxMon->metGame);
         break;
     case MON_DATA_POKEBALL:
-    {
-        u8 pokeball = *data;
-        boxMon->pokeball = pokeball;
+        SET8(boxMon->pokeball);
         break;
-    }
     case MON_DATA_OT_GENDER:
         SET8(boxMon->otGender);
         break;
@@ -2642,7 +2650,8 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         break;
     case MON_DATA_IVS:
     {
-        u32 ivs = data[0] | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
+        u32 ivs;
+        SET32(ivs);
         boxMon->hpIV = ivs & MAX_IV_MASK;
         boxMon->attackIV = (ivs >> 5) & MAX_IV_MASK;
         boxMon->defenseIV = (ivs >> 10) & MAX_IV_MASK;
@@ -2661,12 +2670,8 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         SET8(boxMon->gigantamaxFactor);
         break;
     case MON_DATA_TERA_TYPE:
-    {
-        u32 teraType;
-        SET8(teraType);
-        boxMon->teraType = teraType;
+        SET8(boxMon->teraType);
         break;
-    }
     case MON_DATA_CANT_RANDOMIZE_ABILITY:
         SET8(boxMon->cantRandomizeAbility);
         break;
@@ -6195,8 +6200,8 @@ bool32 TryFormChange(u32 monId, u32 side, enum FormChanges method)
     u32 currentSpecies = GetMonData(&party[monId], MON_DATA_SPECIES);
     u32 targetSpecies = GetFormChangeTargetSpecies(&party[monId], method, 0);
 
-    if (targetSpecies == currentSpecies && gBattleStruct != NULL && gBattleStruct->changedSpecies[side][monId] != SPECIES_NONE)
-        targetSpecies = gBattleStruct->changedSpecies[side][monId];
+    if (targetSpecies == currentSpecies && gBattleStruct != NULL && gBattleStruct->partyState[side][monId].changedSpecies != SPECIES_NONE)
+        targetSpecies = gBattleStruct->partyState[side][monId].changedSpecies;
 
     if (targetSpecies != currentSpecies)
     {
